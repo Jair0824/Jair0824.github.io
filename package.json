@@ -1,0 +1,9 @@
+{
+  "name": "garrylee-personal-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node tools/workbench-server.mjs",
+    "build": "node tools/build.mjs"
+  }
+}

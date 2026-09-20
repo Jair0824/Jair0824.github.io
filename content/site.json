@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "siteTitle": "GarryLee | Research, Engineering and Independent Work",
+    "description": "中国科学技术大学研究生，关注等离子体物理、科研工具、数据处理与轻量企业网站。",
+    "accent": "#e84c3d"
+  },
+  "profile": {
+    "name": "GarryLee",
+    "mark": "G",
+    "eyebrow": "USTC · 能源动力 · 等离子体物理",
+    "headline": "研究物理，也把想法做成可用的东西。",
+    "introduction": "研究生、独立开发者与技术服务提供者。关注等离子体物理、科研工具、数据处理与轻量企业网站。"
+  },
+  "focus": [
+    "科研数据可视化",
+    "等离子体参数工具",
+    "品牌官网与内容型网站",
+    "物理课程辅导"
+  ],
+  "credentials": [
+    "中国科学技术大学研究生",
+    "能源动力与等离子体物理",
+    "企业官网真实交付经验",
+    "Codex 与 Agent 协作开发"
+  ],
+  "projects": [
+    {
+      "title": "少间文旅品牌官网",
+      "status": "企业官网 · 文旅品牌 · 已上线",
+      "summary": "独立完成少间文旅整站制作，包括多页面内容落地、响应式前端、正式域名配置、部署与上线交付。",
+      "url": "https://shaojian.top",
+      "linkLabel": "访问 shaojian.top",
+      "tags": [
+        "独立制作",
+        "响应式前端",
+        "部署上线"
+      ],
+      "visualLabel": "少间文旅",
+      "visualMeta": "ABOUT · PLACES · STORIES",
+      "visualTitle": "让地方，重新被看见"
+    }
+  ],
+  "services": [
+    {
+      "title": "企业与品牌官网",
+      "description": "适合文旅、民宿、工作室、课题组和小型企业的响应式展示网站。"
+    },
+    {
+      "title": "科研数据与工具",
+      "description": "数据清洗、科研绘图、参数计算、自动化脚本和轻量 Web 工具。"
+    },
+    {
+      "title": "物理课程辅导",
+      "description": "高中与大学物理的概念讲解、方法训练和针对性学习规划。"
+    }
+  ],
+  "contact": {
+    "email": "jairlee082413@gmail.com",
+    "wechat": "jair0824",
+    "github": "https://github.com/Jair0824"
+  },
+  "footer": "Research · Engineering · Independent Work"
+}

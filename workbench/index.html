@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GarryLee 网站工作台</title>
+  <link rel="stylesheet" href="/workbench/workbench.css">
+  <script src="/workbench/workbench.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-brand">
+      <span class="brand-mark">G</span>
+      <div><strong>网站工作台</strong><span>GarryLee Personal Web</span></div>
+    </div>
+    <div class="topbar-actions">
+      <span class="save-state" id="save-state">正在读取...</span>
+      <button class="button" id="save-button" type="button">保存并预览</button>
+      <button class="button button-primary" id="publish-button" type="button">发布到 GitHub</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="editor-pane" aria-label="网站内容编辑">
+      <div class="editor-heading">
+        <div>
+          <p class="eyebrow">CONTENT</p>
+          <h1>网站内容</h1>
+        </div>
+        <a href="/" target="_blank">新窗口预览 ↗</a>
+      </div>
+
+      <form id="content-form">
+        <fieldset>
+          <legend>基本信息</legend>
+          <div class="field-grid two-columns">
+            <label>显示姓名<input id="profile-name" type="text" required></label>
+            <label>标识字母<input id="profile-mark" type="text" maxlength="2" required></label>
+          </div>
+          <label>专业标签<input id="profile-eyebrow" type="text" required></label>
+          <label>首页主标题<textarea id="profile-headline" rows="2" required></textarea></label>
+          <label>个人简介<textarea id="profile-introduction" rows="4" required></textarea></label>
+          <div class="field-grid two-columns">
+            <label>浏览器标题<input id="meta-title" type="text" required></label>
+            <label>主题强调色<input id="meta-accent" type="color" required></label>
+          </div>
+          <label>搜索摘要<textarea id="meta-description" rows="3" required></textarea></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>关注方向与能力</legend>
+          <label>当前关注 <span>每行一项</span><textarea id="focus-list" rows="5"></textarea></label>
+          <label>能力概览 <span>每行一项，建议四项</span><textarea id="credential-list" rows="5"></textarea></label>
+        </fieldset>
+
+        <fieldset>
+          <div class="fieldset-heading">
+            <legend>代表项目</legend>
+            <button class="button button-small" id="add-project" type="button">添加项目</button>
+          </div>
+          <div class="repeater" id="project-editor"></div>
+        </fieldset>
+
+        <fieldset>
+          <div class="fieldset-heading">
+            <legend>合作服务</legend>
+            <button class="button button-small" id="add-service" type="button">添加服务</button>
+          </div>
+          <div class="repeater" id="service-editor"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>联系方式</legend>
+          <div class="field-grid two-columns">
+            <label>邮箱<input id="contact-email" type="email" required></label>
+            <label>微信<input id="contact-wechat" type="text" required></label>
+          </div>
+          <label>GitHub 主页<input id="contact-github" type="url" required></label>
+          <label>页脚文字<input id="footer-text" type="text"></label>
+        </fieldset>
+      </form>
+    </section>
+
+    <section class="preview-pane" aria-label="网站实时预览">
+      <div class="preview-toolbar">
+        <div>
+          <span class="preview-dot"></span>
+          <span id="preview-label">桌面预览</span>
+        </div>
+        <div class="segmented" aria-label="预览尺寸">
+          <button class="is-active" type="button" data-preview="desktop">桌面</button>
+          <button type="button" data-preview="mobile">手机</button>
+        </div>
+      </div>
+      <div class="preview-stage" id="preview-stage">
+        <iframe id="site-preview" title="个人主页预览" src="/"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="publish-dialog">
+    <form method="dialog" id="publish-form">
+      <div class="dialog-heading">
+        <div><p class="eyebrow">PUBLISH</p><h2>发布到 GitHub</h2></div>
+        <button class="icon-button" value="cancel" aria-label="关闭" type="submit">×</button>
+      </div>
+      <p>工作台会先保存当前内容，然后提交并推送到 <code>Jair0824/Jair0824.github.io</code>。GitHub Pages 将自动部署公开网站。</p>
+      <label>提交说明<input id="commit-message" type="text" value="Update personal website" required></label>
+      <div class="dialog-actions">
+        <button class="button" value="cancel" type="submit">取消</button>
+        <button class="button button-primary" id="confirm-publish" value="default" type="button">确认发布</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <template id="service-template">
+    <article class="repeat-item service-item">
+      <div class="repeat-heading"><strong>服务</strong><button class="text-button remove-item" type="button">删除</button></div>
+      <label>标题<input data-field="title" type="text" required></label>
+      <label>说明<textarea data-field="description" rows="3" required></textarea></label>
+    </article>
+  </template>
+
+  <template id="project-template">
+    <article class="repeat-item project-item">
+      <div class="repeat-heading"><strong>项目</strong><button class="text-button remove-item" type="button">删除</button></div>
+      <label>项目名称<input data-field="title" type="text" required></label>
+      <label>状态标签<input data-field="status" type="text" required></label>
+      <label>项目说明<textarea data-field="summary" rows="4" required></textarea></label>
+      <div class="field-grid two-columns">
+        <label>项目网址<input data-field="url" type="url" required></label>
+        <label>链接文字<input data-field="linkLabel" type="text" required></label>
+      </div>
+      <label>能力标签 <span>使用逗号分隔</span><input data-field="tags" type="text"></label>
+      <div class="field-grid two-columns">
+        <label>视觉品牌<input data-field="visualLabel" type="text"></label>
+        <label>视觉导航<input data-field="visualMeta" type="text"></label>
+      </div>
+      <label>视觉标题<input data-field="visualTitle" type="text"></label>
+    </article>
+  </template>
+</body>
+</html>
