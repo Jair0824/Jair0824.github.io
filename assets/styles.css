@@ -11,8 +11,8 @@
   --accent: #3d9589;
   --coral: #d77a68;
   --gold: #a77c2f;
-  --serif-cn: "Times New Roman", "KaiTi", "楷体", "STKaiti", "KaiTi_GB2312", serif;
-  --serif-display: "Times New Roman", "KaiTi", "楷体", "STKaiti", "KaiTi_GB2312", serif;
+  --serif-cn: "Times New Roman", "STZhongsong", "STSong", "Noto Serif CJK", "Noto Serif SC", "PMingLiu", "SimSun", "WenQuanYi Bitmap Song", Times, serif;
+  --serif-display: "Times New Roman", "STZhongsong", "STSong", "Noto Serif CJK", "Noto Serif SC", "PMingLiu", "SimSun", "WenQuanYi Bitmap Song", Times, serif;
   --shell: min(1080px, calc(100% - 48px));
   color-scheme: light;
   color: var(--ink);

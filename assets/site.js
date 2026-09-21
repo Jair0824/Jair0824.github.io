@@ -4,14 +4,15 @@ const LANGUAGE_KEY = 'garrylee-language';
 const interfaceCopy = {
   zh: {
     skip: '跳到正文',
-    homepageLabel: '学术主页',
+    homepageLabel: '',
     brandTag: 'Research & Practice',
     navLabel: '主要导航',
     languageLabel: '语言切换',
     navAbout: '关于',
     navResearch: '研究兴趣',
     navEducation: '学术概览',
-    navWorkstation: '个人工作站',
+    navWorkstation: '服务',
+    navServices: '服务',
     profileLabel: '个人信息',
     plasmaVisualLabel: '等离子体动态视觉',
     profileQuote: '理解复杂现象，构造清晰方法。',
@@ -26,7 +27,7 @@ const interfaceCopy = {
     aboutTitle: '关于我',
     aboutSecond: '这个网站用于记录我的研究兴趣、阶段性工作与长期积累。当前不公开尚未成熟的科研成果，但会持续补充适合分享的项目、笔记与工具。',
     viewResearch: '查看研究方向',
-    enterWorkstation: '进入个人工作站',
+    enterWorkstation: '进入服务',
     currentFocus: '当前关注',
     identityTitle: '身份',
     identityCopy: '研究生 · 独立开发者\n科研与实际应用的交叉实践',
@@ -39,15 +40,15 @@ const interfaceCopy = {
     noteTitle: '关于公开内容',
     noteCopy: '科研经历与成果将在适合公开时持续更新。现阶段，这里主要用于呈现我的研究方向、工作方法与联系方式。',
     beyondResearch: 'BEYOND RESEARCH · 研究之外',
-    workstationEntryTitle: '个人工作站',
-    workstationEntryCopy: '我也承接数据分析、网站制作与物理辅导等独立工作。相关能力、案例和合作方式集中放在工作站页面。',
-    openWorkstation: '打开工作站',
+    workstationEntryTitle: '独立合作',
+    workstationEntryCopy: '我也承接数据分析、网站制作与物理辅导等独立工作。相关能力、案例和合作方式集中放在服务页面。',
+    openWorkstation: '查看服务',
     contactMe: '联系我',
-    academicHome: '学术主页',
+    academicHome: '研究',
     servicesNav: '服务',
     projectsNav: '案例',
     contactNav: '联系',
-    workEyebrow: 'GARRYLEE WORKSTATION · 个人工作站',
+    workEyebrow: 'INDEPENDENT WORK · 独立合作',
     workIdentityCopy: '独立开发与技术服务',
     workHeadline: '把问题讲清楚，\n把结果做出来。',
     workIntroduction: '这是我的独立工作入口。我利用科研训练、代码能力与 AI Agent 协作，为个人和小型团队完成数据分析、网站制作与物理辅导。',
@@ -77,18 +78,19 @@ const interfaceCopy = {
     contactKicker: 'START A CONVERSATION',
     contactTitle: '先把你的问题发给我。',
     contactCopy: '请简单说明目标、现有材料和期望时间。我会先判断是否适合承接，再给出清晰的下一步。',
-    backAcademic: '返回学术主页'
+    backAcademic: '返回研究'
   },
   en: {
     skip: 'Skip to content',
-    homepageLabel: 'Academic Homepage',
+    homepageLabel: '',
     brandTag: 'Research & Practice',
     navLabel: 'Primary navigation',
     languageLabel: 'Language switcher',
     navAbout: 'About',
     navResearch: 'Research',
     navEducation: 'Overview',
-    navWorkstation: 'Workstation',
+    navWorkstation: 'Services',
+    navServices: 'Services',
     profileLabel: 'Profile information',
     plasmaVisualLabel: 'Animated plasma field',
     profileQuote: 'Understand complex phenomena. Build clear methods.',
@@ -103,7 +105,7 @@ const interfaceCopy = {
     aboutTitle: 'About Me',
     aboutSecond: 'This site records my research interests, work in progress, and long-term practice. Results that are not ready for public release are omitted for now; suitable projects, notes, and tools will be added over time.',
     viewResearch: 'View research interests',
-    enterWorkstation: 'Enter personal workstation',
+    enterWorkstation: 'View services',
     currentFocus: 'Current interests',
     identityTitle: 'Roles',
     identityCopy: 'Graduate student · Independent developer\nResearch and practical applications',
@@ -116,15 +118,15 @@ const interfaceCopy = {
     noteTitle: 'About public materials',
     noteCopy: 'Research experience and results will be added when appropriate for public release. For now, this page focuses on my interests, working methods, and contact information.',
     beyondResearch: 'BEYOND RESEARCH',
-    workstationEntryTitle: 'Personal Workstation',
-    workstationEntryCopy: 'I also take on independent work in data analysis, website development, and physics tutoring. Capabilities, cases, and collaboration details are collected on a separate workstation page.',
-    openWorkstation: 'Open workstation',
+    workstationEntryTitle: 'Independent Work',
+    workstationEntryCopy: 'I also take on independent work in data analysis, website development, and physics tutoring. Capabilities, cases, and collaboration details are collected on the services page.',
+    openWorkstation: 'View services',
     contactMe: 'Contact',
-    academicHome: 'Academic Home',
+    academicHome: 'Research',
     servicesNav: 'Services',
     projectsNav: 'Case Study',
     contactNav: 'Contact',
-    workEyebrow: 'GARRYLEE WORKSTATION',
+    workEyebrow: 'INDEPENDENT WORK',
     workIdentityCopy: 'Independent development and technical services',
     workHeadline: 'Clarify the problem.\nDeliver the result.',
     workIntroduction: 'This is my independent work portal. Combining research training, coding, and AI agent workflows, I help individuals and small teams with data analysis, website development, and physics tutoring.',
@@ -154,7 +156,7 @@ const interfaceCopy = {
     contactKicker: 'START A CONVERSATION',
     contactTitle: 'Send me the problem first.',
     contactCopy: 'Briefly describe your goal, available materials, and expected timeline. I will first assess the fit and then suggest a clear next step.',
-    backAcademic: 'Back to academic home'
+    backAcademic: 'Back to research'
   }
 };
 
@@ -311,7 +313,7 @@ function renderSite(data) {
   const title = currentLanguage === 'en' ? data.meta.siteTitleEn : data.meta.siteTitle;
   const description = currentLanguage === 'en' ? data.meta.descriptionEn : data.meta.description;
   document.title = document.body.dataset.page === 'workstation'
-    ? (currentLanguage === 'en' ? 'GarryLee Workstation | Services & Projects' : 'GarryLee 工作站 | 服务与项目')
+    ? (currentLanguage === 'en' ? 'GarryLee | Independent Work' : 'GarryLee | 独立合作')
     : title;
   document.querySelector('meta[name="description"]').setAttribute('content', description);
   document.documentElement.style.setProperty('--accent', data.meta.accent || '#75d6c5');
