@@ -2,14 +2,14 @@
   "meta": {
     "siteTitle": "GarryLee | Research, Engineering and Independent Work",
     "description": "中国科学技术大学研究生，关注等离子体物理、科研工具、数据处理与轻量企业网站。",
-    "accent": "#f4d5d2"
+    "accent": "#a84336"
   },
   "visual": {
     "motionEnabled": true,
-    "particleDensity": 180,
-    "flowSpeed": 0.85,
-    "primaryColor": "#e84c3d",
-    "secondaryColor": "#46a99a"
+    "particleDensity": 170,
+    "flowSpeed": 0.8,
+    "primaryColor": "#b94b3e",
+    "secondaryColor": "#4f9a8d"
   },
   "profile": {
     "name": "GarryLee",
@@ -32,19 +32,15 @@
   ],
   "projects": [
     {
-      "title": "少间文旅品牌官网",
       "status": "企业官网 · 文旅品牌 · 已上线",
+      "title": "少间文旅品牌官网",
       "summary": "独立完成少间文旅整站制作，包括多页面内容落地、响应式前端、正式域名配置、部署与上线交付。",
+      "tags": ["独立制作", "响应式前端", "部署上线"],
       "url": "https://shaojian.top",
       "linkLabel": "访问 shaojian.top",
-      "tags": [
-        "独立制作",
-        "响应式前端",
-        "部署上线"
-      ],
+      "visualTitle": "让地方，重新被看见",
       "visualLabel": "少间文旅",
-      "visualMeta": "ABOUT · PLACES · STORIES",
-      "visualTitle": "让地方，重新被看见"
+      "visualMeta": "ABOUT · PLACES · STORIES"
     }
   ],
   "services": [
