@@ -82,7 +82,48 @@ function validateContent(data) {
 
 async function runGit(args) {
   const safeDirectory = projectRoot.replaceAll('\\', '/');
-  return execFileAsync('git', ['-c', `safe.directory=${safeDirectory}`, ...args], { cwd: projectRoot, windowsHide: true, timeout: 120_000 });
+  return execFileAsync('git', [
+    '-c', `safe.directory=${safeDirectory}`,
+    '-c', 'http.sslBackend=openssl',
+    '-c', 'http.version=HTTP/1.1',
+    ...args
+  ], { cwd: projectRoot, windowsHide: true, timeout: 180_000 });
+}
+
+async function gitSucceeds(args) {
+  try {
+    await runGit(args);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function friendlyGitError(error) {
+  const details = `${error?.stderr || ''}\n${error?.stdout || ''}\n${error?.message || ''}`;
+  if (/non-fast-forward|fetch first|rejected/i.test(details)) return '远程仓库有更新，自动合并没有完成。请重试发布；若仍失败，请在工作台外检查远程更改。';
+  if (/Authentication failed|could not read Username|403|Permission denied/i.test(details)) return 'GitHub 身份验证失败。请先在这台电脑上登录 GitHub，然后重试发布。';
+  if (/Failed to connect|Could not resolve host|Connection.*closed|timed out/i.test(details)) return '暂时无法连接 GitHub。你的更改已经保存在本地，请检查网络后重试发布。';
+  if (/CONFLICT|Automatic merge failed/i.test(details)) return '远程文件与本地文件发生冲突，已取消自动合并，本地内容没有丢失。';
+  return 'GitHub 发布失败。本地内容和提交均已保留，请稍后重试。';
+}
+
+async function synchronizeRemote() {
+  await runGit(['fetch', 'origin', 'main']);
+  if (!await gitSucceeds(['rev-parse', '--verify', 'origin/main'])) return;
+  if (await gitSucceeds(['merge-base', '--is-ancestor', 'origin/main', 'HEAD'])) return;
+
+  const related = await gitSucceeds(['merge-base', 'HEAD', 'origin/main']);
+  const mergeArgs = related
+    ? ['merge', 'origin/main', '--no-edit']
+    : ['merge', 'origin/main', '--allow-unrelated-histories', '--no-edit', '-X', 'ours'];
+
+  try {
+    await runGit(mergeArgs);
+  } catch (error) {
+    await runGit(['merge', '--abort']).catch(() => {});
+    throw error;
+  }
 }
 
 function resolveStaticPath(urlPath) {
@@ -138,12 +179,21 @@ async function handleApi(request, response, url) {
     const body = await readJsonBody(request);
     const message = String(body.message || 'Update personal website').trim().slice(0, 120);
     requireString(message, '提交说明');
-    const { stdout: before } = await runGit(['status', '--porcelain']);
-    if (!before.trim()) return sendJson(response, 200, { message: '没有需要发布的新更改' });
-    await runGit(['add', '--all']);
-    await runGit(['commit', '-m', message]);
-    await runGit(['push', 'origin', 'HEAD:main']);
-    return sendJson(response, 200, { message: '已推送到 GitHub，正在自动部署' });
+    try {
+      const { stdout: before } = await runGit(['status', '--porcelain']);
+      if (before.trim()) {
+        await runGit(['add', '--all']);
+        await runGit(['commit', '-m', message]);
+      }
+      await synchronizeRemote();
+      const { stdout: ahead } = await runGit(['rev-list', '--count', 'origin/main..HEAD']);
+      if (Number(ahead.trim()) === 0) return sendJson(response, 200, { message: 'GitHub 已经是最新版本' });
+      await runGit(['push', '--set-upstream', 'origin', 'HEAD:main']);
+      return sendJson(response, 200, { message: '已推送到 GitHub，正在自动部署' });
+    } catch (error) {
+      console.error(error);
+      return sendJson(response, 502, { error: friendlyGitError(error) });
+    }
   }
 
   sendJson(response, 404, { error: '接口不存在' });
