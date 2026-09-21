@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GarryLee 个人工作站：数据分析、网站制作与物理课程辅导。">
+  <meta name="theme-color" content="#f5faf8">
+  <title>GarryLee Workstation</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body data-page="workstation">
+  <canvas class="plasma-background" id="plasma-background" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#main" data-i18n="skip">跳到正文</a>
+
+  <header class="site-header">
+    <div class="shell nav-inner">
+      <a class="brand" href="index.html" aria-label="GarryLee 主页">
+        <span class="brand-seal" aria-hidden="true">GL</span>
+        <span class="brand-copy"><strong>GarryLee</strong><small data-i18n="brandTag">Research &amp; Practice</small></span>
+      </a>
+      <div class="header-controls">
+        <nav class="site-nav" aria-label="主要导航" data-i18n-aria="navLabel">
+          <a href="index.html" data-i18n="academicHome">学术主页</a>
+          <a class="is-active" href="#services" data-i18n="servicesNav">服务</a>
+          <a href="#projects" data-i18n="projectsNav">案例</a>
+          <a href="#contact" data-i18n="contactNav">联系</a>
+        </nav>
+        <div class="language-switch" role="group" aria-label="语言切换" data-i18n-aria="languageLabel">
+          <button type="button" data-lang-option="zh" aria-pressed="true">中</button>
+          <button type="button" data-lang-option="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="work-hero">
+      <div class="shell work-hero-layout">
+        <div class="work-hero-copy">
+          <p class="eyebrow" data-i18n="workEyebrow">GARRYLEE WORKSTATION · 个人工作站</p>
+          <h1 data-i18n="workHeadline">把问题讲清楚，<br>把结果做出来。</h1>
+          <p data-i18n="workIntroduction">这是我的独立工作入口。我利用科研训练、代码能力与 AI Agent 协作，为个人和小型团队完成数据分析、网站制作与物理辅导。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#services"><span data-i18n="viewServices">查看可做的工作</span><span aria-hidden="true">↓</span></a>
+            <a class="button button-quiet" href="#contact"><span data-i18n="discussProject">沟通一个项目</span><span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="availability-panel">
+          <div class="availability-status"><i aria-hidden="true"></i><span data-i18n="availableStatus">可接受线上与线下合作</span></div>
+          <dl>
+            <div><dt data-i18n="responseLabel">沟通语言</dt><dd data-i18n="responseValue">中文优先 / English available</dd></div>
+            <div><dt data-i18n="deliveryLabel">工作方式</dt><dd data-i18n="deliveryValue">阶段确认 · 可预览 · 可复核</dd></div>
+            <div><dt data-i18n="toolsLabel">开发协作</dt><dd data-i18n="toolsValue">Codex 与多 Agent 工作流</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section services-section" id="services">
+      <div class="shell section-layout">
+        <div class="section-intro">
+          <p class="section-index">01</p>
+          <p class="section-kicker" data-i18n="servicesKicker">WHAT I CAN DO</p>
+          <h2 data-i18n="servicesTitle">可承接的工作</h2>
+          <p data-i18n="servicesIntro">适合需求边界清楚、重视沟通与交付质量的中小型任务。</p>
+        </div>
+        <div class="services-grid" id="service-list"></div>
+      </div>
+    </section>
+
+    <section class="content-section projects-section" id="projects">
+      <div class="shell section-layout">
+        <div class="section-intro">
+          <p class="section-index">02</p>
+          <p class="section-kicker" data-i18n="projectsKicker">SELECTED PROJECT</p>
+          <h2 data-i18n="projectsTitle">已完成案例</h2>
+          <p data-i18n="projectsIntro">真实上线的项目比功能清单更能说明工作方式。</p>
+        </div>
+        <div class="project-list" id="project-list"></div>
+      </div>
+    </section>
+
+    <section class="process-section">
+      <div class="shell">
+        <div class="process-heading">
+          <p class="section-kicker" data-i18n="processKicker">WORKING PROCESS</p>
+          <h2 data-i18n="processTitle">简单、透明的合作过程</h2>
+        </div>
+        <ol class="process-list">
+          <li><span>01</span><div><h3 data-i18n="processOneTitle">明确需求</h3><p data-i18n="processOneCopy">先确认目标、交付物、周期与判断完成的标准。</p></div></li>
+          <li><span>02</span><div><h3 data-i18n="processTwoTitle">阶段预览</h3><p data-i18n="processTwoCopy">关键节点提供可查看的中间结果，及时校准方向。</p></div></li>
+          <li><span>03</span><div><h3 data-i18n="processThreeTitle">完整交付</h3><p data-i18n="processThreeCopy">交付成品、必要说明与可继续维护的文件。</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="shell contact-layout">
+        <div>
+          <p class="section-kicker" data-i18n="contactKicker">START A CONVERSATION</p>
+          <h2 data-i18n="contactTitle">先把你的问题发给我。</h2>
+          <p data-i18n="contactCopy">请简单说明目标、现有材料和期望时间。我会先判断是否适合承接，再给出清晰的下一步。</p>
+        </div>
+        <address class="contact-list">
+          <a id="work-email-link" href="mailto:jairlee082413@gmail.com"><span data-i18n="emailLabel">邮箱</span><strong>jairlee082413@gmail.com</strong><i aria-hidden="true">↗</i></a>
+          <p><span data-i18n="wechatLabel">微信</span><strong id="wechat-value">jair0824</strong></p>
+          <a id="work-github-link" href="https://github.com/Jair0824" target="_blank" rel="noreferrer"><span>GitHub</span><strong>Jair0824</strong><i aria-hidden="true">↗</i></a>
+        </address>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <span id="footer-copyright">© 2026 GarryLee</span>
+      <span id="footer-text">Research · Engineering · Independent Work</span>
+      <a href="index.html" data-i18n="backAcademic">返回学术主页</a>
+    </div>
+  </footer>
+
+  <noscript>此页面需要启用 JavaScript 以读取网站内容。</noscript>
+</body>
+</html>

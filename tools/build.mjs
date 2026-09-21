@@ -9,6 +9,7 @@ const output = path.join(projectRoot, '_site');
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 await cp(path.join(projectRoot, 'index.html'), path.join(output, 'index.html'));
+await cp(path.join(projectRoot, 'work.html'), path.join(output, 'work.html'));
 await cp(path.join(projectRoot, 'assets'), path.join(output, 'assets'), { recursive: true });
 await cp(path.join(projectRoot, 'content'), path.join(output, 'content'), { recursive: true });
 await writeFile(path.join(output, '.nojekyll'), '', 'utf8');

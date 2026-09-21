@@ -1,6 +1,6 @@
 # GarryLee Personal Website
 
-这是 GarryLee 的个人主页与本地内容工作台。公开网站由 GitHub Pages 托管，工作台只在本机运行。
+这是 GarryLee 的双语个人学术主页、个人工作站与本地内容工作台。公开网站由 GitHub Pages 托管，工作台只在本机运行。
 
 ## 使用工作台
 
@@ -17,6 +17,7 @@
 `.github/workflows/pages.yml` 会在 `main` 分支更新后构建并部署公开站点。它只发布以下内容：
 
 - `index.html`
+- `work.html`
 - `assets/`
 - `content/`
 

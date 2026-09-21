@@ -53,7 +53,9 @@ function requireString(value, label) {
 function validateContent(data) {
   if (!data || typeof data !== 'object') throw new Error('网站内容格式无效');
   requireString(data.meta?.siteTitle, '浏览器标题');
+  requireString(data.meta?.siteTitleEn, '英文浏览器标题');
   requireString(data.meta?.description, '搜索摘要');
+  requireString(data.meta?.descriptionEn, '英文搜索摘要');
   if (!/^#[0-9a-f]{6}$/i.test(data.meta?.accent || '')) throw new Error('主题色格式无效');
   if (data.visual) {
     if (!Number.isFinite(data.visual.particleDensity) || data.visual.particleDensity < 30 || data.visual.particleDensity > 500) throw new Error('粒子密度超出范围');
@@ -62,18 +64,24 @@ function validateContent(data) {
   }
   requireString(data.profile?.name, '显示姓名');
   requireString(data.profile?.headline, '首页主标题');
+  requireString(data.profile?.headlineEn, '英文首页主标题');
   requireString(data.profile?.introduction, '个人简介');
-  if (!Array.isArray(data.focus) || !Array.isArray(data.credentials)) throw new Error('关注方向或能力概览格式无效');
+  requireString(data.profile?.introductionEn, '英文个人简介');
+  if (!Array.isArray(data.focus) || !Array.isArray(data.focusEn) || !Array.isArray(data.credentials) || !Array.isArray(data.credentialsEn)) throw new Error('关注方向或学术概览格式无效');
   if (!Array.isArray(data.projects) || data.projects.length === 0) throw new Error('至少需要一个代表项目');
   if (!Array.isArray(data.services) || data.services.length === 0) throw new Error('至少需要一个合作服务');
   data.projects.forEach((project, index) => {
     requireString(project.title, `项目 ${index + 1} 名称`);
+    requireString(project.titleEn, `项目 ${index + 1} 英文名称`);
     requireString(project.summary, `项目 ${index + 1} 说明`);
+    requireString(project.summaryEn, `项目 ${index + 1} 英文说明`);
     try { new URL(project.url); } catch { throw new Error(`项目 ${index + 1} 网址无效`); }
   });
   data.services.forEach((service, index) => {
     requireString(service.title, `服务 ${index + 1} 标题`);
+    requireString(service.titleEn, `服务 ${index + 1} 英文标题`);
     requireString(service.description, `服务 ${index + 1} 说明`);
+    requireString(service.descriptionEn, `服务 ${index + 1} 英文说明`);
   });
   requireString(data.contact?.email, '邮箱');
   requireString(data.contact?.wechat, '微信');
@@ -129,6 +137,7 @@ async function synchronizeRemote() {
 function resolveStaticPath(urlPath) {
   const cleanPath = decodeURIComponent(urlPath.split('?')[0]);
   if (cleanPath === '/') return path.join(projectRoot, 'index.html');
+  if (cleanPath === '/work.html') return path.join(projectRoot, 'work.html');
   if (cleanPath === '/workbench' || cleanPath === '/workbench/') return path.join(projectRoot, 'workbench', 'index.html');
   const allowed = ['/assets/', '/content/', '/workbench/'];
   if (!allowed.some((prefix) => cleanPath.startsWith(prefix))) return null;

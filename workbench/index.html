@@ -27,7 +27,7 @@
           <p class="eyebrow">CONTENT</p>
           <h1>网站内容</h1>
         </div>
-        <a href="/" target="_blank">新窗口预览 ↗</a>
+        <div class="editor-links"><a href="/" target="_blank">学术主页 ↗</a><a href="/work.html" target="_blank">工作站 ↗</a></div>
       </div>
 
       <form id="content-form">
@@ -38,13 +38,18 @@
             <label>标识字母<input id="profile-mark" type="text" maxlength="2" required></label>
           </div>
           <label>专业标签<input id="profile-eyebrow" type="text" required></label>
+          <label>专业标签（英文）<input id="profile-eyebrow-en" type="text" required></label>
           <label>首页主标题<textarea id="profile-headline" rows="2" required></textarea></label>
+          <label>首页主标题（英文）<textarea id="profile-headline-en" rows="2" required></textarea></label>
           <label>个人简介<textarea id="profile-introduction" rows="4" required></textarea></label>
+          <label>个人简介（英文）<textarea id="profile-introduction-en" rows="4" required></textarea></label>
           <div class="field-grid two-columns">
             <label>浏览器标题<input id="meta-title" type="text" required></label>
             <label>主题强调色<input id="meta-accent" type="color" required></label>
           </div>
+          <label>浏览器标题（英文）<input id="meta-title-en" type="text" required></label>
           <label>搜索摘要<textarea id="meta-description" rows="3" required></textarea></label>
+          <label>搜索摘要（英文）<textarea id="meta-description-en" rows="3" required></textarea></label>
         </fieldset>
 
         <fieldset>
@@ -63,7 +68,11 @@
         <fieldset>
           <legend>关注方向与能力</legend>
           <label>当前关注 <span>每行一项</span><textarea id="focus-list" rows="5"></textarea></label>
-          <label>能力概览 <span>每行一项，建议四项</span><textarea id="credential-list" rows="5"></textarea></label>
+          <label>当前关注（英文）<span>与中文逐行对应</span><textarea id="focus-list-en" rows="5"></textarea></label>
+          <label>方向说明 <span>每行一项，与“当前关注”逐行对应</span><textarea id="focus-details" rows="6"></textarea></label>
+          <label>方向说明（英文）<span>与中文逐行对应</span><textarea id="focus-details-en" rows="6"></textarea></label>
+          <label>学术概览 <span>每行一项</span><textarea id="credential-list" rows="5"></textarea></label>
+          <label>学术概览（英文）<span>与中文逐行对应</span><textarea id="credential-list-en" rows="5"></textarea></label>
         </fieldset>
 
         <fieldset>
@@ -90,6 +99,7 @@
           </div>
           <label>GitHub 主页<input id="contact-github" type="url" required></label>
           <label>页脚文字<input id="footer-text" type="text"></label>
+          <label>页脚文字（英文）<input id="footer-text-en" type="text"></label>
         </fieldset>
       </form>
     </section>
@@ -132,7 +142,9 @@
     <article class="repeat-item service-item">
       <div class="repeat-heading"><strong>服务</strong><button class="text-button remove-item" type="button">删除</button></div>
       <label>标题<input data-field="title" type="text" required></label>
+      <label>标题（英文）<input data-field="titleEn" type="text" required></label>
       <label>说明<textarea data-field="description" rows="3" required></textarea></label>
+      <label>说明（英文）<textarea data-field="descriptionEn" rows="3" required></textarea></label>
     </article>
   </template>
 
@@ -140,18 +152,28 @@
     <article class="repeat-item project-item">
       <div class="repeat-heading"><strong>项目</strong><button class="text-button remove-item" type="button">删除</button></div>
       <label>项目名称<input data-field="title" type="text" required></label>
+      <label>项目名称（英文）<input data-field="titleEn" type="text" required></label>
       <label>状态标签<input data-field="status" type="text" required></label>
+      <label>状态标签（英文）<input data-field="statusEn" type="text" required></label>
       <label>项目说明<textarea data-field="summary" rows="4" required></textarea></label>
+      <label>项目说明（英文）<textarea data-field="summaryEn" rows="4" required></textarea></label>
       <div class="field-grid two-columns">
         <label>项目网址<input data-field="url" type="url" required></label>
         <label>链接文字<input data-field="linkLabel" type="text" required></label>
       </div>
+      <label>链接文字（英文）<input data-field="linkLabelEn" type="text" required></label>
       <label>能力标签 <span>使用逗号分隔</span><input data-field="tags" type="text"></label>
+      <label>能力标签（英文）<span>使用逗号分隔</span><input data-field="tagsEn" type="text"></label>
       <div class="field-grid two-columns">
         <label>视觉品牌<input data-field="visualLabel" type="text"></label>
         <label>视觉导航<input data-field="visualMeta" type="text"></label>
       </div>
+      <div class="field-grid two-columns">
+        <label>视觉品牌（英文）<input data-field="visualLabelEn" type="text"></label>
+        <label>视觉导航（英文）<input data-field="visualMetaEn" type="text"></label>
+      </div>
       <label>视觉标题<input data-field="visualTitle" type="text"></label>
+      <label>视觉标题（英文）<input data-field="visualTitleEn" type="text"></label>
     </article>
   </template>
 </body>

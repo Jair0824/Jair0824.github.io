@@ -55,10 +55,15 @@ function renderEditor(data) {
   value('profile-name', data.profile.name);
   value('profile-mark', data.profile.mark);
   value('profile-eyebrow', data.profile.eyebrow);
+  value('profile-eyebrow-en', data.profile.eyebrowEn);
   value('profile-headline', data.profile.headline);
+  value('profile-headline-en', data.profile.headlineEn);
   value('profile-introduction', data.profile.introduction);
+  value('profile-introduction-en', data.profile.introductionEn);
   value('meta-title', data.meta.siteTitle);
+  value('meta-title-en', data.meta.siteTitleEn);
   value('meta-description', data.meta.description);
+  value('meta-description-en', data.meta.descriptionEn);
   value('meta-accent', data.meta.accent);
   document.getElementById('visual-motion').checked = data.visual?.motionEnabled !== false;
   value('visual-density', data.visual?.particleDensity ?? 180);
@@ -68,11 +73,16 @@ function renderEditor(data) {
   value('density-output', value('visual-density'));
   value('speed-output', Number(value('visual-speed')).toFixed(2));
   value('focus-list', data.focus.join('\n'));
+  value('focus-list-en', (data.focusEn || []).join('\n'));
+  value('focus-details', (data.focusDetails || []).join('\n'));
+  value('focus-details-en', (data.focusDetailsEn || []).join('\n'));
   value('credential-list', data.credentials.join('\n'));
+  value('credential-list-en', (data.credentialsEn || []).join('\n'));
   value('contact-email', data.contact.email);
   value('contact-wechat', data.contact.wechat);
   value('contact-github', data.contact.github);
   value('footer-text', data.footer);
+  value('footer-text-en', data.footerEn);
 
   document.getElementById('project-editor').replaceChildren();
   data.projects.forEach((project) => addRepeatItem('project', project));
@@ -85,7 +95,9 @@ function collectRepeater(kind) {
   return [...document.querySelectorAll(`#${kind}-editor .${kind}-item`)].map((element) => {
     const item = {};
     element.querySelectorAll('[data-field]').forEach((input) => {
-      item[input.dataset.field] = input.dataset.field === 'tags' ? input.value.split(',').map((tag) => tag.trim()).filter(Boolean) : input.value.trim();
+      item[input.dataset.field] = ['tags', 'tagsEn'].includes(input.dataset.field)
+        ? input.value.split(',').map((tag) => tag.trim()).filter(Boolean)
+        : input.value.trim();
     });
     return item;
   });
@@ -93,9 +105,13 @@ function collectRepeater(kind) {
 
 function collectContent() {
   return {
+    ...content,
     meta: {
+      ...content.meta,
       siteTitle: value('meta-title').trim(),
+      siteTitleEn: value('meta-title-en').trim(),
       description: value('meta-description').trim(),
+      descriptionEn: value('meta-description-en').trim(),
       accent: value('meta-accent')
     },
     visual: {
@@ -106,14 +122,22 @@ function collectContent() {
       secondaryColor: value('visual-secondary')
     },
     profile: {
+      ...content.profile,
       name: value('profile-name').trim(),
       mark: value('profile-mark').trim(),
       eyebrow: value('profile-eyebrow').trim(),
+      eyebrowEn: value('profile-eyebrow-en').trim(),
       headline: value('profile-headline').trim(),
-      introduction: value('profile-introduction').trim()
+      headlineEn: value('profile-headline-en').trim(),
+      introduction: value('profile-introduction').trim(),
+      introductionEn: value('profile-introduction-en').trim()
     },
     focus: lines(value('focus-list')),
+    focusEn: lines(value('focus-list-en')),
+    focusDetails: lines(value('focus-details')),
+    focusDetailsEn: lines(value('focus-details-en')),
     credentials: lines(value('credential-list')),
+    credentialsEn: lines(value('credential-list-en')),
     projects: collectRepeater('project'),
     services: collectRepeater('service'),
     contact: {
@@ -121,7 +145,8 @@ function collectContent() {
       wechat: value('contact-wechat').trim(),
       github: value('contact-github').trim()
     },
-    footer: value('footer-text').trim()
+    footer: value('footer-text').trim(),
+    footerEn: value('footer-text-en').trim()
   };
 }
 
@@ -187,11 +212,15 @@ saveButton.addEventListener('click', () => save().catch((error) => notify(error.
 publishButton.addEventListener('click', () => publishDialog.showModal());
 confirmPublish.addEventListener('click', publish);
 document.getElementById('add-service').addEventListener('click', () => {
-  addRepeatItem('service', { title: '', description: '' });
+  addRepeatItem('service', { title: '', titleEn: '', description: '', descriptionEn: '' });
   setDirty(true);
 });
 document.getElementById('add-project').addEventListener('click', () => {
-  addRepeatItem('project', { title: '', status: '', summary: '', url: 'https://', linkLabel: '访问项目', tags: [], visualLabel: '', visualMeta: '', visualTitle: '' });
+  addRepeatItem('project', {
+    title: '', titleEn: '', status: '', statusEn: '', summary: '', summaryEn: '',
+    url: 'https://', linkLabel: '访问项目', linkLabelEn: 'Visit project', tags: [], tagsEn: [],
+    visualLabel: '', visualLabelEn: '', visualMeta: '', visualMetaEn: '', visualTitle: '', visualTitleEn: ''
+  });
   setDirty(true);
 });
 document.getElementById('visual-density').addEventListener('input', (event) => value('density-output', event.target.value));

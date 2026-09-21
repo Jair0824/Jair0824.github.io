@@ -1,60 +1,101 @@
 {
   "meta": {
-    "siteTitle": "GarryLee | Research, Engineering and Independent Work",
-    "description": "中国科学技术大学研究生，关注等离子体物理、科研工具、数据处理与轻量企业网站。",
-    "accent": "#a84336"
+    "siteTitle": "GarryLee | 个人学术主页",
+    "siteTitleEn": "GarryLee | Academic Homepage",
+    "description": "中国科学技术大学研究生 GarryLee 的个人学术主页，关注能源动力、等离子体物理与科学计算。",
+    "descriptionEn": "Academic homepage of GarryLee, a graduate student at the University of Science and Technology of China interested in energy engineering, plasma physics, and scientific computing.",
+    "accent": "#de6f5c"
   },
   "visual": {
     "motionEnabled": true,
-    "particleDensity": 170,
-    "flowSpeed": 0.8,
-    "primaryColor": "#b94b3e",
-    "secondaryColor": "#4f9a8d"
+    "particleDensity": 120,
+    "flowSpeed": 0.55,
+    "primaryColor": "#65b6b0",
+    "secondaryColor": "#ef9f87"
   },
   "profile": {
     "name": "GarryLee",
     "mark": "G",
-    "eyebrow": "USTC · 能源动力 · 等离子体物理",
-    "headline": "研究物理，也把想法做成可用的东西。",
-    "introduction": "研究生、独立开发者与技术服务提供者。关注等离子体物理、科研工具、数据处理与轻量企业网站。"
+    "eyebrow": "能源动力 · 等离子体物理",
+    "eyebrowEn": "Energy Engineering · Plasma Physics",
+    "headline": "在等离子体物理中，理解能量、流动与结构。",
+    "headlineEn": "Understanding energy, flow, and structure through plasma physics.",
+    "introduction": "中国科学技术大学能源动力专业研究生，研究兴趣集中于等离子体物理及相关科学计算。我希望以清晰、可复核的方式理解问题，并将研究过程沉淀为可靠的方法与工具。",
+    "introductionEn": "I am a graduate student in Energy Engineering at the University of Science and Technology of China. My interests center on plasma physics and related scientific computing, with an emphasis on clear, reproducible methods and useful research tools."
   },
   "focus": [
-    "科研数据可视化",
-    "等离子体参数工具",
-    "品牌官网与内容型网站",
-    "物理课程辅导"
+    "等离子体物理",
+    "能源动力过程",
+    "科研计算与数据可视化",
+    "AI 辅助科研工作流"
+  ],
+  "focusEn": [
+    "Plasma Physics",
+    "Energy and Power Processes",
+    "Scientific Computing and Visualization",
+    "AI-assisted Research Workflows"
+  ],
+  "focusDetails": [
+    "关注等离子体中的输运、结构及相关物理机制。",
+    "从能源动力视角理解复杂系统中的能量传递与演化。",
+    "使用代码完成数据处理、计算结果表达与科研图形制作。",
+    "探索 Codex 与多 Agent 在资料整理、编程和研究辅助中的可靠用法。"
+  ],
+  "focusDetailsEn": [
+    "Interested in transport, structures, and the physical mechanisms of plasma systems.",
+    "Studying energy transfer and evolution in complex systems from an energy engineering perspective.",
+    "Using code for data processing, computational communication, and scientific visualization.",
+    "Exploring reliable uses of Codex and multi-agent systems in research, coding, and knowledge work."
   ],
   "credentials": [
-    "中国科学技术大学研究生",
-    "能源动力与等离子体物理",
-    "企业官网真实交付经验",
-    "Codex 与 Agent 协作开发"
+    "中国科学技术大学 · 在读研究生",
+    "专业方向 · 能源动力与等离子体物理",
+    "研究方法 · 科学计算、数据处理与可视化"
+  ],
+  "credentialsEn": [
+    "University of Science and Technology of China · Graduate Student",
+    "Field · Energy Engineering and Plasma Physics",
+    "Methods · Scientific Computing, Data Processing, and Visualization"
   ],
   "projects": [
     {
       "status": "企业官网 · 文旅品牌 · 已上线",
+      "statusEn": "Corporate Website · Cultural Tourism · Live",
       "title": "少间文旅品牌官网",
+      "titleEn": "Shaojian Cultural Tourism Website",
       "summary": "独立完成少间文旅整站制作，包括多页面内容落地、响应式前端、正式域名配置、部署与上线交付。",
+      "summaryEn": "Independently delivered the complete Shaojian website, including multi-page content implementation, responsive frontend development, domain configuration, deployment, and launch.",
       "tags": ["独立制作", "响应式前端", "部署上线"],
+      "tagsEn": ["Independent Delivery", "Responsive Frontend", "Deployment"],
       "url": "https://shaojian.top",
       "linkLabel": "访问 shaojian.top",
+      "linkLabelEn": "Visit shaojian.top",
       "visualTitle": "让地方，重新被看见",
+      "visualTitleEn": "Let places be seen again",
       "visualLabel": "少间文旅",
-      "visualMeta": "ABOUT · PLACES · STORIES"
+      "visualLabelEn": "SHAOJIAN",
+      "visualMeta": "ABOUT · PLACES · STORIES",
+      "visualMetaEn": "ABOUT · PLACES · STORIES"
     }
   ],
   "services": [
     {
-      "title": "企业与品牌官网",
-      "description": "适合文旅、民宿、工作室、课题组和小型企业的响应式展示网站。"
+      "title": "数据分析与科研绘图",
+      "titleEn": "Data Analysis and Scientific Figures",
+      "description": "整理与清洗数据，完成基础统计、结果可视化、科研绘图和轻量自动化脚本。",
+      "descriptionEn": "Data organization and cleaning, basic statistics, result visualization, scientific figures, and lightweight automation scripts."
     },
     {
-      "title": "科研数据与工具",
-      "description": "数据清洗、科研绘图、参数计算、自动化脚本和轻量 Web 工具。"
+      "title": "网站制作与部署",
+      "titleEn": "Website Development and Deployment",
+      "description": "面向个人、课题组和小型企业制作清晰、响应式、可正式上线的展示网站。",
+      "descriptionEn": "Clear, responsive, deployable websites for individuals, research groups, and small organizations."
     },
     {
       "title": "物理课程辅导",
-      "description": "高中与大学物理的概念讲解、方法训练和针对性学习规划。"
+      "titleEn": "Physics Tutoring",
+      "description": "高中与大学物理的概念讲解、方法训练、习题分析和针对性学习规划。",
+      "descriptionEn": "Conceptual explanation, problem-solving methods, exercise analysis, and targeted study plans for high-school and university physics."
     }
   ],
   "contact": {
@@ -62,5 +103,6 @@
     "wechat": "jair0824",
     "github": "https://github.com/Jair0824"
   },
-  "footer": "Research · Engineering · Independent Work"
+  "footer": "研究 · 工程 · 独立实践",
+  "footerEn": "Research · Engineering · Independent Practice"
 }
