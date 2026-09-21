@@ -55,6 +55,11 @@ function validateContent(data) {
   requireString(data.meta?.siteTitle, '浏览器标题');
   requireString(data.meta?.description, '搜索摘要');
   if (!/^#[0-9a-f]{6}$/i.test(data.meta?.accent || '')) throw new Error('主题色格式无效');
+  if (data.visual) {
+    if (!Number.isFinite(data.visual.particleDensity) || data.visual.particleDensity < 30 || data.visual.particleDensity > 500) throw new Error('粒子密度超出范围');
+    if (!Number.isFinite(data.visual.flowSpeed) || data.visual.flowSpeed <= 0 || data.visual.flowSpeed > 2) throw new Error('流动速度超出范围');
+    if (!/^#[0-9a-f]{6}$/i.test(data.visual.primaryColor || '') || !/^#[0-9a-f]{6}$/i.test(data.visual.secondaryColor || '')) throw new Error('流场颜色格式无效');
+  }
   requireString(data.profile?.name, '显示姓名');
   requireString(data.profile?.headline, '首页主标题');
   requireString(data.profile?.introduction, '个人简介');

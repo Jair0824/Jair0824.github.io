@@ -27,27 +27,19 @@
 
   <main>
     <section class="hero" id="top">
-      <svg class="hero-field" viewBox="0 0 1600 760" preserveAspectRatio="none" role="img" aria-label="等离子体波形与粒子轨迹示意">
-        <defs>
-          <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-            <path d="M80 0H0V80" fill="none" stroke="currentColor" stroke-opacity=".08"/>
-          </pattern>
-        </defs>
-        <rect width="1600" height="760" fill="url(#grid)"/>
-        <path class="wave wave-primary" d="M-80 500 C 160 235, 320 650, 570 410 S 930 220, 1160 470 S 1480 610, 1710 300"/>
-        <path class="wave wave-secondary" d="M-80 540 C 170 380, 390 575, 620 485 S 1010 410, 1230 520 S 1500 560, 1700 410"/>
-        <g class="particles" fill="currentColor">
-          <circle cx="438" cy="470" r="7"/><circle cx="904" cy="372" r="7"/><circle cx="1320" cy="505" r="7"/>
-        </g>
-      </svg>
+      <canvas class="flow-field" id="flow-field" aria-hidden="true"></canvas>
+      <div class="hero-grid" aria-hidden="true"></div>
       <div class="shell hero-layout">
         <div class="hero-copy">
           <p class="eyebrow" id="profile-eyebrow">USTC · 能源动力 · 等离子体物理</p>
-          <h1><span id="profile-name">GarryLee</span><br><span id="profile-headline">研究物理，也把想法做成可用的东西。</span></h1>
+          <h1><span class="hero-name" id="profile-name">GarryLee</span><span class="hero-statement" id="profile-headline">研究物理，也把想法做成可用的东西。</span></h1>
           <p class="hero-intro" id="profile-introduction">研究生、独立开发者与技术服务提供者。关注等离子体物理、科研工具、数据处理与轻量企业网站。</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#work">查看代表项目 <span aria-hidden="true">↘</span></a>
             <a class="button button-secondary" href="#contact">联系合作</a>
+          </div>
+          <div class="hero-signature" aria-label="工作方向">
+            <span>PLASMA PHYSICS</span><span>SCIENTIFIC COMPUTING</span><span>INDEPENDENT DELIVERY</span>
           </div>
         </div>
         <aside class="focus-panel" id="about">
@@ -65,7 +57,7 @@
       <div class="shell">
         <div class="section-heading">
           <p class="section-kicker">FEATURED WORK / 代表项目</p>
-          <h2>用已经上线的真实项目说明交付能力。</h2>
+          <h2>把研究者的严谨，带进每一次工程交付。</h2>
         </div>
         <div id="project-list"></div>
       </div>
@@ -75,7 +67,7 @@
       <div class="shell">
         <div class="section-heading">
           <p class="section-kicker">WAYS TO WORK / 合作方向</p>
-          <h2>把专业背景、工程执行与清晰表达放在同一个交付里。</h2>
+          <h2>清晰定义问题，建立方法，然后完成可复核的结果。</h2>
         </div>
         <div class="services-grid" id="service-list"></div>
       </div>

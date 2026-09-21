@@ -60,6 +60,13 @@ function renderEditor(data) {
   value('meta-title', data.meta.siteTitle);
   value('meta-description', data.meta.description);
   value('meta-accent', data.meta.accent);
+  document.getElementById('visual-motion').checked = data.visual?.motionEnabled !== false;
+  value('visual-density', data.visual?.particleDensity ?? 180);
+  value('visual-speed', data.visual?.flowSpeed ?? 0.85);
+  value('visual-primary', data.visual?.primaryColor ?? '#e84c3d');
+  value('visual-secondary', data.visual?.secondaryColor ?? '#46a99a');
+  value('density-output', value('visual-density'));
+  value('speed-output', Number(value('visual-speed')).toFixed(2));
   value('focus-list', data.focus.join('\n'));
   value('credential-list', data.credentials.join('\n'));
   value('contact-email', data.contact.email);
@@ -90,6 +97,13 @@ function collectContent() {
       siteTitle: value('meta-title').trim(),
       description: value('meta-description').trim(),
       accent: value('meta-accent')
+    },
+    visual: {
+      motionEnabled: document.getElementById('visual-motion').checked,
+      particleDensity: Number(value('visual-density')),
+      flowSpeed: Number(value('visual-speed')),
+      primaryColor: value('visual-primary'),
+      secondaryColor: value('visual-secondary')
     },
     profile: {
       name: value('profile-name').trim(),
@@ -180,6 +194,8 @@ document.getElementById('add-project').addEventListener('click', () => {
   addRepeatItem('project', { title: '', status: '', summary: '', url: 'https://', linkLabel: '访问项目', tags: [], visualLabel: '', visualMeta: '', visualTitle: '' });
   setDirty(true);
 });
+document.getElementById('visual-density').addEventListener('input', (event) => value('density-output', event.target.value));
+document.getElementById('visual-speed').addEventListener('input', (event) => value('speed-output', Number(event.target.value).toFixed(2)));
 document.querySelectorAll('[data-preview]').forEach((button) => {
   button.addEventListener('click', () => {
     document.querySelectorAll('[data-preview]').forEach((item) => item.classList.toggle('is-active', item === button));

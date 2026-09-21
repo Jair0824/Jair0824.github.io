@@ -48,6 +48,19 @@
         </fieldset>
 
         <fieldset>
+          <legend>动态视觉</legend>
+          <label class="check-row"><input id="visual-motion" type="checkbox"><span><strong>启用等离子体流场</strong><small>关闭后显示静态科学纹理，并遵循系统的“减少动态效果”设置。</small></span></label>
+          <div class="field-grid two-columns">
+            <label>粒子密度 <output id="density-output">180</output><input id="visual-density" type="range" min="60" max="320" step="10"></label>
+            <label>流动速度 <output id="speed-output">0.85</output><input id="visual-speed" type="range" min="0.25" max="1.5" step="0.05"></label>
+          </div>
+          <div class="field-grid two-columns">
+            <label>主流颜色<input id="visual-primary" type="color"></label>
+            <label>次流颜色<input id="visual-secondary" type="color"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
           <legend>关注方向与能力</legend>
           <label>当前关注 <span>每行一项</span><textarea id="focus-list" rows="5"></textarea></label>
           <label>能力概览 <span>每行一项，建议四项</span><textarea id="credential-list" rows="5"></textarea></label>
