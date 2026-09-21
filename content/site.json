@@ -8,7 +8,7 @@
   },
   "visual": {
     "motionEnabled": true,
-    "particleDensity": 120,
+    "particleDensity": 190,
     "flowSpeed": 0.55,
     "primaryColor": "#69bfb1",
     "secondaryColor": "#eaa18e"

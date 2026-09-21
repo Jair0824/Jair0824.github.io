@@ -450,7 +450,7 @@ function initializePlasmaBackground(config) {
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
   const primary = colorToRgb(config.primaryColor, [117, 214, 197]);
   const secondary = colorToRgb(config.secondaryColor, [242, 152, 127]);
-  const density = Math.max(50, Math.min(240, Number(config.particleDensity) || 120));
+  const density = Math.max(70, Math.min(280, Number(config.particleDensity) || 180));
   const speed = Math.max(0.2, Math.min(1.2, Number(config.flowSpeed) || 0.55));
   let width = 0;
   let height = 0;
@@ -462,9 +462,9 @@ function initializePlasmaBackground(config) {
   function resetParticle(particle, randomizeX = true) {
     particle.x = randomizeX ? Math.random() * width : -8;
     particle.y = Math.random() * height;
-    particle.radius = 0.35 + Math.random() * 0.75;
+    particle.radius = 0.5 + Math.random() * 1.1;
     particle.color = Math.random() > 0.24 ? primary : secondary;
-    particle.alpha = 0.1 + Math.random() * 0.2;
+    particle.alpha = 0.18 + Math.random() * 0.24;
     particle.drift = Math.random() * Math.PI * 2;
   }
 
@@ -481,8 +481,8 @@ function initializePlasmaBackground(config) {
     stars = Array.from({ length: Math.max(55, Math.min(170, starCount)) }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: 0.28 + Math.random() * 0.72,
-      alpha: 0.07 + Math.random() * 0.23,
+      radius: 0.35 + Math.random() * 0.8,
+      alpha: 0.11 + Math.random() * 0.3,
       phase: Math.random() * Math.PI * 2
     }));
     const count = Math.round(density * (width < 700 ? 0.55 : 1));
@@ -514,8 +514,11 @@ function initializePlasmaBackground(config) {
     context.save();
     for (let line = 0; line < 7; line += 1) {
       const color = line === 2 || line === 5 ? secondary : primary;
-      context.strokeStyle = `rgba(${color.join(', ')}, ${line === 3 ? 0.21 : 0.11})`;
-      context.lineWidth = line === 3 ? 0.9 : 0.55;
+      const lineAlpha = line === 3 ? 0.42 : (line === 2 || line === 5 ? 0.3 : 0.23);
+      context.strokeStyle = `rgba(${color.join(', ')}, ${lineAlpha})`;
+      context.lineWidth = line === 3 ? 1.35 : 0.85;
+      context.shadowBlur = line === 2 || line === 5 ? 8 : 4;
+      context.shadowColor = `rgba(${color.join(', ')}, ${lineAlpha * 0.72})`;
       context.beginPath();
       for (let x = -16; x <= width + 16; x += 13) {
         const baseline = height * (0.08 + line * 0.145);
@@ -527,18 +530,25 @@ function initializePlasmaBackground(config) {
       }
       context.stroke();
     }
+    context.shadowBlur = 0;
     context.restore();
   }
 
   function drawParticles(time, delta, move) {
     particles.forEach((particle) => {
+      const angle = fieldAngle(particle.x, particle.y, time) + Math.sin(particle.drift + time * 0.0001) * 0.12;
       if (move) {
-        const angle = fieldAngle(particle.x, particle.y, time) + Math.sin(particle.drift + time * 0.0001) * 0.12;
         particle.x += (Math.cos(angle) * 0.26 + 0.29) * speed * delta * 0.055;
         particle.y += Math.sin(angle) * 0.24 * speed * delta * 0.055;
         if (particle.x > width + 10 || particle.y < -10 || particle.y > height + 10) resetParticle(particle, false);
       }
       context.fillStyle = `rgba(${particle.color.join(', ')}, ${particle.alpha})`;
+      context.strokeStyle = `rgba(${particle.color.join(', ')}, ${particle.alpha * 0.72})`;
+      context.lineWidth = Math.max(0.55, particle.radius * 0.72);
+      context.beginPath();
+      context.moveTo(particle.x, particle.y);
+      context.lineTo(particle.x - Math.cos(angle) * 5, particle.y - Math.sin(angle) * 5);
+      context.stroke();
       context.beginPath();
       context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
       context.fill();
