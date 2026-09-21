@@ -514,7 +514,7 @@ function initializePlasmaBackground(config) {
     context.save();
     for (let line = 0; line < 7; line += 1) {
       const color = line === 2 || line === 5 ? secondary : primary;
-      context.strokeStyle = `rgba(${color.join(', ')}, ${line === 3 ? 0.16 : 0.09})`;
+      context.strokeStyle = `rgba(${color.join(', ')}, ${line === 3 ? 0.21 : 0.11})`;
       context.lineWidth = line === 3 ? 0.9 : 0.55;
       context.beginPath();
       for (let x = -16; x <= width + 16; x += 13) {
