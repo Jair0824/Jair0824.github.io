@@ -4,14 +4,14 @@
     "siteTitleEn": "GarryLee | Academic Homepage",
     "description": "中国科学技术大学研究生 GarryLee 的个人学术主页，关注能源动力、等离子体物理与科学计算。",
     "descriptionEn": "Academic homepage of GarryLee, a graduate student at the University of Science and Technology of China interested in energy engineering, plasma physics, and scientific computing.",
-    "accent": "#de6f5c"
+    "accent": "#75d6c5"
   },
   "visual": {
     "motionEnabled": true,
     "particleDensity": 120,
     "flowSpeed": 0.55,
-    "primaryColor": "#65b6b0",
-    "secondaryColor": "#ef9f87"
+    "primaryColor": "#75d6c5",
+    "secondaryColor": "#f2987f"
   },
   "profile": {
     "name": "GarryLee",

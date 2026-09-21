@@ -4,6 +4,7 @@ const LANGUAGE_KEY = 'garrylee-language';
 const interfaceCopy = {
   zh: {
     skip: '跳到正文',
+    homepageLabel: '学术主页',
     brandTag: 'Research & Practice',
     navLabel: '主要导航',
     languageLabel: '语言切换',
@@ -12,6 +13,8 @@ const interfaceCopy = {
     navEducation: '学术概览',
     navWorkstation: '个人工作站',
     profileLabel: '个人信息',
+    plasmaVisualLabel: '等离子体动态视觉',
+    profileQuote: '理解复杂现象，构造清晰方法。',
     graduateRole: '研究生',
     ustc: '中国科学技术大学',
     fieldLabel: '方向',
@@ -20,6 +23,8 @@ const interfaceCopy = {
     emailLabel: '邮箱',
     wechatLabel: '微信',
     academicEyebrow: 'ACADEMIC PROFILE · 学术主页',
+    aboutTitle: '关于我',
+    aboutSecond: '这个网站用于记录我的研究兴趣、阶段性工作与长期积累。当前不公开尚未成熟的科研成果，但会持续补充适合分享的项目、笔记与工具。',
     viewResearch: '查看研究方向',
     enterWorkstation: '进入个人工作站',
     currentFocus: '当前关注',
@@ -43,6 +48,7 @@ const interfaceCopy = {
     projectsNav: '案例',
     contactNav: '联系',
     workEyebrow: 'GARRYLEE WORKSTATION · 个人工作站',
+    workIdentityCopy: '独立开发与技术服务',
     workHeadline: '把问题讲清楚，\n把结果做出来。',
     workIntroduction: '这是我的独立工作入口。我利用科研训练、代码能力与 AI Agent 协作，为个人和小型团队完成数据分析、网站制作与物理辅导。',
     viewServices: '查看可做的工作',
@@ -75,6 +81,7 @@ const interfaceCopy = {
   },
   en: {
     skip: 'Skip to content',
+    homepageLabel: 'Academic Homepage',
     brandTag: 'Research & Practice',
     navLabel: 'Primary navigation',
     languageLabel: 'Language switcher',
@@ -83,6 +90,8 @@ const interfaceCopy = {
     navEducation: 'Overview',
     navWorkstation: 'Workstation',
     profileLabel: 'Profile information',
+    plasmaVisualLabel: 'Animated plasma field',
+    profileQuote: 'Understand complex phenomena. Build clear methods.',
     graduateRole: 'Graduate Student',
     ustc: 'University of Science and Technology of China',
     fieldLabel: 'Field',
@@ -91,6 +100,8 @@ const interfaceCopy = {
     emailLabel: 'Email',
     wechatLabel: 'WeChat',
     academicEyebrow: 'ACADEMIC PROFILE',
+    aboutTitle: 'About Me',
+    aboutSecond: 'This site records my research interests, work in progress, and long-term practice. Results that are not ready for public release are omitted for now; suitable projects, notes, and tools will be added over time.',
     viewResearch: 'View research interests',
     enterWorkstation: 'Enter personal workstation',
     currentFocus: 'Current interests',
@@ -114,6 +125,7 @@ const interfaceCopy = {
     projectsNav: 'Case Study',
     contactNav: 'Contact',
     workEyebrow: 'GARRYLEE WORKSTATION',
+    workIdentityCopy: 'Independent development and technical services',
     workHeadline: 'Clarify the problem.\nDeliver the result.',
     workIntroduction: 'This is my independent work portal. Combining research training, coding, and AI agent workflows, I help individuals and small teams with data analysis, website development, and physics tutoring.',
     viewServices: 'View services',
@@ -304,7 +316,7 @@ function renderSite(data) {
     ? (currentLanguage === 'en' ? 'GarryLee Workstation | Services & Projects' : 'GarryLee 工作站 | 服务与项目')
     : title;
   document.querySelector('meta[name="description"]').setAttribute('content', description);
-  document.documentElement.style.setProperty('--accent', data.meta.accent || '#de6f5c');
+  document.documentElement.style.setProperty('--accent', data.meta.accent || '#75d6c5');
 
   if (document.body.dataset.page === 'academic') renderAcademic(data);
   else renderWorkstation(data);
@@ -323,6 +335,114 @@ function colorToRgb(hex, fallback) {
   return [0, 2, 4].map((offset) => Number.parseInt(normalized.slice(offset, offset + 2), 16));
 }
 
+function initializeProfileOrb(config) {
+  const canvas = document.getElementById('plasma-portrait');
+  const context = canvas?.getContext('2d');
+  if (!context) return;
+
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionEnabled = config.motionEnabled !== false && !reducedMotion;
+  const primary = colorToRgb(config.primaryColor, [117, 214, 197]);
+  const secondary = colorToRgb(config.secondaryColor, [242, 152, 127]);
+  const particles = Array.from({ length: 84 }, (_, index) => ({
+    longitude: (index * 2.399963) % (Math.PI * 2),
+    latitude: Math.acos(1 - (2 * (index + 0.5)) / 84),
+    size: 0.65 + (index % 5) * 0.16,
+    color: index % 4 === 0 ? secondary : primary
+  }));
+  let size = 0;
+  let frameId = 0;
+
+  function resize() {
+    const bounds = canvas.getBoundingClientRect();
+    const scale = Math.min(devicePixelRatio || 1, 2);
+    size = Math.max(1, Math.round(Math.min(bounds.width, bounds.height)));
+    canvas.width = Math.round(size * scale);
+    canvas.height = Math.round(size * scale);
+    context.setTransform(scale, 0, 0, scale, 0, 0);
+  }
+
+  function draw(time) {
+    const center = size / 2;
+    const radius = size * 0.405;
+    const phase = time * 0.00018;
+    context.clearRect(0, 0, size, size);
+    context.fillStyle = '#09100f';
+    context.beginPath();
+    context.arc(center, center, size * 0.49, 0, Math.PI * 2);
+    context.fill();
+
+    context.save();
+    context.beginPath();
+    context.arc(center, center, radius * 1.06, 0, Math.PI * 2);
+    context.clip();
+
+    for (let band = -4; band <= 4; band += 1) {
+      const vertical = band / 5;
+      const ringWidth = radius * Math.sqrt(Math.max(0.08, 1 - vertical * vertical));
+      context.strokeStyle = band % 2 === 0
+        ? `rgba(${primary.join(', ')}, 0.18)`
+        : `rgba(${secondary.join(', ')}, 0.12)`;
+      context.lineWidth = band === 0 ? 1.05 : 0.65;
+      context.beginPath();
+      for (let step = 0; step <= 72; step += 1) {
+        const angle = (step / 72) * Math.PI * 2;
+        const wobble = Math.sin(angle * 3 + phase * 5 + band) * radius * 0.018;
+        const x = center + Math.cos(angle) * ringWidth;
+        const y = center + vertical * radius * 0.82 + Math.sin(angle) * radius * 0.12 + wobble;
+        if (step === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
+      }
+      context.closePath();
+      context.stroke();
+    }
+
+    particles
+      .map((particle) => {
+        const longitude = particle.longitude + phase;
+        const sinLatitude = Math.sin(particle.latitude);
+        const x = sinLatitude * Math.cos(longitude);
+        const y = Math.cos(particle.latitude);
+        const z = sinLatitude * Math.sin(longitude);
+        return { ...particle, x, y, z };
+      })
+      .sort((a, b) => a.z - b.z)
+      .forEach((particle) => {
+        const perspective = 0.78 + (particle.z + 1) * 0.11;
+        const x = center + particle.x * radius * perspective;
+        const y = center + particle.y * radius * 0.88;
+        const alpha = 0.22 + (particle.z + 1) * 0.23;
+        context.fillStyle = `rgba(${particle.color.join(', ')}, ${alpha})`;
+        context.beginPath();
+        context.arc(x, y, particle.size * perspective, 0, Math.PI * 2);
+        context.fill();
+      });
+
+    context.restore();
+    context.strokeStyle = `rgba(${primary.join(', ')}, 0.42)`;
+    context.lineWidth = 0.7;
+    context.beginPath();
+    context.arc(center, center, radius * 1.06, 0, Math.PI * 2);
+    context.stroke();
+  }
+
+  function tick(time) {
+    draw(time);
+    frameId = requestAnimationFrame(tick);
+  }
+
+  resize();
+  if (motionEnabled) frameId = requestAnimationFrame(tick);
+  else draw(0);
+
+  new ResizeObserver(() => {
+    cancelAnimationFrame(frameId);
+    resize();
+    draw(performance.now());
+    if (motionEnabled && !document.hidden) frameId = requestAnimationFrame(tick);
+  }).observe(canvas.parentElement);
+}
+
 function initializePlasmaBackground(config) {
   const canvas = document.getElementById('plasma-background');
   const context = canvas?.getContext('2d');
@@ -330,12 +450,13 @@ function initializePlasmaBackground(config) {
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
-  const primary = colorToRgb(config.primaryColor, [101, 182, 176]);
-  const secondary = colorToRgb(config.secondaryColor, [239, 159, 135]);
-  const density = Math.max(40, Math.min(220, Number(config.particleDensity) || 120));
+  const primary = colorToRgb(config.primaryColor, [117, 214, 197]);
+  const secondary = colorToRgb(config.secondaryColor, [242, 152, 127]);
+  const density = Math.max(50, Math.min(240, Number(config.particleDensity) || 120));
   const speed = Math.max(0.2, Math.min(1.2, Number(config.flowSpeed) || 0.55));
   let width = 0;
   let height = 0;
+  let stars = [];
   let particles = [];
   let frameId = 0;
   let lastTime = performance.now();
@@ -343,9 +464,10 @@ function initializePlasmaBackground(config) {
   function resetParticle(particle, randomizeX = true) {
     particle.x = randomizeX ? Math.random() * width : -8;
     particle.y = Math.random() * height;
-    particle.radius = 0.45 + Math.random() * 1.15;
-    particle.color = Math.random() > 0.35 ? primary : secondary;
-    particle.alpha = 0.14 + Math.random() * 0.22;
+    particle.radius = 0.35 + Math.random() * 0.75;
+    particle.color = Math.random() > 0.24 ? primary : secondary;
+    particle.alpha = 0.1 + Math.random() * 0.2;
+    particle.drift = Math.random() * Math.PI * 2;
   }
 
   function resize() {
@@ -357,6 +479,14 @@ function initializePlasmaBackground(config) {
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     context.setTransform(scale, 0, 0, scale, 0, 0);
+    const starCount = Math.round((width * height) / 10500);
+    stars = Array.from({ length: Math.max(55, Math.min(170, starCount)) }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: 0.28 + Math.random() * 0.72,
+      alpha: 0.07 + Math.random() * 0.23,
+      phase: Math.random() * Math.PI * 2
+    }));
     const count = Math.round(density * (width < 700 ? 0.55 : 1));
     particles = Array.from({ length: count }, () => {
       const particle = {};
@@ -366,25 +496,35 @@ function initializePlasmaBackground(config) {
   }
 
   function fieldAngle(x, y, time) {
-    const a = Math.sin(x * 0.004 + time * 0.00011);
-    const b = Math.cos(y * 0.006 - time * 0.00008);
-    const c = Math.sin((x + y) * 0.0022 + time * 0.00006);
-    return (a + b + c * 0.7) * 1.5;
+    const a = Math.sin(x * 0.0043 + time * 0.00009);
+    const b = Math.cos(y * 0.0052 - time * 0.00007);
+    const c = Math.sin((x + y) * 0.002 + time * 0.00005);
+    return (a + b + c * 0.65) * 1.35;
+  }
+
+  function drawStars(time) {
+    stars.forEach((star) => {
+      const pulse = 0.72 + Math.sin(time * 0.00055 + star.phase) * 0.28;
+      context.fillStyle = `rgba(222, 232, 224, ${star.alpha * pulse})`;
+      context.beginPath();
+      context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      context.fill();
+    });
   }
 
   function drawFieldLines(time) {
     context.save();
-    for (let line = 0; line < 5; line += 1) {
-      const color = line % 2 === 0 ? primary : secondary;
-      context.strokeStyle = `rgba(${color.join(', ')}, ${line === 2 ? 0.13 : 0.075})`;
-      context.lineWidth = line === 2 ? 1.2 : 0.8;
+    for (let line = 0; line < 7; line += 1) {
+      const color = line === 2 || line === 5 ? secondary : primary;
+      context.strokeStyle = `rgba(${color.join(', ')}, ${line === 3 ? 0.085 : 0.045})`;
+      context.lineWidth = line === 3 ? 0.9 : 0.55;
       context.beginPath();
-      for (let x = -10; x <= width + 10; x += 12) {
-        const baseline = height * (0.13 + line * 0.19);
-        const wave = Math.sin(x * 0.006 + line * 1.2 + time * 0.00008) * 34;
-        const drift = Math.cos(x * 0.0025 - time * 0.00005) * 20;
+      for (let x = -16; x <= width + 16; x += 13) {
+        const baseline = height * (0.08 + line * 0.145);
+        const wave = Math.sin(x * 0.0055 + line * 0.92 + time * 0.00006) * (23 + line * 2);
+        const drift = Math.cos(x * 0.0022 - time * 0.00004 + line) * 17;
         const y = baseline + wave + drift;
-        if (x === -10) context.moveTo(x, y);
+        if (x === -16) context.moveTo(x, y);
         else context.lineTo(x, y);
       }
       context.stroke();
@@ -395,9 +535,9 @@ function initializePlasmaBackground(config) {
   function drawParticles(time, delta, move) {
     particles.forEach((particle) => {
       if (move) {
-        const angle = fieldAngle(particle.x, particle.y, time);
-        particle.x += (Math.cos(angle) * 0.36 + 0.35) * speed * delta * 0.06;
-        particle.y += Math.sin(angle) * 0.3 * speed * delta * 0.06;
+        const angle = fieldAngle(particle.x, particle.y, time) + Math.sin(particle.drift + time * 0.0001) * 0.12;
+        particle.x += (Math.cos(angle) * 0.26 + 0.29) * speed * delta * 0.055;
+        particle.y += Math.sin(angle) * 0.24 * speed * delta * 0.055;
         if (particle.x > width + 10 || particle.y < -10 || particle.y > height + 10) resetParticle(particle, false);
       }
       context.fillStyle = `rgba(${particle.color.join(', ')}, ${particle.alpha})`;
@@ -411,6 +551,7 @@ function initializePlasmaBackground(config) {
     const delta = Math.min(34, time - lastTime || 16);
     lastTime = time;
     context.clearRect(0, 0, width, height);
+    drawStars(time);
     drawFieldLines(time);
     drawParticles(time, delta, move);
   }
@@ -424,13 +565,12 @@ function initializePlasmaBackground(config) {
   if (motionEnabled) frameId = requestAnimationFrame(tick);
   else draw(0, false);
 
-  const resizeObserver = new ResizeObserver(() => {
+  window.addEventListener('resize', () => {
     cancelAnimationFrame(frameId);
     resize();
+    draw(performance.now(), false);
     if (motionEnabled && !document.hidden) frameId = requestAnimationFrame(tick);
-    else draw(0, false);
-  });
-  resizeObserver.observe(document.documentElement);
+  }, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
     cancelAnimationFrame(frameId);
@@ -441,6 +581,26 @@ function initializePlasmaBackground(config) {
   });
 }
 
+function initializeNavigation() {
+  const links = [...document.querySelectorAll('.site-nav a[href^="#"]')];
+  if (!links.length) return;
+  const sections = links.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
+    links.forEach((link) => {
+      link.classList.toggle('is-active', link.getAttribute('href') === `#${visible.target.id}`);
+    });
+  }, { rootMargin: '-18% 0px -62% 0px', threshold: [0, 0.2, 0.6] });
+
+  sections.forEach((section) => observer.observe(section));
+  links[0].classList.add('is-active');
+}
+
 async function loadSite() {
   try {
     const response = await fetch(`${CONTENT_PATH}?v=${Date.now()}`, { cache: 'no-store' });
@@ -448,6 +608,8 @@ async function loadSite() {
     siteData = await response.json();
     renderSite(siteData);
     initializePlasmaBackground(siteData.visual || {});
+    initializeProfileOrb(siteData.visual || {});
+    initializeNavigation();
   } catch (error) {
     console.error(error);
     document.body.classList.add('content-error');
