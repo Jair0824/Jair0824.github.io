@@ -11,8 +11,8 @@
   --accent: #3d9589;
   --coral: #d77a68;
   --gold: #a77c2f;
-  --serif-cn: "FZShuSong-Z01S", "方正书宋_GBK", "Source Han Serif SC", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
-  --serif-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "FZShuSong-Z01S", "Source Han Serif SC", "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
+  --serif-cn: "Times New Roman", "KaiTi", "楷体", "STKaiti", "KaiTi_GB2312", serif;
+  --serif-display: "Times New Roman", "KaiTi", "楷体", "STKaiti", "KaiTi_GB2312", serif;
   --shell: min(1080px, calc(100% - 48px));
   color-scheme: light;
   color: var(--ink);
