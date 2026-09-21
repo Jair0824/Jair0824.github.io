@@ -231,7 +231,6 @@ function renderAcademic(data) {
   const list = document.getElementById('focus-list');
   list.replaceChildren(...focus.map((item, index) => {
     const article = make('article', 'interest-item');
-    article.append(make('span', '', String(index + 1).padStart(2, '0')));
     article.append(make('h3', '', item));
     article.append(make('p', '', focusDetails[index] || ''));
     return article;
@@ -239,25 +238,24 @@ function renderAcademic(data) {
 
   const credentials = localizedArray(data, 'credentials');
   const credentialsList = document.getElementById('credential-list');
-  credentialsList.replaceChildren(...credentials.map((item, index) => {
+  credentialsList.replaceChildren(...credentials.map((item) => {
     const row = make('div', 'timeline-item');
-    row.append(make('span', '', String(index + 1).padStart(2, '0')), make('p', '', item));
+    row.append(make('p', '', item));
     return row;
   }));
 }
 
 function renderWorkstation(data) {
   const serviceList = document.getElementById('service-list');
-  serviceList.replaceChildren(...data.services.map((service, index) => {
+  serviceList.replaceChildren(...data.services.map((service) => {
     const article = make('article', 'service-card');
-    article.append(make('span', 'service-number', String(index + 1).padStart(2, '0')));
     article.append(make('h3', '', localized(service, 'title')));
     article.append(make('p', '', localized(service, 'description')));
     return article;
   }));
 
   const projectList = document.getElementById('project-list');
-  projectList.replaceChildren(...data.projects.map((project, index) => {
+  projectList.replaceChildren(...data.projects.map((project) => {
     const article = make('article', 'project-item');
     const preview = make('div', 'project-preview');
     preview.setAttribute('aria-label', localized(project, 'title'));
@@ -266,7 +264,7 @@ function renderWorkstation(data) {
     const center = make('div', 'project-preview-center');
     center.append(make('strong', '', localized(project, 'visualTitle')));
     const bottom = make('div', 'project-preview-bottom');
-    bottom.append(make('span', '', new URL(project.url).hostname.toUpperCase()), make('span', '', `CASE ${String(index + 1).padStart(2, '0')}`));
+    bottom.append(make('span', '', new URL(project.url).hostname.toUpperCase()));
     preview.append(top, center, bottom);
 
     const copy = make('div', 'project-copy');
@@ -367,7 +365,7 @@ function initializeProfileOrb(config) {
     const radius = size * 0.405;
     const phase = time * 0.00018;
     context.clearRect(0, 0, size, size);
-    context.fillStyle = '#09100f';
+    context.fillStyle = '#f7fbfa';
     context.beginPath();
     context.arc(center, center, size * 0.49, 0, Math.PI * 2);
     context.fill();
@@ -381,8 +379,8 @@ function initializeProfileOrb(config) {
       const vertical = band / 5;
       const ringWidth = radius * Math.sqrt(Math.max(0.08, 1 - vertical * vertical));
       context.strokeStyle = band % 2 === 0
-        ? `rgba(${primary.join(', ')}, 0.18)`
-        : `rgba(${secondary.join(', ')}, 0.12)`;
+        ? `rgba(${primary.join(', ')}, 0.46)`
+        : `rgba(${secondary.join(', ')}, 0.32)`;
       context.lineWidth = band === 0 ? 1.05 : 0.65;
       context.beginPath();
       for (let step = 0; step <= 72; step += 1) {
@@ -411,7 +409,7 @@ function initializeProfileOrb(config) {
         const perspective = 0.78 + (particle.z + 1) * 0.11;
         const x = center + particle.x * radius * perspective;
         const y = center + particle.y * radius * 0.88;
-        const alpha = 0.22 + (particle.z + 1) * 0.23;
+        const alpha = 0.34 + (particle.z + 1) * 0.2;
         context.fillStyle = `rgba(${particle.color.join(', ')}, ${alpha})`;
         context.beginPath();
         context.arc(x, y, particle.size * perspective, 0, Math.PI * 2);
@@ -419,7 +417,7 @@ function initializeProfileOrb(config) {
       });
 
     context.restore();
-    context.strokeStyle = `rgba(${primary.join(', ')}, 0.42)`;
+    context.strokeStyle = `rgba(${primary.join(', ')}, 0.64)`;
     context.lineWidth = 0.7;
     context.beginPath();
     context.arc(center, center, radius * 1.06, 0, Math.PI * 2);
@@ -505,7 +503,7 @@ function initializePlasmaBackground(config) {
   function drawStars(time) {
     stars.forEach((star) => {
       const pulse = 0.72 + Math.sin(time * 0.00055 + star.phase) * 0.28;
-      context.fillStyle = `rgba(222, 232, 224, ${star.alpha * pulse})`;
+      context.fillStyle = `rgba(50, 82, 74, ${star.alpha * pulse})`;
       context.beginPath();
       context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
       context.fill();
@@ -516,7 +514,7 @@ function initializePlasmaBackground(config) {
     context.save();
     for (let line = 0; line < 7; line += 1) {
       const color = line === 2 || line === 5 ? secondary : primary;
-      context.strokeStyle = `rgba(${color.join(', ')}, ${line === 3 ? 0.085 : 0.045})`;
+      context.strokeStyle = `rgba(${color.join(', ')}, ${line === 3 ? 0.16 : 0.09})`;
       context.lineWidth = line === 3 ? 0.9 : 0.55;
       context.beginPath();
       for (let x = -16; x <= width + 16; x += 13) {
