@@ -12,14 +12,16 @@
   --aqua: #68aaa6;
   --aqua-soft: #cfe7e2;
   --yellow: #e5b85d;
-  --serif-cn: "Source Han Serif SC", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
-  --serif-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "Source Han Serif SC", "Songti SC", STSong, serif;
+  --serif-cn: "Noto Serif", FangSong, STFangsong, "FangSong_GB2312", "Songti SC", STSong, SimSun, serif;
+  --serif-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "Noto Serif", FangSong, STFangsong, "Songti SC", STSong, serif;
   --shell: min(1160px, calc(100% - 64px));
   color-scheme: light;
   color: var(--ink);
   background: var(--paper);
   font-family: var(--serif-cn);
   font-size: 16px;
+  font-synthesis: none;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
@@ -39,6 +41,11 @@ body {
   background: var(--paper);
   font-family: var(--serif-cn);
   text-rendering: optimizeLegibility;
+}
+
+strong,
+b {
+  font-weight: 400;
 }
 
 body::after {
@@ -162,7 +169,7 @@ body > noscript {
 .brand-copy strong {
   font-family: var(--serif-display);
   font-size: 19px;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .brand-copy small {
