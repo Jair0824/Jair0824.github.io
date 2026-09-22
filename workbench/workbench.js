@@ -42,13 +42,24 @@ function fillRepeatItem(element, item) {
 function addRepeatItem(kind, item) {
   const template = document.getElementById(`${kind}-template`);
   const container = document.getElementById(`${kind}-editor`);
+  container.querySelector('.empty-repeater')?.remove();
   const element = template.content.firstElementChild.cloneNode(true);
   fillRepeatItem(element, item);
   element.querySelector('.remove-item').addEventListener('click', () => {
     element.remove();
+    renderEmptyRepeater(kind);
     setDirty(true);
   });
   container.append(element);
+}
+
+function renderEmptyRepeater(kind) {
+  const container = document.getElementById(`${kind}-editor`);
+  if (container.querySelector(`.${kind}-item`)) return;
+  const empty = document.createElement('p');
+  empty.className = 'empty-repeater';
+  empty.textContent = container.dataset.emptyLabel || '暂无内容，可直接保存';
+  container.append(empty);
 }
 
 function renderEditor(data) {
@@ -72,11 +83,11 @@ function renderEditor(data) {
   value('visual-secondary', data.visual?.secondaryColor ?? '#46a99a');
   value('density-output', value('visual-density'));
   value('speed-output', Number(value('visual-speed')).toFixed(2));
-  value('focus-list', data.focus.join('\n'));
+  value('focus-list', (data.focus || []).join('\n'));
   value('focus-list-en', (data.focusEn || []).join('\n'));
   value('focus-details', (data.focusDetails || []).join('\n'));
   value('focus-details-en', (data.focusDetailsEn || []).join('\n'));
-  value('credential-list', data.credentials.join('\n'));
+  value('credential-list', (data.credentials || []).join('\n'));
   value('credential-list-en', (data.credentialsEn || []).join('\n'));
   value('contact-email', data.contact.email);
   value('contact-wechat', data.contact.wechat);
@@ -85,9 +96,11 @@ function renderEditor(data) {
   value('footer-text-en', data.footerEn);
 
   document.getElementById('project-editor').replaceChildren();
-  data.projects.forEach((project) => addRepeatItem('project', project));
+  (data.projects || []).forEach((project) => addRepeatItem('project', project));
+  renderEmptyRepeater('project');
   document.getElementById('service-editor').replaceChildren();
-  data.services.forEach((service) => addRepeatItem('service', service));
+  (data.services || []).forEach((service) => addRepeatItem('service', service));
+  renderEmptyRepeater('service');
   setDirty(false);
 }
 
@@ -141,6 +154,7 @@ function collectContent() {
     projects: collectRepeater('project'),
     services: collectRepeater('service'),
     contact: {
+      ...content.contact,
       email: value('contact-email').trim(),
       wechat: value('contact-wechat').trim(),
       github: value('contact-github').trim()

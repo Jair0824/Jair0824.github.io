@@ -67,24 +67,18 @@ function validateContent(data) {
   requireString(data.profile?.headlineEn, '英文首页主标题');
   requireString(data.profile?.introduction, '个人简介');
   requireString(data.profile?.introductionEn, '英文个人简介');
-  if (!Array.isArray(data.focus) || !Array.isArray(data.focusEn) || !Array.isArray(data.credentials) || !Array.isArray(data.credentialsEn)) throw new Error('关注方向或学术概览格式无效');
-  if (!Array.isArray(data.projects) || data.projects.length === 0) throw new Error('至少需要一个代表项目');
-  if (!Array.isArray(data.services) || data.services.length === 0) throw new Error('至少需要一个合作服务');
+  if (!Array.isArray(data.focus) || !Array.isArray(data.focusEn)) throw new Error('关注方向格式无效');
+  if (!Array.isArray(data.projects) || !Array.isArray(data.services)) throw new Error('项目或服务格式无效');
   data.projects.forEach((project, index) => {
     requireString(project.title, `项目 ${index + 1} 名称`);
-    requireString(project.titleEn, `项目 ${index + 1} 英文名称`);
     requireString(project.summary, `项目 ${index + 1} 说明`);
-    requireString(project.summaryEn, `项目 ${index + 1} 英文说明`);
     try { new URL(project.url); } catch { throw new Error(`项目 ${index + 1} 网址无效`); }
   });
   data.services.forEach((service, index) => {
     requireString(service.title, `服务 ${index + 1} 标题`);
-    requireString(service.titleEn, `服务 ${index + 1} 英文标题`);
     requireString(service.description, `服务 ${index + 1} 说明`);
-    requireString(service.descriptionEn, `服务 ${index + 1} 英文说明`);
   });
   requireString(data.contact?.email, '邮箱');
-  requireString(data.contact?.wechat, '微信');
   try { new URL(data.contact?.github); } catch { throw new Error('GitHub 主页地址无效'); }
 }
 

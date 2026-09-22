@@ -35,7 +35,7 @@
           <legend>基本信息</legend>
           <div class="field-grid two-columns">
             <label>显示姓名<input id="profile-name" type="text" required></label>
-            <label>标识字母<input id="profile-mark" type="text" maxlength="2" required></label>
+            <label>标识字母（可选）<input id="profile-mark" type="text" maxlength="2"></label>
           </div>
           <label>专业标签<input id="profile-eyebrow" type="text" required></label>
           <label>专业标签（英文）<input id="profile-eyebrow-en" type="text" required></label>
@@ -77,25 +77,25 @@
 
         <fieldset>
           <div class="fieldset-heading">
-            <legend>代表项目</legend>
+            <legend>代表项目（可选）</legend>
             <button class="button button-small" id="add-project" type="button">添加项目</button>
           </div>
-          <div class="repeater" id="project-editor"></div>
+          <div class="repeater" id="project-editor" data-empty-label="暂无项目，可直接保存"></div>
         </fieldset>
 
         <fieldset>
           <div class="fieldset-heading">
-            <legend>合作服务</legend>
+            <legend>合作服务（可选）</legend>
             <button class="button button-small" id="add-service" type="button">添加服务</button>
           </div>
-          <div class="repeater" id="service-editor"></div>
+          <div class="repeater" id="service-editor" data-empty-label="暂无服务，可直接保存"></div>
         </fieldset>
 
         <fieldset>
           <legend>联系方式</legend>
           <div class="field-grid two-columns">
             <label>邮箱<input id="contact-email" type="email" required></label>
-            <label>微信<input id="contact-wechat" type="text" required></label>
+            <label>微信（可选）<input id="contact-wechat" type="text"></label>
           </div>
           <label>GitHub 主页<input id="contact-github" type="url" required></label>
           <label>页脚文字<input id="footer-text" type="text"></label>
@@ -142,9 +142,9 @@
     <article class="repeat-item service-item">
       <div class="repeat-heading"><strong>服务</strong><button class="text-button remove-item" type="button">删除</button></div>
       <label>标题<input data-field="title" type="text" required></label>
-      <label>标题（英文）<input data-field="titleEn" type="text" required></label>
+      <label>标题（英文）<input data-field="titleEn" type="text"></label>
       <label>说明<textarea data-field="description" rows="3" required></textarea></label>
-      <label>说明（英文）<textarea data-field="descriptionEn" rows="3" required></textarea></label>
+      <label>说明（英文）<textarea data-field="descriptionEn" rows="3"></textarea></label>
     </article>
   </template>
 
@@ -152,16 +152,16 @@
     <article class="repeat-item project-item">
       <div class="repeat-heading"><strong>项目</strong><button class="text-button remove-item" type="button">删除</button></div>
       <label>项目名称<input data-field="title" type="text" required></label>
-      <label>项目名称（英文）<input data-field="titleEn" type="text" required></label>
-      <label>状态标签<input data-field="status" type="text" required></label>
-      <label>状态标签（英文）<input data-field="statusEn" type="text" required></label>
+      <label>项目名称（英文）<input data-field="titleEn" type="text"></label>
+      <label>状态标签<input data-field="status" type="text"></label>
+      <label>状态标签（英文）<input data-field="statusEn" type="text"></label>
       <label>项目说明<textarea data-field="summary" rows="4" required></textarea></label>
-      <label>项目说明（英文）<textarea data-field="summaryEn" rows="4" required></textarea></label>
+      <label>项目说明（英文）<textarea data-field="summaryEn" rows="4"></textarea></label>
       <div class="field-grid two-columns">
         <label>项目网址<input data-field="url" type="url" required></label>
-        <label>链接文字<input data-field="linkLabel" type="text" required></label>
+        <label>链接文字<input data-field="linkLabel" type="text"></label>
       </div>
-      <label>链接文字（英文）<input data-field="linkLabelEn" type="text" required></label>
+      <label>链接文字（英文）<input data-field="linkLabelEn" type="text"></label>
       <label>能力标签 <span>使用逗号分隔</span><input data-field="tags" type="text"></label>
       <label>能力标签（英文）<span>使用逗号分隔</span><input data-field="tagsEn" type="text"></label>
       <div class="field-grid two-columns">

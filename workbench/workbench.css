@@ -58,6 +58,7 @@ input[type="range"] { min-height: 30px; padding-inline: 0; accent-color: var(--t
 .field-grid { display: grid; gap: 12px; }
 .two-columns { grid-template-columns: 1fr 1fr; }
 .repeater { display: grid; gap: 12px; clear: both; }
+.empty-repeater { margin: 4px 0 0; padding: 16px; border: 1px dashed var(--line); border-radius: 5px; color: var(--muted); background: #f8faf7; font-size: 13px; text-align: center; }
 .repeat-item { padding: 16px; border: 1px solid var(--line); border-radius: 5px; background: #f5f7f4; }
 .repeat-heading { display: flex; justify-content: space-between; align-items: center; }
 .text-button { min-height: 32px; padding: 0; border: 0; color: var(--danger); background: transparent; font-size: 12px; }
