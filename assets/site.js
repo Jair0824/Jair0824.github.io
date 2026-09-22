@@ -15,8 +15,13 @@ const interfaceCopy = {
     navServices: '服务',
     profileLabel: '个人信息',
     plasmaVisualLabel: '等离子体动态视觉',
-    profileQuote: '理解复杂现象，构造清晰方法。',
-    graduateRole: '研究生',
+    labValue: 'KMAX 实验室',
+    educationLabel: '教育经历',
+    educationMasters: '硕士研究生 · 能源动力',
+    educationBachelor: '本科 · 空间科学与技术',
+    mastersPeriod: '2026.09 — 至今',
+    bachelorPeriod: '2022.09 — 2026.06',
+    researchgateLabel: 'ResearchGate',
     ustc: '中国科学技术大学',
     fieldLabel: '方向',
     locationLabel: '地点',
@@ -25,23 +30,23 @@ const interfaceCopy = {
     wechatLabel: '微信',
     academicEyebrow: 'ACADEMIC PROFILE · 学术主页',
     aboutTitle: '关于我',
-    aboutSecond: '这个网站用于记录我的研究兴趣、阶段性工作与长期积累。当前不公开尚未成熟的科研成果，但会持续补充适合分享的项目、笔记与工具。',
+    aboutSecond: '这个网站用于记录我的研究兴趣、阶段性工作与长期积累，适合公开的项目、笔记与工具会在这里持续补充',
     viewResearch: '查看研究方向',
     enterWorkstation: '进入服务',
     currentFocus: '当前关注',
     identityTitle: '身份',
-    identityCopy: '研究生 · 独立开发者\n科研与实际应用的交叉实践',
+    identityCopy: '独立开发者 · 科研与实际应用的交叉实践',
     researchKicker: 'RESEARCH INTERESTS',
     researchTitle: '研究兴趣',
-    researchIntro: '从物理机制出发，关注理论、计算与数据表达之间的联系。',
+    researchIntro: '从物理机制出发，关注理论、诊断、计算与数据表达之间的联系',
     overviewKicker: 'ACADEMIC OVERVIEW',
     overviewTitle: '学术概览',
-    overviewIntro: '目前公开展示基本研究身份，后续将逐步补充成熟的项目与成果。',
+    overviewIntro: '这里整理教育经历与研究训练，后续将逐步补充成熟的项目与成果',
     noteTitle: '关于公开内容',
-    noteCopy: '科研经历与成果将在适合公开时持续更新。现阶段，这里主要用于呈现我的研究方向、工作方法与联系方式。',
+    noteCopy: '科研经历与成果将在适合公开时持续更新，这里先呈现研究方向、教育经历与工作方法',
     beyondResearch: 'BEYOND RESEARCH · 研究之外',
     workstationEntryTitle: '独立合作',
-    workstationEntryCopy: '我也承接数据分析、网站制作与物理辅导等独立工作。相关能力、案例和合作方式集中放在服务页面。',
+    workstationEntryCopy: '我也承接数据分析、网站制作与物理辅导等独立工作，相关能力、案例和合作方式集中放在服务页面',
     openWorkstation: '查看服务',
     contactMe: '联系我',
     academicHome: '研究',
@@ -50,8 +55,8 @@ const interfaceCopy = {
     contactNav: '联系',
     workEyebrow: 'INDEPENDENT WORK · 独立合作',
     workIdentityCopy: '独立开发与技术服务',
-    workHeadline: '把问题讲清楚，\n把结果做出来。',
-    workIntroduction: '这是我的独立工作入口。我利用科研训练、代码能力与 AI Agent 协作，为个人和小型团队完成数据分析、网站制作与物理辅导。',
+    workHeadline: '把问题讲清楚，把结果做出来',
+    workIntroduction: '这是我的独立工作入口，我利用科研训练、代码能力与 Agent 协作，为个人和小型团队完成数据分析、网站制作与物理辅导',
     viewServices: '查看可做的工作',
     discussProject: '沟通一个项目',
     availableStatus: '可接受线上与线下合作',
@@ -60,24 +65,24 @@ const interfaceCopy = {
     deliveryLabel: '工作方式',
     deliveryValue: '阶段确认 · 可预览 · 可复核',
     toolsLabel: '开发协作',
-    toolsValue: 'Codex 与多 Agent 工作流',
+    toolsValue: 'Agent 协作工作流',
     servicesKicker: 'WHAT I CAN DO',
     servicesTitle: '可承接的工作',
-    servicesIntro: '适合需求边界清楚、重视沟通与交付质量的中小型任务。',
+    servicesIntro: '适合需求边界清楚、重视沟通与交付质量的中小型任务',
     projectsKicker: 'SELECTED PROJECT',
     projectsTitle: '已完成案例',
-    projectsIntro: '真实上线的项目比功能清单更能说明工作方式。',
+    projectsIntro: '真实上线的项目比功能清单更能说明工作方式',
     processKicker: 'WORKING PROCESS',
     processTitle: '简单、透明的合作过程',
     processOneTitle: '明确需求',
-    processOneCopy: '先确认目标、交付物、周期与判断完成的标准。',
+    processOneCopy: '先确认目标、交付物、周期与判断完成的标准',
     processTwoTitle: '阶段预览',
-    processTwoCopy: '关键节点提供可查看的中间结果，及时校准方向。',
+    processTwoCopy: '关键节点提供可查看的中间结果，及时校准方向',
     processThreeTitle: '完整交付',
-    processThreeCopy: '交付成品、必要说明与可继续维护的文件。',
+    processThreeCopy: '交付成品、必要说明与可继续维护的文件',
     contactKicker: 'START A CONVERSATION',
-    contactTitle: '先把你的问题发给我。',
-    contactCopy: '请简单说明目标、现有材料和期望时间。我会先判断是否适合承接，再给出清晰的下一步。',
+    contactTitle: '先把你的问题发给我',
+    contactCopy: '请简单说明目标、现有材料和期望时间，我会先判断是否适合承接，再给出清晰的下一步',
     backAcademic: '返回研究'
   },
   en: {
@@ -93,8 +98,13 @@ const interfaceCopy = {
     navServices: 'Services',
     profileLabel: 'Profile information',
     plasmaVisualLabel: 'Animated plasma field',
-    profileQuote: 'Understand complex phenomena. Build clear methods.',
-    graduateRole: 'Graduate Student',
+    labValue: 'KMAX Laboratory',
+    educationLabel: 'Education',
+    educationMasters: 'M.Eng. · Energy and Power Engineering',
+    educationBachelor: 'B.S. · Space Science and Technology',
+    mastersPeriod: 'Sep. 2026 — Present',
+    bachelorPeriod: 'Sep. 2022 — Jun. 2026',
+    researchgateLabel: 'ResearchGate',
     ustc: 'University of Science and Technology of China',
     fieldLabel: 'Field',
     locationLabel: 'Based in',
@@ -103,23 +113,23 @@ const interfaceCopy = {
     wechatLabel: 'WeChat',
     academicEyebrow: 'ACADEMIC PROFILE',
     aboutTitle: 'About Me',
-    aboutSecond: 'This site records my research interests, work in progress, and long-term practice. Results that are not ready for public release are omitted for now; suitable projects, notes, and tools will be added over time.',
+    aboutSecond: 'This site records my research interests, work in progress, and long-term practice, with suitable projects, notes, and tools added over time',
     viewResearch: 'View research interests',
     enterWorkstation: 'View services',
     currentFocus: 'Current interests',
     identityTitle: 'Roles',
-    identityCopy: 'Graduate student · Independent developer\nResearch and practical applications',
+    identityCopy: 'Independent developer · Research and practical applications',
     researchKicker: 'RESEARCH INTERESTS',
     researchTitle: 'Research Interests',
-    researchIntro: 'Starting from physical mechanisms, I am interested in the links between theory, computation, and data representation.',
+    researchIntro: 'Starting from physical mechanisms, I am interested in the links between theory, diagnostics, computation, and data representation',
     overviewKicker: 'ACADEMIC OVERVIEW',
     overviewTitle: 'Academic Overview',
-    overviewIntro: 'This page currently presents my academic profile. Mature projects and results will be added over time.',
+    overviewIntro: 'This page brings together my education and research training, with mature projects and results added over time',
     noteTitle: 'About public materials',
-    noteCopy: 'Research experience and results will be added when appropriate for public release. For now, this page focuses on my interests, working methods, and contact information.',
+    noteCopy: 'Research experience and results will be added when appropriate for public release, while this page focuses on my interests, education, and working methods',
     beyondResearch: 'BEYOND RESEARCH',
     workstationEntryTitle: 'Independent Work',
-    workstationEntryCopy: 'I also take on independent work in data analysis, website development, and physics tutoring. Capabilities, cases, and collaboration details are collected on the services page.',
+    workstationEntryCopy: 'I also take on independent work in data analysis, website development, and physics tutoring, with capabilities, cases, and collaboration details collected on the services page',
     openWorkstation: 'View services',
     contactMe: 'Contact',
     academicHome: 'Research',
@@ -128,8 +138,8 @@ const interfaceCopy = {
     contactNav: 'Contact',
     workEyebrow: 'INDEPENDENT WORK',
     workIdentityCopy: 'Independent development and technical services',
-    workHeadline: 'Clarify the problem.\nDeliver the result.',
-    workIntroduction: 'This is my independent work portal. Combining research training, coding, and AI agent workflows, I help individuals and small teams with data analysis, website development, and physics tutoring.',
+    workHeadline: 'Clarify the problem. Deliver the result',
+    workIntroduction: 'This is my independent work portal, combining research training, coding, and agent workflows to help individuals and small teams with data analysis, website development, and physics tutoring',
     viewServices: 'View services',
     discussProject: 'Discuss a project',
     availableStatus: 'Available for online and local work',
@@ -138,24 +148,24 @@ const interfaceCopy = {
     deliveryLabel: 'Delivery',
     deliveryValue: 'Milestones · Previews · Verifiable results',
     toolsLabel: 'Workflow',
-    toolsValue: 'Codex and multi-agent collaboration',
+    toolsValue: 'Agent-assisted workflow',
     servicesKicker: 'WHAT I CAN DO',
     servicesTitle: 'Services',
-    servicesIntro: 'Best suited to small and medium assignments with clear scope, communication, and delivery standards.',
+    servicesIntro: 'Best suited to small and medium assignments with clear scope, communication, and delivery standards',
     projectsKicker: 'SELECTED PROJECT',
     projectsTitle: 'Completed Work',
-    projectsIntro: 'A real, deployed project explains my working style better than a feature list.',
+    projectsIntro: 'A real, deployed project explains my working style better than a feature list',
     processKicker: 'WORKING PROCESS',
     processTitle: 'A simple, transparent process',
     processOneTitle: 'Define',
-    processOneCopy: 'We first agree on the goal, deliverables, timeline, and acceptance criteria.',
+    processOneCopy: 'We first agree on the goal, deliverables, timeline, and acceptance criteria',
     processTwoTitle: 'Preview',
-    processTwoCopy: 'Reviewable intermediate results are shared at key milestones to keep the direction aligned.',
+    processTwoCopy: 'Reviewable intermediate results are shared at key milestones to keep the direction aligned',
     processThreeTitle: 'Deliver',
-    processThreeCopy: 'You receive the finished work, essential documentation, and maintainable source files.',
+    processThreeCopy: 'You receive the finished work, essential documentation, and maintainable source files',
     contactKicker: 'START A CONVERSATION',
-    contactTitle: 'Send me the problem first.',
-    contactCopy: 'Briefly describe your goal, available materials, and expected timeline. I will first assess the fit and then suggest a clear next step.',
+    contactTitle: 'Send me the problem first',
+    contactCopy: 'Briefly describe your goal, available materials, and expected timeline, and I will first assess the fit before suggesting a clear next step',
     backAcademic: 'Back to research'
   }
 };
@@ -238,11 +248,18 @@ function renderAcademic(data) {
     return article;
   }));
 
-  const credentials = localizedArray(data, 'credentials');
+  const education = currentLanguage === 'en' && Array.isArray(data.educationEn) && data.educationEn.length
+    ? data.educationEn
+    : (Array.isArray(data.education) ? data.education : []);
   const credentialsList = document.getElementById('credential-list');
-  credentialsList.replaceChildren(...credentials.map((item) => {
-    const row = make('div', 'timeline-item');
-    row.append(make('p', '', item));
+  credentialsList.replaceChildren(...education.map((item) => {
+    const row = make('article', 'timeline-item');
+    row.append(make('time', 'timeline-period', localized(item, 'period')));
+    const copy = make('div', 'timeline-copy');
+    copy.append(make('h3', '', localized(item, 'institution')));
+    copy.append(make('p', 'timeline-degree', localized(item, 'degree')));
+    copy.append(make('p', 'timeline-detail', localized(item, 'details')));
+    row.append(copy);
     return row;
   }));
 }
@@ -303,6 +320,12 @@ function renderContact(data) {
     if (strong) strong.textContent = data.contact.github.split('/').filter(Boolean).pop();
   });
 
+  ['researchgate-link', 'work-researchgate-link'].forEach((id) => {
+    const link = document.getElementById(id);
+    if (!link || !data.contact.researchgate) return;
+    link.href = data.contact.researchgate;
+  });
+
   setText('wechat-value', data.contact.wechat);
   setText('footer-copyright', `© ${new Date().getFullYear()} ${data.profile.name}`);
   setText('footer-text', localized(data, 'footer'));
@@ -316,7 +339,7 @@ function renderSite(data) {
     ? (currentLanguage === 'en' ? 'GarryLee | Independent Work' : 'GarryLee | 独立合作')
     : title;
   document.querySelector('meta[name="description"]').setAttribute('content', description);
-  document.documentElement.style.setProperty('--accent', data.meta.accent || '#75d6c5');
+  document.documentElement.style.setProperty('--accent', data.meta.accent || '#6f9db5');
 
   if (document.body.dataset.page === 'academic') renderAcademic(data);
   else renderWorkstation(data);
@@ -342,8 +365,8 @@ function initializeProfileOrb(config) {
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
-  const primary = colorToRgb(config.primaryColor, [117, 214, 197]);
-  const secondary = colorToRgb(config.secondaryColor, [242, 152, 127]);
+  const primary = colorToRgb(config.primaryColor, [111, 157, 181]);
+  const secondary = colorToRgb(config.secondaryColor, [79, 127, 153]);
   const particles = Array.from({ length: 84 }, (_, index) => ({
     longitude: (index * 2.399963) % (Math.PI * 2),
     latitude: Math.acos(1 - (2 * (index + 0.5)) / 84),
@@ -367,7 +390,7 @@ function initializeProfileOrb(config) {
     const radius = size * 0.405;
     const phase = time * 0.00018;
     context.clearRect(0, 0, size, size);
-    context.fillStyle = '#f7fbfa';
+    context.fillStyle = '#f8fafc';
     context.beginPath();
     context.arc(center, center, size * 0.49, 0, Math.PI * 2);
     context.fill();
@@ -450,8 +473,8 @@ function initializePlasmaBackground(config) {
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
-  const primary = colorToRgb(config.primaryColor, [117, 214, 197]);
-  const secondary = colorToRgb(config.secondaryColor, [242, 152, 127]);
+  const primary = colorToRgb(config.primaryColor, [111, 157, 181]);
+  const secondary = colorToRgb(config.secondaryColor, [79, 127, 153]);
   const density = Math.max(70, Math.min(280, Number(config.particleDensity) || 180));
   const speed = Math.max(0.2, Math.min(1.2, Number(config.flowSpeed) || 0.55));
   let width = 0;
@@ -505,7 +528,7 @@ function initializePlasmaBackground(config) {
   function drawStars(time) {
     stars.forEach((star) => {
       const pulse = 0.72 + Math.sin(time * 0.00055 + star.phase) * 0.28;
-      context.fillStyle = `rgba(50, 82, 74, ${star.alpha * pulse})`;
+      context.fillStyle = `rgba(79, 127, 153, ${star.alpha * pulse})`;
       context.beginPath();
       context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
       context.fill();

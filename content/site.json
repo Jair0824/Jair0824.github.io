@@ -2,60 +2,82 @@
   "meta": {
     "siteTitle": "GarryLee | 个人主页",
     "siteTitleEn": "GarryLee | Personal Page",
-    "description": "中国科学技术大学研究生 GarryLee 的个人学术主页，关注能源动力、等离子体物理与科学计算。",
-    "descriptionEn": "Academic homepage of GarryLee, a graduate student at the University of Science and Technology of China interested in energy engineering, plasma physics, and scientific computing.",
-    "accent": "#3d9589"
+    "description": "中国科学技术大学 GarryLee 的个人学术主页，关注等离子体物理、空间环境观测与科学计算",
+    "descriptionEn": "Academic homepage of GarryLee at the University of Science and Technology of China, focused on plasma physics, space-environment observations, and scientific computing",
+    "accent": "#6F9DB5"
   },
   "visual": {
     "motionEnabled": true,
     "particleDensity": 190,
     "flowSpeed": 0.55,
-    "primaryColor": "#69bfb1",
-    "secondaryColor": "#eaa18e"
+    "primaryColor": "#6F9DB5",
+    "secondaryColor": "#4F7F99"
   },
   "profile": {
     "name": "GarryLee",
     "mark": "G",
-    "eyebrow": "能源动力 · 等离子体物理",
-    "eyebrowEn": "Energy Engineering · Plasma Physics",
-    "headline": "在等离子体物理中，理解能量、流动与结构。",
-    "headlineEn": "Understanding energy, flow, and structure through plasma physics.",
-    "introduction": "中国科学技术大学能源动力专业研究生，研究兴趣集中于等离子体物理及相关科学计算。我希望以清晰、可复核的方式理解问题，并将研究过程沉淀为可靠的方法与工具。",
-    "introductionEn": "I am a graduate student in Energy Engineering at the University of Science and Technology of China. My interests center on plasma physics and related scientific computing, with an emphasis on clear, reproducible methods and useful research tools."
+    "eyebrow": "等离子体物理",
+    "eyebrowEn": "Plasma Physics",
+    "headline": "在空间环境与等离子体物理之间，研究观测、诊断与计算",
+    "headlineEn": "Studying observations, diagnostics, and computation across space environments and plasma physics",
+    "introduction": "中国科学技术大学能源动力专业硕士研究生，现于 KMAX 实验室开展等离子体物理相关学习与研究，关注等离子体诊断、空间环境观测以及科学计算方法",
+    "introductionEn": "I am a master's student in Energy and Power Engineering at the University of Science and Technology of China, working at the KMAX Laboratory on plasma physics, diagnostics, space-environment observations, and scientific computing"
   },
   "focus": [
     "等离子体物理",
-    "能源动力过程",
+    "等离子体诊断",
+    "空间环境与流星雷达",
     "科研计算与数据可视化",
-    "AI 辅助科研工作流"
+    "Agent 辅助科研"
   ],
   "focusEn": [
     "Plasma Physics",
-    "Energy and Power Processes",
+    "Plasma Diagnostics",
+    "Space Environment and Meteor Radar",
     "Scientific Computing and Visualization",
-    "AI-assisted Research Workflows"
+    "Agent-assisted Research"
   ],
   "focusDetails": [
-    "关注等离子体中的输运、结构及相关物理机制。",
-    "从能源动力视角理解复杂系统中的能量传递与演化。",
-    "使用代码完成数据处理、计算结果表达与科研图形制作。",
-    "探索 Codex 与多 Agent 在资料整理、编程和研究辅助中的可靠用法。"
+    "关注等离子体中的输运、结构与实验诊断方法",
+    "关注空间环境观测、流星雷达数据分析及相关反演问题",
+    "使用 C、Python、Fortran、Julia 和科学计算工具完成数据处理与结果表达",
+    "使用代码完成数据处理、计算结果表达与科研图形制作",
+    "探索 Agent 在科学研究辅助中的可靠用法"
   ],
   "focusDetailsEn": [
-    "Interested in transport, structures, and the physical mechanisms of plasma systems.",
-    "Studying energy transfer and evolution in complex systems from an energy engineering perspective.",
-    "Using code for data processing, computational communication, and scientific visualization.",
-    "Exploring reliable uses of Codex and multi-agent systems in research, coding, and knowledge work."
+    "Interested in plasma transport, structures, and experimental diagnostic methods",
+    "Studying space-environment observations, meteor-radar data, and related inverse problems",
+    "Using C, Python, Fortran, Julia, and scientific-computing tools for data processing and communication",
+    "Using code for data processing, computational communication, and scientific visualization",
+    "Exploring reliable uses of agents in scientific research"
   ],
-  "credentials": [
-    "中国科学技术大学 · 在读研究生",
-    "专业方向 · 能源动力与等离子体物理",
-    "研究方法 · 科学计算、数据处理与可视化"
+  "education": [
+    {
+      "period": "2026.09 — 至今",
+      "institution": "中国科学技术大学",
+      "degree": "硕士研究生 · 能源动力",
+      "details": "主修等离子体物理基础、高等电动力学与核聚变工程导论"
+    },
+    {
+      "period": "2022.09 — 2026.06",
+      "institution": "中国科学技术大学",
+      "degree": "本科 · 空间科学与技术",
+      "details": "主修空间环境与航天工程、空间等离子体探测技术、科学计算与程序设计"
+    }
   ],
-  "credentialsEn": [
-    "University of Science and Technology of China · Graduate Student",
-    "Field · Energy Engineering and Plasma Physics",
-    "Methods · Scientific Computing, Data Processing, and Visualization"
+  "educationEn": [
+    {
+      "period": "Sep. 2026 — Present",
+      "institution": "University of Science and Technology of China",
+      "degree": "M.Eng. · Energy and Power Engineering",
+      "details": "Coursework includes Fundamentals of Plasma Physics, Advanced Electrodynamics, and Introduction to Fusion Engineering"
+    },
+    {
+      "period": "Sep. 2022 — Jun. 2026",
+      "institution": "University of Science and Technology of China",
+      "degree": "B.S. · Space Science and Technology",
+      "details": "Coursework includes Space Plasma Diagnostics, Space Environment and Astronautical Engineering, and Scientific Computing"
+    }
   ],
   "projects": [
     {
@@ -63,8 +85,8 @@
       "statusEn": "Corporate Website · Cultural Tourism · Live",
       "title": "少间文旅品牌官网",
       "titleEn": "Shaojian Cultural Tourism Website",
-      "summary": "独立完成少间文旅整站制作，包括多页面内容落地、响应式前端、正式域名配置、部署与上线交付。",
-      "summaryEn": "Independently delivered the complete Shaojian website, including multi-page content implementation, responsive frontend development, domain configuration, deployment, and launch.",
+      "summary": "独立完成少间文旅整站制作，包括多页面内容落地、响应式前端、正式域名配置、部署与上线交付",
+      "summaryEn": "Independently delivered the complete Shaojian website, including multi-page content implementation, responsive frontend development, domain configuration, deployment, and launch",
       "tags": ["独立制作", "响应式前端", "部署上线"],
       "tagsEn": ["Independent Delivery", "Responsive Frontend", "Deployment"],
       "url": "https://shaojian.top",
@@ -82,26 +104,27 @@
     {
       "title": "数据分析与科研绘图",
       "titleEn": "Data Analysis and Scientific Figures",
-      "description": "整理与清洗数据，完成基础统计、结果可视化、科研绘图和轻量自动化脚本。",
-      "descriptionEn": "Data organization and cleaning, basic statistics, result visualization, scientific figures, and lightweight automation scripts."
+      "description": "整理与清洗数据，完成基础统计、结果可视化、科研绘图和轻量自动化脚本",
+      "descriptionEn": "Data organization and cleaning, basic statistics, result visualization, scientific figures, and lightweight automation scripts"
     },
     {
       "title": "网站制作与部署",
       "titleEn": "Website Development and Deployment",
-      "description": "面向个人、课题组和小型企业制作清晰、响应式、可正式上线的展示网站。",
-      "descriptionEn": "Clear, responsive, deployable websites for individuals, research groups, and small organizations."
+      "description": "面向个人、课题组和小型企业制作清晰、响应式、可正式上线的展示网站",
+      "descriptionEn": "Clear, responsive, deployable websites for individuals, research groups, and small organizations"
     },
     {
       "title": "物理课程辅导",
       "titleEn": "Physics Tutoring",
-      "description": "高中与大学物理的概念讲解、方法训练、习题分析和针对性学习规划。",
-      "descriptionEn": "Conceptual explanation, problem-solving methods, exercise analysis, and targeted study plans for high-school and university physics."
+      "description": "高中与大学物理的概念讲解、方法训练、习题分析和针对性学习规划",
+      "descriptionEn": "Conceptual explanation, problem-solving methods, exercise analysis, and targeted study plans for high-school and university physics"
     }
   ],
   "contact": {
     "email": "jairlee082413@gmail.com",
     "wechat": "jair0824",
-    "github": "https://github.com/Jair0824"
+    "github": "https://github.com/Jair0824",
+    "researchgate": "https://www.researchgate.net/profile/Jiarui-Li-91"
   },
   "footer": "研究 · 工程 · 独立实践",
   "footerEn": "Research · Engineering · Independent Practice"
