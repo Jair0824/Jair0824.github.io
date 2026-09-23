@@ -365,8 +365,15 @@ function initializeProfileOrb(config) {
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
-  const primary = colorToRgb(config.primaryColor, [111, 157, 181]);
-  const secondary = colorToRgb(config.secondaryColor, [79, 127, 153]);
+  // Match the active aurora palette instead of the former light-theme blue
+  const palette = [
+    [126, 226, 192], // emerald
+    [102, 213, 230], // ice cyan
+    [83, 203, 166],  // mint
+    [220, 233, 121]  // lemon highlight
+  ];
+  const primary = palette[0];
+  const secondary = palette[1];
   const particles = Array.from({ length: 84 }, (_, index) => ({
     longitude: (index * 2.399963) % (Math.PI * 2),
     latitude: Math.acos(1 - (2 * (index + 0.5)) / 84),
@@ -473,8 +480,15 @@ function initializePlasmaBackground(config) {
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
-  const primary = colorToRgb(config.primaryColor, [111, 157, 181]);
-  const secondary = colorToRgb(config.secondaryColor, [79, 127, 153]);
+  // Keep the beam aligned with the dark aurora theme rather than the old light-theme colors
+  const palette = [
+    [126, 226, 192], // emerald
+    [102, 213, 230], // ice cyan
+    [83, 203, 166],  // mint
+    [220, 233, 121]  // lemon highlight
+  ];
+  const primary = palette[0];
+  const secondary = palette[1];
   const density = Math.max(70, Math.min(280, Number(config.particleDensity) || 180));
   const speed = Math.max(0.2, Math.min(1.2, Number(config.flowSpeed) || 0.55));
   let width = 0;
@@ -483,12 +497,26 @@ function initializePlasmaBackground(config) {
   let particles = [];
   let frameId = 0;
   let lastTime = performance.now();
+  const pointer = { x: -9999, y: -9999, target: 0, current: 0 };
+
+  window.addEventListener('pointermove', (event) => {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+    pointer.target = 1;
+  }, { passive: true });
+
+  window.addEventListener('pointerleave', () => {
+    pointer.target = 0;
+  }, { passive: true });
 
   function resetParticle(particle, randomizeX = true) {
     particle.x = randomizeX ? Math.random() * width : -8;
     particle.y = Math.random() * height;
     particle.radius = 0.5 + Math.random() * 1.1;
-    particle.color = Math.random() > 0.24 ? primary : secondary;
+    const colorRoll = Math.random();
+    particle.color = colorRoll < 0.48 ? palette[0]
+      : colorRoll < 0.8 ? palette[1]
+        : colorRoll < 0.96 ? palette[2] : palette[3];
     particle.alpha = 0.18 + Math.random() * 0.24;
     particle.drift = Math.random() * Math.PI * 2;
   }
@@ -528,7 +556,7 @@ function initializePlasmaBackground(config) {
   function drawStars(time) {
     stars.forEach((star) => {
       const pulse = 0.72 + Math.sin(time * 0.00055 + star.phase) * 0.28;
-      context.fillStyle = `rgba(79, 127, 153, ${star.alpha * pulse})`;
+      context.fillStyle = `rgba(${palette[1].join(', ')}, ${star.alpha * pulse * 0.72})`;
       context.beginPath();
       context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
       context.fill();
@@ -560,9 +588,18 @@ function initializePlasmaBackground(config) {
   }
 
   function drawParticles(time, delta, move) {
+    pointer.current += (pointer.target - pointer.current) * 0.08;
     particles.forEach((particle) => {
       const angle = fieldAngle(particle.x, particle.y, time) + Math.sin(particle.drift + time * 0.0001) * 0.12;
       if (move) {
+        const dx = particle.x - pointer.x;
+        const dy = particle.y - pointer.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (pointer.current > 0.01 && distance < 130 && distance > 0.01) {
+          const falloff = (1 - distance / 130) ** 2 * pointer.current * 1.8;
+          particle.x += (dx / distance) * falloff;
+          particle.y += (dy / distance) * falloff;
+        }
         particle.x += (Math.cos(angle) * 0.26 + 0.29) * speed * delta * 0.055;
         particle.y += Math.sin(angle) * 0.24 * speed * delta * 0.055;
         if (particle.x > width + 10 || particle.y < -10 || particle.y > height + 10) resetParticle(particle, false);
