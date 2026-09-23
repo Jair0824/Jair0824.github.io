@@ -1490,6 +1490,79 @@ body {
   background: radial-gradient(ellipse at 50% 35%, transparent 0 42%, rgb(2 5 7 / 0.58) 100%);
 }
 
+.meteors {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.meteor {
+  position: absolute;
+  display: block;
+  width: 2px;
+  height: 180px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, transparent 0%, rgb(224 255 239 / 0.045) 18%, rgb(164 244 211 / 0.22) 64%, rgb(255 255 255 / 0.88) 100%);
+  filter: drop-shadow(0 0 3px rgb(193 255 224 / 0.58));
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) rotate(215deg);
+  transform-origin: 100% 100%;
+  will-change: transform, opacity;
+  animation: meteor-flight 7.4s linear infinite;
+}
+
+.meteor::before {
+  content: "";
+  position: absolute;
+  right: 50%;
+  bottom: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 4px 2px rgb(255 255 255 / 0.9), 0 0 13px 4px rgb(177 255 211 / 0.62), 0 0 23px 7px rgb(105 215 170 / 0.28);
+  transform: translateX(50%);
+}
+
+.meteor::after {
+  content: "";
+  position: absolute;
+  right: -7px;
+  bottom: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.45), rgb(181 255 214 / 0.15) 40%, transparent 72%);
+}
+
+.meteor--1 { top: -12%; left: 14%; height: 145px; animation-duration: 6.8s; animation-delay: -1.2s; }
+.meteor--2 { top: 5%; left: 34%; height: 210px; animation-duration: 8.6s; animation-delay: -5.4s; }
+.meteor--3 { top: -8%; left: 64%; height: 175px; animation-duration: 7.2s; animation-delay: -3.1s; }
+.meteor--4 { top: 18%; left: 90%; height: 235px; animation-duration: 9.3s; animation-delay: -7.8s; }
+.meteor--5 { top: 38%; left: 55%; height: 132px; animation-duration: 6.2s; animation-delay: -4.5s; }
+.meteor--6 { top: 47%; left: 108%; height: 194px; animation-duration: 8.8s; animation-delay: -2.4s; }
+.meteor--7 { top: -18%; left: 51%; height: 112px; animation-duration: 5.9s; animation-delay: -5.2s; }
+.meteor--8 { top: 28%; left: 76%; height: 156px; animation-duration: 7.8s; animation-delay: -6.7s; }
+
+@keyframes meteor-flight {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(215deg);
+  }
+  8% {
+    opacity: 0.64;
+  }
+  68% {
+    opacity: 0.58;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-68vw, 78vh, 0) rotate(215deg);
+  }
+}
+
 @keyframes aurora-emerald {
   0% {
     transform: translate3d(-4%, -3%, 0) rotate(-10deg) scale(0.94);
