@@ -1,54 +1,54 @@
 {
   "meta": {
-    "siteTitle": "GarryLee | 个人主页",
-    "siteTitleEn": "GarryLee | Personal Page",
+    "siteTitle": "GarryLee",
+    "siteTitleEn": "GarryLee",
     "description": "中国科学技术大学 GarryLee 的个人学术主页，关注等离子体物理、空间环境观测与科学计算",
     "descriptionEn": "Academic homepage of GarryLee at the University of Science and Technology of China, focused on plasma physics, space-environment observations, and scientific computing",
-    "accent": "#6F9DB5"
+    "accent": "#6f9db5"
   },
   "visual": {
     "motionEnabled": true,
-    "particleDensity": 190,
-    "flowSpeed": 0.55,
-    "primaryColor": "#6F9DB5",
-    "secondaryColor": "#4F7F99"
+    "particleDensity": 280,
+    "flowSpeed": 0.7,
+    "primaryColor": "#6f9db5",
+    "secondaryColor": "#4f7f99"
   },
   "profile": {
     "name": "GarryLee",
-    "mark": "G",
+    "mark": "",
     "eyebrow": "等离子体物理",
     "eyebrowEn": "Plasma Physics",
-    "headline": "在空间环境与等离子体物理之间，研究观测、诊断与计算",
-    "headlineEn": "Studying observations, diagnostics, and computation across space environments and plasma physics",
-    "introduction": "中国科学技术大学能源动力专业硕士研究生，现于 KMAX 实验室开展等离子体物理相关学习与研究，关注等离子体诊断、空间环境观测以及科学计算方法",
-    "introductionEn": "I am a master's student in Energy and Power Engineering at the University of Science and Technology of China, working at the KMAX Laboratory on plasma physics, diagnostics, space-environment observations, and scientific computing"
+    "headline": "等离子体物理，空间环境，观测，诊断与计算",
+    "headlineEn": "plasma physics,space environments, observations, diagnostics, and computation",
+    "introduction": "中国科学技术大学能源动力专业硕士研究生，现于 USTC-KMAX 实验室开展等离子体物理相关学习与研究，关注等离子体诊断、场反位型以及科学计算方法",
+    "introductionEn": "I am a master's student in Energy and Power Engineering at the University of Science and Technology of China, working at the USTC-KMAX Laboratory on plasma physics, diagnostics, FRC, and scientific computing"
   },
   "focus": [
     "等离子体物理",
     "等离子体诊断",
-    "空间环境与流星雷达",
-    "科研计算与数据可视化",
-    "Agent 辅助科研"
+    "场反位型",
+    "科学计算与数据可视化",
+    "Agent 辅助"
   ],
   "focusEn": [
     "Plasma Physics",
     "Plasma Diagnostics",
-    "Space Environment and Meteor Radar",
+    "FRC",
     "Scientific Computing and Visualization",
-    "Agent-assisted Research"
+    "Agent-assisted"
   ],
   "focusDetails": [
-    "关注等离子体中的输运、结构与实验诊断方法",
-    "关注空间环境观测、流星雷达数据分析及相关反演问题",
-    "使用 C、Python、Fortran、Julia 和科学计算工具完成数据处理与结果表达",
-    "使用代码完成数据处理、计算结果表达与科研图形制作",
+    "等离子体中的输运、结构与实验方法",
+    "等离子体光学、探针等诊断手段",
+    "磁镜FRC及其参数",
+    "使用 C、Python、Fortran、Julia 和科学计算工具进行仿真与计算",
     "探索 Agent 在科学研究辅助中的可靠用法"
   ],
   "focusDetailsEn": [
-    "Interested in plasma transport, structures, and experimental diagnostic methods",
-    "Studying space-environment observations, meteor-radar data, and related inverse problems",
-    "Using C, Python, Fortran, Julia, and scientific-computing tools for data processing and communication",
-    "Using code for data processing, computational communication, and scientific visualization",
+    "Plasma transport, structures, and experimental techniques",
+    "Plasma optical diagnostics, probe diagnostics, and related methods",
+    "Magnetic mirrors, field-reversed configurations (FRC), and their parameters",
+    "Using C, Python, Fortran, Julia, and scientific-computing tools for simulation and computational studies",
     "Exploring reliable uses of agents in scientific research"
   ],
   "education": [
@@ -81,23 +81,31 @@
   ],
   "projects": [
     {
-      "status": "企业官网 · 文旅品牌 · 已上线",
-      "statusEn": "Corporate Website · Cultural Tourism · Live",
       "title": "少间文旅品牌官网",
       "titleEn": "Shaojian Cultural Tourism Website",
+      "status": "企业官网 · 文旅品牌 · 已上线",
+      "statusEn": "Corporate Website · Cultural Tourism · Live",
       "summary": "独立完成少间文旅整站制作，包括多页面内容落地、响应式前端、正式域名配置、部署与上线交付",
       "summaryEn": "Independently delivered the complete Shaojian website, including multi-page content implementation, responsive frontend development, domain configuration, deployment, and launch",
-      "tags": ["独立制作", "响应式前端", "部署上线"],
-      "tagsEn": ["Independent Delivery", "Responsive Frontend", "Deployment"],
       "url": "https://shaojian.top",
       "linkLabel": "访问 shaojian.top",
       "linkLabelEn": "Visit shaojian.top",
-      "visualTitle": "让地方，重新被看见",
-      "visualTitleEn": "Let places be seen again",
+      "tags": [
+        "独立制作",
+        "响应式前端",
+        "部署上线"
+      ],
+      "tagsEn": [
+        "Independent Delivery",
+        "Responsive Frontend",
+        "Deployment"
+      ],
       "visualLabel": "少间文旅",
-      "visualLabelEn": "SHAOJIAN",
       "visualMeta": "ABOUT · PLACES · STORIES",
-      "visualMetaEn": "ABOUT · PLACES · STORIES"
+      "visualLabelEn": "SHAOJIAN",
+      "visualMetaEn": "ABOUT · PLACES · STORIES",
+      "visualTitle": "让地方，重新被看见",
+      "visualTitleEn": "Let places be seen again"
     }
   ],
   "services": [
@@ -127,5 +135,7 @@
     "researchgate": "https://www.researchgate.net/profile/Jiarui-Li-91"
   },
   "footer": "研究 · 工程 · 独立实践",
-  "footerEn": "Research · Engineering · Independent Practice"
+  "footerEn": "Research · Engineering · Independent Practice",
+  "credentials": [],
+  "credentialsEn": []
 }

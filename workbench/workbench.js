@@ -19,6 +19,34 @@ function lines(raw) {
   return raw.split('\n').map((item) => item.trim()).filter(Boolean);
 }
 
+function educationLines(items) {
+  return (Array.isArray(items) ? items : []).map((item) => {
+    if (typeof item === 'string') return item;
+    return [item.period, item.institution, item.degree, item.details].filter(Boolean).join('｜');
+  });
+}
+
+function parseEducation(raw, fallback = []) {
+  return lines(raw).map((entry, index) => {
+    const parts = entry.split(/\s*[|｜]\s*/);
+    const previous = fallback[index] || {};
+    if (parts.length < 2) {
+      return {
+        period: previous.period || '',
+        institution: previous.institution || entry,
+        degree: previous.degree || '',
+        details: previous.details || ''
+      };
+    }
+    return {
+      period: parts[0] || previous.period || '',
+      institution: parts[1] || previous.institution || '',
+      degree: parts[2] || previous.degree || '',
+      details: parts.slice(3).join('｜') || previous.details || ''
+    };
+  });
+}
+
 function notify(message, isError = false) {
   clearTimeout(toastTimer);
   toast.textContent = message;
@@ -87,8 +115,8 @@ function renderEditor(data) {
   value('focus-list-en', (data.focusEn || []).join('\n'));
   value('focus-details', (data.focusDetails || []).join('\n'));
   value('focus-details-en', (data.focusDetailsEn || []).join('\n'));
-  value('credential-list', (data.credentials || []).join('\n'));
-  value('credential-list-en', (data.credentialsEn || []).join('\n'));
+  value('credential-list', educationLines(data.education?.length ? data.education : data.credentials).join('\n'));
+  value('credential-list-en', educationLines(data.educationEn?.length ? data.educationEn : data.credentialsEn).join('\n'));
   value('contact-email', data.contact.email);
   value('contact-wechat', data.contact.wechat);
   value('contact-github', data.contact.github);
@@ -149,6 +177,8 @@ function collectContent() {
     focusEn: lines(value('focus-list-en')),
     focusDetails: lines(value('focus-details')),
     focusDetailsEn: lines(value('focus-details-en')),
+    education: parseEducation(value('credential-list'), content.education),
+    educationEn: parseEducation(value('credential-list-en'), content.educationEn),
     credentials: lines(value('credential-list')),
     credentialsEn: lines(value('credential-list-en')),
     projects: collectRepeater('project'),
