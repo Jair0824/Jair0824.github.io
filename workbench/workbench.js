@@ -47,6 +47,11 @@ function parseEducation(raw, fallback = []) {
   });
 }
 
+const defaultNote = {
+  text: '科研经历与成果将在适合公开时持续更新，这里先呈现研究方向、教育经历与工作方法',
+  textEn: 'Research experience and results will be added when appropriate for public release, while this page focuses on my interests, education, and working methods'
+};
+
 function notify(message, isError = false) {
   clearTimeout(toastTimer);
   toast.textContent = message;
@@ -117,6 +122,9 @@ function renderEditor(data) {
   value('focus-details-en', (data.focusDetailsEn || []).join('\n'));
   value('credential-list', educationLines(data.education?.length ? data.education : data.credentials).join('\n'));
   value('credential-list-en', educationLines(data.educationEn?.length ? data.educationEn : data.credentialsEn).join('\n'));
+  const note = data.note && typeof data.note === 'object' ? data.note : defaultNote;
+  value('note-copy', note.text);
+  value('note-copy-en', note.textEn);
   value('contact-email', data.contact.email);
   value('contact-wechat', data.contact.wechat);
   value('contact-github', data.contact.github);
@@ -181,6 +189,10 @@ function collectContent() {
     educationEn: parseEducation(value('credential-list-en'), content.educationEn),
     credentials: lines(value('credential-list')),
     credentialsEn: lines(value('credential-list-en')),
+    note: {
+      text: value('note-copy').trim(),
+      textEn: value('note-copy-en').trim()
+    },
     projects: collectRepeater('project'),
     services: collectRepeater('service'),
     contact: {

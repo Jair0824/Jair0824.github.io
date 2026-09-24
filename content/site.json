@@ -41,42 +41,42 @@
     "等离子体中的输运、结构与实验方法",
     "等离子体光学、探针等诊断手段",
     "磁镜FRC及其参数",
-    "使用 C、Python、Fortran、Julia 和科学计算工具进行仿真与计算",
+    "科学计算与仿真",
     "探索 Agent 在科学研究辅助中的可靠用法"
   ],
   "focusDetailsEn": [
-    "Plasma transport, structures, and experimental techniques",
-    "Plasma optical diagnostics, probe diagnostics, and related methods",
-    "Magnetic mirrors, field-reversed configurations (FRC), and their parameters",
-    "Using C, Python, Fortran, Julia, and scientific-computing tools for simulation and computational studies",
-    "Exploring reliable uses of agents in scientific research"
+    "Plasma transport, structures, and experimental methods",
+    "Plasma optics, probe diagnostics, and other diagnostic techniques",
+    "Magnetic mirrors, field-reversed configurations (FRCs), and their parameters",
+    "Scientific computing and simulation",
+    "Exploring reliable uses of agents in scientific research assistance"
   ],
   "education": [
     {
       "period": "2026.09 — 至今",
       "institution": "中国科学技术大学",
       "degree": "硕士研究生 · 能源动力",
-      "details": "主修等离子体物理基础、高等电动力学与核聚变工程导论"
+      "details": "等离子体物理｜等离子体诊断｜场反位型(FRC)"
     },
     {
       "period": "2022.09 — 2026.06",
       "institution": "中国科学技术大学",
       "degree": "本科 · 空间科学与技术",
-      "details": "主修空间环境与航天工程、空间等离子体探测技术、科学计算与程序设计"
+      "details": "流星雷达观测｜流星余迹时空分布特征｜流星余迹通信｜中高层大气动力学"
     }
   ],
   "educationEn": [
     {
       "period": "Sep. 2026 — Present",
       "institution": "University of Science and Technology of China",
-      "degree": "M.Eng. · Energy and Power Engineering",
-      "details": "Coursework includes Fundamentals of Plasma Physics, Advanced Electrodynamics, and Introduction to Fusion Engineering"
+      "degree": "M.Eng. in Energy and Power Engineering",
+      "details": "Plasma Physics｜Plasma Diagnostics｜Field-Reversed Configuration (FRC)"
     },
     {
       "period": "Sep. 2022 — Jun. 2026",
       "institution": "University of Science and Technology of China",
-      "degree": "B.S. · Space Science and Technology",
-      "details": "Coursework includes Space Plasma Diagnostics, Space Environment and Astronautical Engineering, and Scientific Computing"
+      "degree": "B.S. in Space Science and Technology",
+      "details": "Meteor Radar Observations｜Spatiotemporal Characteristics of Meteor Trails｜Meteor-Trail Communications｜Middle and Upper Atmospheric Dynamics"
     }
   ],
   "projects": [
@@ -136,6 +136,16 @@
   },
   "footer": "研究 · 工程 · 独立实践",
   "footerEn": "Research · Engineering · Independent Practice",
-  "credentials": [],
-  "credentialsEn": []
+  "credentials": [
+    "2026.09 — 至今｜中国科学技术大学｜硕士研究生 · 能源动力｜等离子体物理｜等离子体诊断｜场反位型(FRC)",
+    "2022.09 — 2026.06｜中国科学技术大学｜本科 · 空间科学与技术｜流星雷达观测｜流星余迹时空分布特征｜流星余迹通信｜中高层大气动力学"
+  ],
+  "credentialsEn": [
+    "Sep. 2026 — Present｜University of Science and Technology of China｜M.Eng. in Energy and Power Engineering｜Plasma Physics｜Plasma Diagnostics｜Field-Reversed Configuration (FRC)",
+    "Sep. 2022 — Jun. 2026｜University of Science and Technology of China｜B.S. in Space Science and Technology｜Meteor Radar Observations｜Spatiotemporal Characteristics of Meteor Trails｜Meteor-Trail Communications｜Middle and Upper Atmospheric Dynamics"
+  ],
+  "note": {
+    "text": "",
+    "textEn": ""
+  }
 }

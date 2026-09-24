@@ -262,6 +262,25 @@ function renderAcademic(data) {
     row.append(copy);
     return row;
   }));
+
+  const note = document.querySelector('.editorial-note');
+  const configuredNote = data.note && typeof data.note === 'object';
+  const fallbackNote = interfaceCopy[currentLanguage].noteCopy;
+  const noteText = configuredNote
+    ? (currentLanguage === 'en' ? data.note.textEn : data.note.text)
+    : fallbackNote;
+  if (note) {
+    const normalizedNote = String(noteText || '').trim();
+    if (!normalizedNote) {
+      note.remove();
+      return;
+    }
+    note.hidden = false;
+    note.replaceChildren();
+    const label = make('span', '', 'NOTE');
+    label.setAttribute('aria-hidden', 'true');
+    note.append(label, make('p', '', normalizedNote));
+  }
 }
 
 function renderWorkstation(data) {
