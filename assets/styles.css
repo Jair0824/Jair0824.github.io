@@ -391,8 +391,9 @@ body > noscript {
 
 .identity-affiliation {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 11px;
   line-height: 1.5;
+  white-space: nowrap;
 }
 
 .identity-panel blockquote {
@@ -1221,10 +1222,14 @@ body > noscript {
 
   .identity-panel h1,
   .identity-role,
-  .identity-affiliation,
   .identity-lab {
     grid-column: 2;
     text-align: left;
+  }
+
+  .identity-affiliation {
+    grid-column: 1 / -1;
+    text-align: center;
   }
 
   .identity-panel h1 {

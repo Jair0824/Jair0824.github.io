@@ -19,6 +19,19 @@ function lines(raw) {
   return raw.split('\n').map((item) => item.trim()).filter(Boolean);
 }
 
+function objectLines(object) {
+  return Object.entries(object || {}).map(([key, item]) => `${key}=${item ?? ''}`).join('\n');
+}
+
+function parseKeyValue(raw) {
+  return lines(raw).reduce((result, entry) => {
+    const separator = entry.indexOf('=');
+    if (separator < 1) return result;
+    result[entry.slice(0, separator).trim()] = entry.slice(separator + 1).trim();
+    return result;
+  }, {});
+}
+
 function educationLines(items) {
   return (Array.isArray(items) ? items : []).map((item) => {
     if (typeof item === 'string') return item;
@@ -50,6 +63,54 @@ function parseEducation(raw, fallback = []) {
 const defaultNote = {
   text: '科研经历与成果将在适合公开时持续更新，这里先呈现研究方向、教育经历与工作方法',
   textEn: 'Research experience and results will be added when appropriate for public release, while this page focuses on my interests, education, and working methods'
+};
+
+const defaultSidebar = {
+  affiliation: '中国科学技术大学',
+  affiliationEn: 'University of Science and Technology of China',
+  lab: 'KMAX',
+  labEn: 'KMAX',
+  fieldLabel: '方向',
+  fieldLabelEn: 'Field',
+  locationLabel: '地点',
+  locationLabelEn: 'Based in',
+  location: '中国 · 合肥',
+  locationEn: 'Hefei, China',
+  educationLabel: '教育经历',
+  educationLabelEn: 'Education',
+  workRole: '独立合作',
+  workRoleEn: 'Independent Work',
+  workAffiliation: '独立开发与技术服务',
+  workAffiliationEn: 'Independent development and technical services',
+  availability: '可接受线上与线下合作',
+  availabilityEn: 'Available for online and local work',
+  responseLabel: '沟通语言',
+  responseLabelEn: 'Language',
+  responseValue: '中文优先 / English available',
+  responseValueEn: 'Chinese preferred / English available',
+  deliveryLabel: '工作方式',
+  deliveryLabelEn: 'Delivery',
+  deliveryValue: '阶段确认 · 可预览 · 可复核',
+  deliveryValueEn: 'Milestones · Previews · Verifiable results',
+  githubLabel: 'Jair0824',
+  githubLabelEn: 'Jair0824',
+  researchgateLabel: 'ResearchGate',
+  researchgateLabelEn: 'ResearchGate',
+  servicesLabel: '服务',
+  servicesLabelEn: 'Services',
+  backLabel: '返回研究',
+  backLabelEn: 'Back to research'
+};
+
+const defaultIcons = {
+  email: '✉',
+  github: '◇',
+  researchgate: '▥',
+  services: '↗',
+  back: '←',
+  arrow: '→',
+  external: '↗',
+  educationEmblem: 'assets/ustc-emblem.jpg'
 };
 
 function notify(message, isError = false) {
@@ -104,6 +165,20 @@ function renderEditor(data) {
   value('profile-headline-en', data.profile.headlineEn);
   value('profile-introduction', data.profile.introduction);
   value('profile-introduction-en', data.profile.introductionEn);
+  const sidebar = Object.fromEntries(Object.entries(defaultSidebar).map(([key, fallback]) => {
+    const configured = data.sidebar?.[key];
+    return [key, typeof configured === 'string' && configured.trim() ? configured : fallback];
+  }));
+  Object.entries(sidebar).forEach(([key, nextValue]) => {
+    value(`sidebar-${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`, nextValue);
+  });
+  value('ui-copy-zh', objectLines(data.ui?.zh));
+  value('ui-copy-en', objectLines(data.ui?.en));
+  const icons = Object.fromEntries(Object.entries(defaultIcons).map(([key, fallback]) => {
+    const configured = data.icons?.[key];
+    return [key, typeof configured === 'string' && configured.trim() ? configured : fallback];
+  }));
+  Object.entries(icons).forEach(([key, nextValue]) => value(`icon-${key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`, nextValue));
   value('meta-title', data.meta.siteTitle);
   value('meta-title-en', data.meta.siteTitleEn);
   value('meta-description', data.meta.description);
@@ -128,6 +203,7 @@ function renderEditor(data) {
   value('contact-email', data.contact.email);
   value('contact-wechat', data.contact.wechat);
   value('contact-github', data.contact.github);
+  value('contact-researchgate', data.contact.researchgate);
   value('footer-text', data.footer);
   value('footer-text-en', data.footerEn);
 
@@ -181,6 +257,56 @@ function collectContent() {
       introduction: value('profile-introduction').trim(),
       introductionEn: value('profile-introduction-en').trim()
     },
+    sidebar: {
+      affiliation: value('sidebar-affiliation').trim(),
+      affiliationEn: value('sidebar-affiliation-en').trim(),
+      lab: value('sidebar-lab').trim(),
+      labEn: value('sidebar-lab-en').trim(),
+      fieldLabel: value('sidebar-field-label').trim(),
+      fieldLabelEn: value('sidebar-field-label-en').trim(),
+      locationLabel: value('sidebar-location-label').trim(),
+      locationLabelEn: value('sidebar-location-label-en').trim(),
+      location: value('sidebar-location').trim(),
+      locationEn: value('sidebar-location-en').trim(),
+      educationLabel: value('sidebar-education-label').trim(),
+      educationLabelEn: value('sidebar-education-label-en').trim(),
+      workRole: value('sidebar-work-role').trim(),
+      workRoleEn: value('sidebar-work-role-en').trim(),
+      workAffiliation: value('sidebar-work-affiliation').trim(),
+      workAffiliationEn: value('sidebar-work-affiliation-en').trim(),
+      availability: value('sidebar-availability').trim(),
+      availabilityEn: value('sidebar-availability-en').trim(),
+      responseLabel: value('sidebar-response-label').trim(),
+      responseLabelEn: value('sidebar-response-label-en').trim(),
+      responseValue: value('sidebar-response-value').trim(),
+      responseValueEn: value('sidebar-response-value-en').trim(),
+      deliveryLabel: value('sidebar-delivery-label').trim(),
+      deliveryLabelEn: value('sidebar-delivery-label-en').trim(),
+      deliveryValue: value('sidebar-delivery-value').trim(),
+      deliveryValueEn: value('sidebar-delivery-value-en').trim(),
+      githubLabel: value('sidebar-github-label').trim(),
+      githubLabelEn: value('sidebar-github-label-en').trim(),
+      researchgateLabel: value('sidebar-researchgate-label').trim(),
+      researchgateLabelEn: value('sidebar-researchgate-label-en').trim(),
+      servicesLabel: value('sidebar-services-label').trim(),
+      servicesLabelEn: value('sidebar-services-label-en').trim(),
+      backLabel: value('sidebar-back-label').trim(),
+      backLabelEn: value('sidebar-back-label-en').trim()
+    },
+    ui: {
+      zh: parseKeyValue(value('ui-copy-zh')),
+      en: parseKeyValue(value('ui-copy-en'))
+    },
+    icons: {
+      email: value('icon-email').trim(),
+      github: value('icon-github').trim(),
+      researchgate: value('icon-researchgate').trim(),
+      services: value('icon-services').trim(),
+      back: value('icon-back').trim(),
+      arrow: value('icon-arrow').trim(),
+      external: value('icon-external').trim(),
+      educationEmblem: value('icon-education-emblem').trim()
+    },
     focus: lines(value('focus-list')),
     focusEn: lines(value('focus-list-en')),
     focusDetails: lines(value('focus-details')),
@@ -199,7 +325,8 @@ function collectContent() {
       ...content.contact,
       email: value('contact-email').trim(),
       wechat: value('contact-wechat').trim(),
-      github: value('contact-github').trim()
+      github: value('contact-github').trim(),
+      researchgate: value('contact-researchgate').trim()
     },
     footer: value('footer-text').trim(),
     footerEn: value('footer-text-en').trim()

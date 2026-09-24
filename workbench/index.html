@@ -53,6 +53,70 @@
         </fieldset>
 
         <fieldset>
+          <legend>侧边栏内容</legend>
+          <div class="field-grid two-columns">
+            <label>学校名称<input id="sidebar-affiliation" type="text"></label>
+            <label>学校名称（英文）<input id="sidebar-affiliation-en" type="text"></label>
+            <label>KMAX 文案<input id="sidebar-lab" type="text"></label>
+            <label>KMAX 文案（英文）<input id="sidebar-lab-en" type="text"></label>
+            <label>方向标签<input id="sidebar-field-label" type="text"></label>
+            <label>方向标签（英文）<input id="sidebar-field-label-en" type="text"></label>
+            <label>地点标签<input id="sidebar-location-label" type="text"></label>
+            <label>地点标签（英文）<input id="sidebar-location-label-en" type="text"></label>
+            <label>地点<input id="sidebar-location" type="text"></label>
+            <label>地点（英文）<input id="sidebar-location-en" type="text"></label>
+            <label>教育经历标题<input id="sidebar-education-label" type="text"></label>
+            <label>教育经历标题（英文）<input id="sidebar-education-label-en" type="text"></label>
+          </div>
+          <div class="field-grid two-columns">
+            <label>合作页身份<input id="sidebar-work-role" type="text"></label>
+            <label>合作页身份（英文）<input id="sidebar-work-role-en" type="text"></label>
+            <label>合作页副标题<input id="sidebar-work-affiliation" type="text"></label>
+            <label>合作页副标题（英文）<input id="sidebar-work-affiliation-en" type="text"></label>
+            <label>可合作状态<input id="sidebar-availability" type="text"></label>
+            <label>可合作状态（英文）<input id="sidebar-availability-en" type="text"></label>
+            <label>沟通语言标签<input id="sidebar-response-label" type="text"></label>
+            <label>沟通语言标签（英文）<input id="sidebar-response-label-en" type="text"></label>
+            <label>沟通语言内容<input id="sidebar-response-value" type="text"></label>
+            <label>沟通语言内容（英文）<input id="sidebar-response-value-en" type="text"></label>
+            <label>工作方式标签<input id="sidebar-delivery-label" type="text"></label>
+            <label>工作方式标签（英文）<input id="sidebar-delivery-label-en" type="text"></label>
+            <label>工作方式内容<input id="sidebar-delivery-value" type="text"></label>
+            <label>工作方式内容（英文）<input id="sidebar-delivery-value-en" type="text"></label>
+          </div>
+          <div class="field-grid two-columns">
+            <label>GitHub 链接文字<input id="sidebar-github-label" type="text"></label>
+            <label>GitHub 链接文字（英文）<input id="sidebar-github-label-en" type="text"></label>
+            <label>ResearchGate 链接文字<input id="sidebar-researchgate-label" type="text"></label>
+            <label>ResearchGate 链接文字（英文）<input id="sidebar-researchgate-label-en" type="text"></label>
+            <label>服务入口文字<input id="sidebar-services-label" type="text"></label>
+            <label>服务入口文字（英文）<input id="sidebar-services-label-en" type="text"></label>
+            <label>返回研究文字<input id="sidebar-back-label" type="text"></label>
+            <label>返回研究文字（英文）<input id="sidebar-back-label-en" type="text"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>页面文字</legend>
+          <label>中文界面文字 <span>格式：key=文字，每行一项；可修改等号后的内容</span><textarea id="ui-copy-zh" rows="16"></textarea></label>
+          <label>英文界面文字 <span>格式：key=text，每行一项；可修改等号后的内容</span><textarea id="ui-copy-en" rows="16"></textarea></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>图标与图片</legend>
+          <div class="field-grid two-columns">
+            <label>邮箱图标<input id="icon-email" type="text"></label>
+            <label>GitHub 图标<input id="icon-github" type="text"></label>
+            <label>ResearchGate 图标<input id="icon-researchgate" type="text"></label>
+            <label>服务入口图标<input id="icon-services" type="text"></label>
+            <label>返回研究图标<input id="icon-back" type="text"></label>
+            <label>按钮箭头图标<input id="icon-arrow" type="text"></label>
+            <label>外链箭头图标<input id="icon-external" type="text"></label>
+            <label>教育徽标图片地址<input id="icon-education-emblem" type="text"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
           <legend>动态视觉</legend>
           <label class="check-row"><input id="visual-motion" type="checkbox"><span><strong>启用等离子体流场</strong><small>关闭后显示静态科学纹理，并遵循系统的“减少动态效果”设置。</small></span></label>
           <div class="field-grid two-columns">
@@ -100,6 +164,7 @@
             <label>微信（可选）<input id="contact-wechat" type="text"></label>
           </div>
           <label>GitHub 主页<input id="contact-github" type="url" required></label>
+          <label>ResearchGate 主页（可选）<input id="contact-researchgate" type="url"></label>
           <label>页脚文字<input id="footer-text" type="text"></label>
           <label>页脚文字（英文）<input id="footer-text-en" type="text"></label>
         </fieldset>

@@ -15,7 +15,7 @@ const interfaceCopy = {
     navServices: '服务',
     profileLabel: '个人信息',
     plasmaVisualLabel: '等离子体动态视觉',
-    labValue: 'KMAX 实验室',
+    labValue: 'KMAX',
     educationLabel: '教育经历',
     educationMasters: '硕士研究生 · 能源动力',
     educationBachelor: '本科 · 空间科学与技术',
@@ -64,6 +64,7 @@ const interfaceCopy = {
     responseValue: '中文优先 / English available',
     deliveryLabel: '工作方式',
     deliveryValue: '阶段确认 · 可预览 · 可复核',
+    workPageTitle: 'GarryLee | 独立合作',
     toolsLabel: '开发协作',
     toolsValue: 'Agent 协作工作流',
     servicesKicker: 'WHAT I CAN DO',
@@ -98,7 +99,7 @@ const interfaceCopy = {
     navServices: 'Services',
     profileLabel: 'Profile information',
     plasmaVisualLabel: 'Animated plasma field',
-    labValue: 'KMAX Laboratory',
+    labValue: 'KMAX',
     educationLabel: 'Education',
     educationMasters: 'M.Eng. · Energy and Power Engineering',
     educationBachelor: 'B.S. · Space Science and Technology',
@@ -147,6 +148,7 @@ const interfaceCopy = {
     responseValue: 'Chinese preferred / English available',
     deliveryLabel: 'Delivery',
     deliveryValue: 'Milestones · Previews · Verifiable results',
+    workPageTitle: 'GarryLee | Independent Work',
     toolsLabel: 'Workflow',
     toolsValue: 'Agent-assisted workflow',
     servicesKicker: 'WHAT I CAN DO',
@@ -172,6 +174,13 @@ const interfaceCopy = {
 
 let siteData = null;
 let currentLanguage = readLanguage();
+
+function activeCopy() {
+  return {
+    ...interfaceCopy[currentLanguage],
+    ...(siteData?.ui?.[currentLanguage] || {})
+  };
+}
 
 function readLanguage() {
   try {
@@ -201,6 +210,24 @@ function localizedArray(data, key, language = currentLanguage) {
   return Array.isArray(translated) && translated.length ? translated : fallback;
 }
 
+function sidebarText(data, key, fallbackKey, literalFallback = '') {
+  const configured = data.sidebar;
+  const localizedKey = currentLanguage === 'en' ? `${key}En` : key;
+  if (configured && Object.prototype.hasOwnProperty.call(configured, localizedKey)) {
+    const value = String(configured[localizedKey] ?? '').trim();
+    if (value) return value;
+  }
+  return fallbackKey ? (activeCopy()[fallbackKey] || '') : literalFallback;
+}
+
+function iconText(data, key, fallback) {
+  if (data.icons && Object.prototype.hasOwnProperty.call(data.icons, key)) {
+    const value = String(data.icons[key] ?? '').trim();
+    if (value) return value;
+  }
+  return fallback;
+}
+
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = value || '';
@@ -213,8 +240,70 @@ function make(tag, className, value) {
   return element;
 }
 
+function renderSidebar(data) {
+  setText('brand-name', data.profile.name);
+  setText('sidebar-affiliation', sidebarText(data, 'affiliation', 'ustc'));
+  setText('sidebar-lab', sidebarText(data, 'lab', 'labValue'));
+  setText('sidebar-field-label', sidebarText(data, 'fieldLabel', 'fieldLabel'));
+  setText('sidebar-location-label', sidebarText(data, 'locationLabel', 'locationLabel'));
+  setText('sidebar-location', sidebarText(data, 'location', 'location'));
+  setText('sidebar-education-title', sidebarText(data, 'educationLabel', 'educationLabel'));
+
+  const educationList = document.getElementById('sidebar-education-list');
+  if (educationList) {
+    const education = currentLanguage === 'en' && Array.isArray(data.educationEn) && data.educationEn.length
+      ? data.educationEn
+      : (Array.isArray(data.education) ? data.education : []);
+    educationList.replaceChildren(...education.map((item) => {
+      const row = make('div', 'sidebar-education-item');
+      const emblem = make('img', 'education-emblem');
+      emblem.src = iconText(data, 'educationEmblem', 'assets/ustc-emblem.jpg');
+      emblem.alt = '';
+      emblem.width = 24;
+      emblem.height = 24;
+      const copy = make('div');
+      copy.append(
+        make('strong', '', localized(item, 'institution')),
+        make('p', '', localized(item, 'degree')),
+        make('time', '', localized(item, 'period'))
+      );
+      row.append(emblem, copy);
+      return row;
+    }));
+  }
+
+  setText('work-profile-name', data.profile.name);
+  setText('work-sidebar-role', sidebarText(data, 'workRole', 'workstationEntryTitle'));
+  setText('work-sidebar-affiliation', sidebarText(data, 'workAffiliation', 'workIdentityCopy'));
+  setText('work-sidebar-lab', sidebarText(data, 'lab', 'labValue'));
+  setText('work-availability', sidebarText(data, 'availability', 'availableStatus'));
+  setText('work-response-label', sidebarText(data, 'responseLabel', 'responseLabel'));
+  setText('work-response-value', sidebarText(data, 'responseValue', 'responseValue'));
+  setText('work-delivery-label', sidebarText(data, 'deliveryLabel', 'deliveryLabel'));
+  setText('work-delivery-value', sidebarText(data, 'deliveryValue', 'deliveryValue'));
+  setText('work-tools-label', activeCopy().toolsLabel);
+  setText('work-tools-value', activeCopy().toolsValue);
+
+  setText('github-label', sidebarText(data, 'githubLabel', null, 'GitHub'));
+  setText('work-github-label', sidebarText(data, 'githubLabel', null, 'GitHub'));
+  setText('researchgate-label', sidebarText(data, 'researchgateLabel', 'researchgateLabel'));
+  setText('work-researchgate-label', sidebarText(data, 'researchgateLabel', 'researchgateLabel'));
+  setText('services-label', sidebarText(data, 'servicesLabel', 'navServices'));
+  setText('back-label', sidebarText(data, 'backLabel', 'backAcademic'));
+  setText('email-icon', iconText(data, 'email', '✉'));
+  setText('work-email-icon', iconText(data, 'email', '✉'));
+  setText('github-icon', iconText(data, 'github', '◇'));
+  setText('work-github-icon', iconText(data, 'github', '◇'));
+  setText('researchgate-icon', iconText(data, 'researchgate', '▥'));
+  setText('work-researchgate-icon', iconText(data, 'researchgate', '▥'));
+  setText('services-icon', iconText(data, 'services', '↗'));
+  setText('back-icon', iconText(data, 'back', '←'));
+  setText('about-services-icon', iconText(data, 'arrow', '→'));
+  setText('work-discuss-icon', iconText(data, 'arrow', '→'));
+}
+
 function applyInterfaceLanguage() {
-  const copy = interfaceCopy[currentLanguage];
+  const copy = activeCopy();
   document.documentElement.lang = currentLanguage === 'zh' ? 'zh-CN' : 'en';
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const value = copy[element.dataset.i18n];
@@ -265,7 +354,7 @@ function renderAcademic(data) {
 
   const note = document.querySelector('.editorial-note');
   const configuredNote = data.note && typeof data.note === 'object';
-  const fallbackNote = interfaceCopy[currentLanguage].noteCopy;
+  const fallbackNote = activeCopy().noteCopy;
   const noteText = configuredNote
     ? (currentLanguage === 'en' ? data.note.textEn : data.note.text)
     : fallbackNote;
@@ -277,7 +366,7 @@ function renderAcademic(data) {
     }
     note.hidden = false;
     note.replaceChildren();
-    const label = make('span', '', 'NOTE');
+    const label = make('span', '', activeCopy().noteTitle || 'NOTE');
     label.setAttribute('aria-hidden', 'true');
     note.append(label, make('p', '', normalizedNote));
   }
@@ -285,7 +374,7 @@ function renderAcademic(data) {
 
 function renderWorkstation(data) {
   const serviceList = document.getElementById('service-list');
-  serviceList.replaceChildren(...data.services.map((service) => {
+  serviceList.replaceChildren(...(Array.isArray(data.services) ? data.services : []).map((service) => {
     const article = make('article', 'service-card');
     article.append(make('h3', '', localized(service, 'title')));
     article.append(make('p', '', localized(service, 'description')));
@@ -293,7 +382,7 @@ function renderWorkstation(data) {
   }));
 
   const projectList = document.getElementById('project-list');
-  projectList.replaceChildren(...data.projects.map((project) => {
+  projectList.replaceChildren(...(Array.isArray(data.projects) ? data.projects : []).map((project) => {
     const article = make('article', 'project-item');
     const preview = make('div', 'project-preview');
     preview.setAttribute('aria-label', localized(project, 'title'));
@@ -312,7 +401,7 @@ function renderWorkstation(data) {
     const tags = make('div', 'tag-list');
     const selectedTags = currentLanguage === 'en' && Array.isArray(project.tagsEn) && project.tagsEn.length ? project.tagsEn : project.tags;
     selectedTags.forEach((tag) => tags.append(make('span', '', tag)));
-    const link = make('a', 'project-link', `${localized(project, 'linkLabel')} ↗`);
+    const link = make('a', 'project-link', `${localized(project, 'linkLabel')} ${iconText(data, 'external', '↗')}`);
     link.href = project.url;
     link.target = '_blank';
     link.rel = 'noreferrer';
@@ -331,21 +420,37 @@ function renderContact(data) {
     if (strong) strong.textContent = data.contact.email;
   });
 
+  const contactEmailLink = document.getElementById('contact-email-link');
+  if (contactEmailLink) contactEmailLink.href = `mailto:${data.contact.email}`;
+  setText('contact-email-value', data.contact.email);
+
+  const footerEmailLink = document.getElementById('footer-email-link');
+  if (footerEmailLink) footerEmailLink.href = `mailto:${data.contact.email}`;
+
   ['github-link', 'work-github-link'].forEach((id) => {
     const link = document.getElementById(id);
     if (!link) return;
     link.href = data.contact.github;
     const strong = link.querySelector('strong');
-    if (strong) strong.textContent = data.contact.github.split('/').filter(Boolean).pop();
+    const configuredLabel = data.sidebar && Object.prototype.hasOwnProperty.call(
+      data.sidebar,
+      currentLanguage === 'en' ? 'githubLabelEn' : 'githubLabel'
+    );
+    if (strong) {
+      strong.textContent = configuredLabel
+        ? sidebarText(data, 'githubLabel', null, '')
+        : data.contact.github.split('/').filter(Boolean).pop();
+    }
   });
 
   ['researchgate-link', 'work-researchgate-link'].forEach((id) => {
     const link = document.getElementById(id);
-    if (!link || !data.contact.researchgate) return;
+    if (!link || !data.contact?.researchgate) return;
     link.href = data.contact.researchgate;
   });
 
   setText('wechat-value', data.contact.wechat);
+  setText('contact-icon', iconText(data, 'external', '↗'));
   setText('footer-copyright', `© ${new Date().getFullYear()} ${data.profile.name}`);
   setText('footer-text', localized(data, 'footer'));
 }
@@ -355,11 +460,12 @@ function renderSite(data) {
   const title = currentLanguage === 'en' ? data.meta.siteTitleEn : data.meta.siteTitle;
   const description = currentLanguage === 'en' ? data.meta.descriptionEn : data.meta.description;
   document.title = document.body.dataset.page === 'workstation'
-    ? (currentLanguage === 'en' ? 'GarryLee | Independent Work' : 'GarryLee | 独立合作')
+    ? (activeCopy().workPageTitle || (currentLanguage === 'en' ? 'GarryLee | Independent Work' : 'GarryLee | 独立合作'))
     : title;
   document.querySelector('meta[name="description"]').setAttribute('content', description);
   document.documentElement.style.setProperty('--accent', data.meta.accent || '#6f9db5');
 
+  renderSidebar(data);
   if (document.body.dataset.page === 'academic') renderAcademic(data);
   else renderWorkstation(data);
   renderContact(data);
