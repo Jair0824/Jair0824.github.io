@@ -150,12 +150,12 @@
   "footer": "研究 · 工程 · 独立实践",
   "footerEn": "Research · Engineering · Independent Practice",
   "credentials": [
-    "2026.09 — 至今｜中国科学技术大学｜硕士研究生 · 能源动力｜等离子体物理｜等离子体诊断｜场反位型(FRC)",
-    "2022.09 — 2026.06｜中国科学技术大学｜本科 · 空间科学与技术｜流星雷达观测｜流星余迹时空分布特征｜流星余迹通信｜中高层大气动力学"
+    "2026.09 — 至今 || 中国科学技术大学 || 硕士研究生 · 能源动力 || 等离子体物理｜等离子体诊断｜场反位型(FRC) || 孙玄 || https://faculty.ustc.edu.cn/sunxuan/zh_CN/index.htm",
+    "2022.09 — 2026.06 || 中国科学技术大学 || 本科 · 空间科学与技术 || 流星雷达观测｜流星余迹时空分布特征｜流星余迹通信｜中高层大气动力学 || 易稳 || https://faculty.ustc.edu.cn/Wen_Yi/zh_CN/index.htm"
   ],
   "credentialsEn": [
-    "Sep. 2026 — Present｜University of Science and Technology of China｜M.Eng. in Energy and Power Engineering｜Plasma Physics｜Plasma Diagnostics｜Field-Reversed Configuration (FRC)",
-    "Sep. 2022 — Jun. 2026｜University of Science and Technology of China｜B.S. in Space Science and Technology｜Meteor Radar Observations｜Spatiotemporal Characteristics of Meteor Trails｜Meteor-Trail Communications｜Middle and Upper Atmospheric Dynamics"
+    "Sep. 2026 — Present || University of Science and Technology of China || M.Eng. in Energy and Power Engineering || Plasma Physics｜Plasma Diagnostics｜Field-Reversed Configuration (FRC) || Prof. Xuan Sun || https://faculty.ustc.edu.cn/sunxuan/zh_CN/index.htm",
+    "Sep. 2022 — Jun. 2026 || University of Science and Technology of China || B.S. in Space Science and Technology || Meteor Radar Observations｜Spatiotemporal Characteristics of Meteor Trails｜Meteor-Trail Communications｜Middle and Upper Atmospheric Dynamics || Prof. Wen Yi || https://faculty.ustc.edu.cn/Wen_Yi/zh_CN/index.htm"
   ],
   "note": {
     "text": "",
@@ -241,17 +241,17 @@
       "researchIntro": "从物理机制出发，关注理论、诊断、计算与数据表达之间的联系",
       "overviewKicker": "ACADEMIC OVERVIEW",
       "overviewTitle": "学术概览",
-      "overviewIntro": "这里整理教育经历与研究训练，后续将逐步补充成熟的项目与成果",
+      "overviewIntro": "",
       "contributionsKicker": "GITHUB ACTIVITY",
-      "contributionsTitle": "GitHub 贡献",
-      "contributionsIntro": "公开代码与项目维护记录",
+      "contributionsTitle": "GitHub",
+      "contributionsIntro": "",
       "contributionsLink": "查看 GitHub 主页",
       "contributionsAlt": "{username} 的 GitHub 贡献记录",
       "noteTitle": "关于公开内容",
       "noteCopy": "科研经历与成果将在适合公开时持续更新，这里先呈现研究方向、教育经历与工作方法",
       "beyondResearch": "BEYOND RESEARCH · 研究之外",
       "workstationEntryTitle": "合作",
-      "workstationEntryCopy": "我也承接数据分析、网站制作与物理辅导等独立工作，相关能力、案例和合作方式集中放在服务页面",
+      "workstationEntryCopy": "数据分析、网站制作与物理辅导等独立工作，相关能力、案例和合作方式可以通过服务页面了解",
       "openWorkstation": "查看服务",
       "contactMe": "联系我",
       "academicHome": "研究",
@@ -332,10 +332,10 @@
       "researchIntro": "Starting from physical mechanisms, I am interested in the links between theory, diagnostics, computation, and data representation",
       "overviewKicker": "ACADEMIC OVERVIEW",
       "overviewTitle": "Academic Overview",
-      "overviewIntro": "This page brings together my education and research training, with mature projects and results added over time",
+      "overviewIntro": "",
       "contributionsKicker": "GITHUB ACTIVITY",
       "contributionsTitle": "GitHub Contributions",
-      "contributionsIntro": "Public coding and project maintenance activity",
+      "contributionsIntro": "",
       "contributionsLink": "View GitHub profile",
       "contributionsAlt": "GitHub contribution history for {username}",
       "noteTitle": "About public materials",
