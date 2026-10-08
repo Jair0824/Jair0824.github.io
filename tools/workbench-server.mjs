@@ -62,6 +62,10 @@ function validateContent(data) {
     if (!Number.isFinite(data.visual.flowSpeed) || data.visual.flowSpeed <= 0 || data.visual.flowSpeed > 2) throw new Error('流动速度超出范围');
     if (!/^#[0-9a-f]{6}$/i.test(data.visual.primaryColor || '') || !/^#[0-9a-f]{6}$/i.test(data.visual.secondaryColor || '')) throw new Error('流场颜色格式无效');
   }
+  const githubUsername = String(data.githubContributions?.username || '').trim();
+  if (data.githubContributions?.enabled !== false && githubUsername && !/^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(githubUsername)) {
+    throw new Error('GitHub 用户名格式无效');
+  }
   requireString(data.profile?.name, '显示姓名');
   requireString(data.profile?.headline, '首页主标题');
   requireString(data.profile?.headlineEn, '英文首页主标题');

@@ -191,6 +191,8 @@ function renderEditor(data) {
   value('visual-secondary', data.visual?.secondaryColor ?? '#46a99a');
   value('density-output', value('visual-density'));
   value('speed-output', Number(value('visual-speed')).toFixed(2));
+  document.getElementById('github-contributions-enabled').checked = data.githubContributions?.enabled !== false;
+  value('github-contributions-username', data.githubContributions?.username ?? 'Jair0824');
   value('focus-list', (data.focus || []).join('\n'));
   value('focus-list-en', (data.focusEn || []).join('\n'));
   value('focus-details', (data.focusDetails || []).join('\n'));
@@ -245,6 +247,11 @@ function collectContent() {
       flowSpeed: Number(value('visual-speed')),
       primaryColor: value('visual-primary'),
       secondaryColor: value('visual-secondary')
+    },
+    githubContributions: {
+      ...content.githubContributions,
+      enabled: document.getElementById('github-contributions-enabled').checked,
+      username: value('github-contributions-username').trim()
     },
     profile: {
       ...content.profile,

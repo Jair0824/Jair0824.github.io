@@ -3,6 +3,8 @@ name: Deploy personal website
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "17 2 * * *"
   workflow_dispatch:
 
 permissions:
@@ -27,6 +29,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Update GitHub contributions
+        run: node tools/update-contributions.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build public files
         run: node tools/build.mjs
       - name: Configure Pages

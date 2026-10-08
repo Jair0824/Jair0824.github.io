@@ -42,6 +42,11 @@ const interfaceCopy = {
     overviewKicker: 'ACADEMIC OVERVIEW',
     overviewTitle: '学术概览',
     overviewIntro: '这里整理教育经历与研究训练，后续将逐步补充成熟的项目与成果',
+    contributionsKicker: 'GITHUB ACTIVITY',
+    contributionsTitle: 'GitHub 贡献',
+    contributionsIntro: '公开代码与项目维护记录',
+    contributionsLink: '查看 GitHub 主页',
+    contributionsAlt: '{username} 的 GitHub 贡献记录',
     noteTitle: '关于公开内容',
     noteCopy: '科研经历与成果将在适合公开时持续更新，这里先呈现研究方向、教育经历与工作方法',
     beyondResearch: 'BEYOND RESEARCH · 研究之外',
@@ -126,6 +131,11 @@ const interfaceCopy = {
     overviewKicker: 'ACADEMIC OVERVIEW',
     overviewTitle: 'Academic Overview',
     overviewIntro: 'This page brings together my education and research training, with mature projects and results added over time',
+    contributionsKicker: 'GITHUB ACTIVITY',
+    contributionsTitle: 'GitHub Contributions',
+    contributionsIntro: 'Public coding and project maintenance activity',
+    contributionsLink: 'View GitHub profile',
+    contributionsAlt: 'GitHub contribution history for {username}',
     noteTitle: 'About public materials',
     noteCopy: 'Research experience and results will be added when appropriate for public release, while this page focuses on my interests, education, and working methods',
     beyondResearch: 'BEYOND RESEARCH',
@@ -318,6 +328,36 @@ function applyInterfaceLanguage() {
   });
 }
 
+function renderContributions(data) {
+  const section = document.getElementById('contributions');
+  if (!section) return;
+
+  let username = String(data.githubContributions?.username || '').trim();
+  if (!username) {
+    try {
+      username = new URL(data.contact?.github || '').pathname.split('/').filter(Boolean)[0] || '';
+    } catch {
+      username = '';
+    }
+  }
+
+  const visible = data.githubContributions?.enabled !== false && Boolean(username);
+  section.hidden = !visible;
+  if (!visible) return;
+
+  const profileUrl = `https://github.com/${encodeURIComponent(username)}`;
+  ['contributions-profile-link', 'contributions-text-link'].forEach((id) => {
+    const link = document.getElementById(id);
+    if (link) link.href = profileUrl;
+  });
+  setText('contributions-username', `@${username}`);
+
+  const chart = document.getElementById('contributions-chart');
+  if (chart) {
+    chart.alt = String(activeCopy().contributionsAlt || '').replaceAll('{username}', username);
+  }
+}
+
 function renderAcademic(data) {
   setText('profile-name', data.profile.name);
   setText('profile-field', localized(data.profile, 'eyebrow'));
@@ -351,6 +391,8 @@ function renderAcademic(data) {
     row.append(copy);
     return row;
   }));
+
+  renderContributions(data);
 
   const note = document.querySelector('.editorial-note');
   const configuredNote = data.note && typeof data.note === 'object';
