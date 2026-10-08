@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="../assets/ustc-emblem.jpg">
   <title>GarryLee 网站工作台</title>
   <link rel="stylesheet" href="/workbench/workbench.css">
   <script src="/workbench/workbench.js" defer></script>
@@ -89,6 +90,8 @@
             <label>GitHub 链接文字（英文）<input id="sidebar-github-label-en" type="text"></label>
             <label>ResearchGate 链接文字<input id="sidebar-researchgate-label" type="text"></label>
             <label>ResearchGate 链接文字（英文）<input id="sidebar-researchgate-label-en" type="text"></label>
+            <label>简历链接文字<input id="sidebar-resume-label" type="text"></label>
+            <label>简历链接文字（英文）<input id="sidebar-resume-label-en" type="text"></label>
             <label>服务入口文字<input id="sidebar-services-label" type="text"></label>
             <label>服务入口文字（英文）<input id="sidebar-services-label-en" type="text"></label>
             <label>返回研究文字<input id="sidebar-back-label" type="text"></label>
@@ -105,11 +108,12 @@
         <fieldset>
           <legend>图标与图片</legend>
           <div class="field-grid two-columns">
-            <label>邮箱图标<input id="icon-email" type="text"></label>
-            <label>GitHub 图标<input id="icon-github" type="text"></label>
-            <label>ResearchGate 图标<input id="icon-researchgate" type="text"></label>
-            <label>服务入口图标<input id="icon-services" type="text"></label>
-            <label>返回研究图标<input id="icon-back" type="text"></label>
+            <label>邮箱图标地址或字符<input id="icon-email" type="text"></label>
+            <label>GitHub 图标地址或字符<input id="icon-github" type="text"></label>
+            <label>ResearchGate 图标地址或字符<input id="icon-researchgate" type="text"></label>
+            <label>服务入口图标地址或字符<input id="icon-services" type="text"></label>
+            <label>简历图标地址或字符<input id="icon-resume" type="text"></label>
+            <label>返回研究图标地址或字符<input id="icon-back" type="text"></label>
             <label>按钮箭头图标<input id="icon-arrow" type="text"></label>
             <label>外链箭头图标<input id="icon-external" type="text"></label>
             <label>教育徽标图片地址<input id="icon-education-emblem" type="text"></label>
@@ -141,8 +145,8 @@
           <label>当前关注（英文）<span>与中文逐行对应</span><textarea id="focus-list-en" rows="5"></textarea></label>
           <label>方向说明 <span>每行一项，与“当前关注”逐行对应</span><textarea id="focus-details" rows="6"></textarea></label>
           <label>方向说明（英文）<span>与中文逐行对应</span><textarea id="focus-details-en" rows="6"></textarea></label>
-          <label>学术概览 <span>格式：时间｜学校｜学位｜说明，每行一项</span><textarea id="credential-list" rows="5"></textarea></label>
-          <label>学术概览（英文）<span>格式：Period｜Institution｜Degree｜Details，每行一项</span><textarea id="credential-list-en" rows="5"></textarea></label>
+          <label>学术概览 <span>格式：时间 || 学校 || 学位 || 说明 || 导师 || 导师链接，每行一项</span><textarea id="credential-list" rows="6"></textarea></label>
+          <label>学术概览（英文）<span>格式：Period || Institution || Degree || Details || Advisor || Advisor URL，每行一项</span><textarea id="credential-list-en" rows="6"></textarea></label>
           <label>页面提示（可选）<span>留空后隐藏主页学术概览下方的 NOTE 提示</span><textarea id="note-copy" rows="3"></textarea></label>
           <label>页面提示（英文，可选）<span>留空后隐藏英文页面中的 NOTE 提示</span><textarea id="note-copy-en" rows="3"></textarea></label>
         </fieldset>
@@ -171,6 +175,7 @@
           </div>
           <label>GitHub 主页<input id="contact-github" type="url" required></label>
           <label>ResearchGate 主页（可选）<input id="contact-researchgate" type="url"></label>
+          <label>个人简历文件地址（可选）<input id="contact-resume" type="text" placeholder="assets/Jiarui_Li_English_Resume.pdf"></label>
           <label>页脚文字<input id="footer-text" type="text"></label>
           <label>页脚文字（英文）<input id="footer-text-en" type="text"></label>
         </fieldset>

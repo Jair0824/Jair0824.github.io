@@ -60,13 +60,17 @@
       "period": "2026.09 — 至今",
       "institution": "中国科学技术大学",
       "degree": "硕士研究生 · 能源动力",
-      "details": "等离子体物理｜等离子体诊断｜场反位型(FRC)"
+      "details": "等离子体物理｜等离子体诊断｜场反位型(FRC)",
+      "advisor": "孙玄",
+      "advisorUrl": "https://faculty.ustc.edu.cn/sunxuan/zh_CN/index.htm"
     },
     {
       "period": "2022.09 — 2026.06",
       "institution": "中国科学技术大学",
       "degree": "本科 · 空间科学与技术",
-      "details": "流星雷达观测｜流星余迹时空分布特征｜流星余迹通信｜中高层大气动力学"
+      "details": "流星雷达观测｜流星余迹时空分布特征｜流星余迹通信｜中高层大气动力学",
+      "advisor": "易稳",
+      "advisorUrl": "https://faculty.ustc.edu.cn/Wen_Yi/zh_CN/index.htm"
     }
   ],
   "educationEn": [
@@ -74,13 +78,17 @@
       "period": "Sep. 2026 — Present",
       "institution": "University of Science and Technology of China",
       "degree": "M.Eng. in Energy and Power Engineering",
-      "details": "Plasma Physics｜Plasma Diagnostics｜Field-Reversed Configuration (FRC)"
+      "details": "Plasma Physics｜Plasma Diagnostics｜Field-Reversed Configuration (FRC)",
+      "advisor": "Prof. Xuan Sun",
+      "advisorUrl": "https://faculty.ustc.edu.cn/sunxuan/zh_CN/index.htm"
     },
     {
       "period": "Sep. 2022 — Jun. 2026",
       "institution": "University of Science and Technology of China",
       "degree": "B.S. in Space Science and Technology",
-      "details": "Meteor Radar Observations｜Spatiotemporal Characteristics of Meteor Trails｜Meteor-Trail Communications｜Middle and Upper Atmospheric Dynamics"
+      "details": "Meteor Radar Observations｜Spatiotemporal Characteristics of Meteor Trails｜Meteor-Trail Communications｜Middle and Upper Atmospheric Dynamics",
+      "advisor": "Prof. Wen Yi",
+      "advisorUrl": "https://faculty.ustc.edu.cn/Wen_Yi/zh_CN/index.htm"
     }
   ],
   "projects": [
@@ -136,7 +144,8 @@
     "email": "jiaruili@mail.ustc.edu.cn",
     "wechat": "Jair0824",
     "github": "https://github.com/Jair0824",
-    "researchgate": "https://www.researchgate.net/profile/Jiarui-Li-91"
+    "researchgate": "https://www.researchgate.net/profile/Jiarui-Li-91",
+    "resume": "assets/Jiarui_Li_English_Resume.pdf"
   },
   "footer": "研究 · 工程 · 独立实践",
   "footerEn": "Research · Engineering · Independent Practice",
@@ -183,6 +192,8 @@
     "githubLabelEn": "Jair0824",
     "researchgateLabel": "ResearchGate",
     "researchgateLabelEn": "ResearchGate",
+    "resumeLabel": "个人简历",
+    "resumeLabelEn": "Curriculum Vitae",
     "servicesLabel": "服务",
     "servicesLabelEn": "Services",
     "backLabel": "返回研究",
@@ -209,6 +220,8 @@
       "mastersPeriod": "2026.09 — 至今",
       "bachelorPeriod": "2022.09 — 2026.06",
       "researchgateLabel": "ResearchGate",
+      "resumeLabel": "个人简历",
+      "advisorLabel": "导师",
       "ustc": "中国科学技术大学",
       "fieldLabel": "方向",
       "locationLabel": "地点",
@@ -298,6 +311,8 @@
       "mastersPeriod": "Sep. 2026 — Present",
       "bachelorPeriod": "Sep. 2022 — Jun. 2026",
       "researchgateLabel": "ResearchGate",
+      "resumeLabel": "Curriculum Vitae",
+      "advisorLabel": "Supervised by",
       "ustc": "University of Science and Technology of China",
       "fieldLabel": "Field",
       "locationLabel": "Based in",
@@ -369,11 +384,12 @@
     }
   },
   "icons": {
-    "email": "✉",
-    "github": "◇",
-    "researchgate": "▥",
-    "services": "↗",
-    "back": "←",
+    "email": "assets/icons/mail.svg",
+    "github": "assets/icons/github.svg",
+    "researchgate": "assets/icons/researchgate.svg",
+    "services": "assets/icons/briefcase-business.svg",
+    "resume": "assets/icons/file-text.svg",
+    "back": "assets/icons/arrow-left.svg",
     "arrow": "→",
     "external": "↗",
     "educationEmblem": "assets/ustc-emblem.jpg"

@@ -72,6 +72,10 @@ function validateContent(data) {
   requireString(data.profile?.introduction, '个人简介');
   requireString(data.profile?.introductionEn, '英文个人简介');
   if (!Array.isArray(data.focus) || !Array.isArray(data.focusEn)) throw new Error('关注方向格式无效');
+  [...(data.education || []), ...(data.educationEn || [])].forEach((item, index) => {
+    if (!item.advisorUrl) return;
+    try { new URL(item.advisorUrl); } catch { throw new Error(`教育经历 ${index + 1} 导师链接无效`); }
+  });
   if (!Array.isArray(data.projects) || !Array.isArray(data.services)) throw new Error('项目或服务格式无效');
   data.projects.forEach((project, index) => {
     requireString(project.title, `项目 ${index + 1} 名称`);
@@ -84,6 +88,8 @@ function validateContent(data) {
   });
   requireString(data.contact?.email, '邮箱');
   try { new URL(data.contact?.github); } catch { throw new Error('GitHub 主页地址无效'); }
+  const resume = String(data.contact?.resume || '').trim();
+  if (resume && !/^(?:https?:\/\/|\.?\/?assets\/)[^\s]+$/i.test(resume)) throw new Error('个人简历地址无效');
 }
 
 async function runGit(args) {

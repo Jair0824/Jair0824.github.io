@@ -22,6 +22,8 @@ const interfaceCopy = {
     mastersPeriod: '2026.09 — 至今',
     bachelorPeriod: '2022.09 — 2026.06',
     researchgateLabel: 'ResearchGate',
+    resumeLabel: '个人简历',
+    advisorLabel: '导师',
     ustc: '中国科学技术大学',
     fieldLabel: '方向',
     locationLabel: '地点',
@@ -111,6 +113,8 @@ const interfaceCopy = {
     mastersPeriod: 'Sep. 2026 — Present',
     bachelorPeriod: 'Sep. 2022 — Jun. 2026',
     researchgateLabel: 'ResearchGate',
+    resumeLabel: 'Curriculum Vitae',
+    advisorLabel: 'Supervised by',
     ustc: 'University of Science and Technology of China',
     fieldLabel: 'Field',
     locationLabel: 'Based in',
@@ -238,6 +242,20 @@ function iconText(data, key, fallback) {
   return fallback;
 }
 
+function renderSidebarIcon(data, id, key, fallback) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  const value = iconText(data, key, fallback);
+  const isAsset = /^(?:https?:\/\/|\/|\.\.?\/|assets\/).+\.(?:svg|png|webp)(?:[?#].*)?$/i.test(value);
+  element.classList.toggle('sidebar-icon--asset', isAsset);
+  element.style.removeProperty('--sidebar-icon-source');
+  element.textContent = isAsset ? '' : value;
+  if (isAsset) {
+    const source = new URL(value, document.baseURI).href;
+    element.style.setProperty('--sidebar-icon-source', `url(${JSON.stringify(source)})`);
+  }
+}
+
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = value || '';
@@ -298,16 +316,20 @@ function renderSidebar(data) {
   setText('work-github-label', sidebarText(data, 'githubLabel', null, 'GitHub'));
   setText('researchgate-label', sidebarText(data, 'researchgateLabel', 'researchgateLabel'));
   setText('work-researchgate-label', sidebarText(data, 'researchgateLabel', 'researchgateLabel'));
+  setText('resume-label', sidebarText(data, 'resumeLabel', 'resumeLabel'));
+  setText('work-resume-label', sidebarText(data, 'resumeLabel', 'resumeLabel'));
   setText('services-label', sidebarText(data, 'servicesLabel', 'navServices'));
   setText('back-label', sidebarText(data, 'backLabel', 'backAcademic'));
-  setText('email-icon', iconText(data, 'email', '✉'));
-  setText('work-email-icon', iconText(data, 'email', '✉'));
-  setText('github-icon', iconText(data, 'github', '◇'));
-  setText('work-github-icon', iconText(data, 'github', '◇'));
-  setText('researchgate-icon', iconText(data, 'researchgate', '▥'));
-  setText('work-researchgate-icon', iconText(data, 'researchgate', '▥'));
-  setText('services-icon', iconText(data, 'services', '↗'));
-  setText('back-icon', iconText(data, 'back', '←'));
+  renderSidebarIcon(data, 'email-icon', 'email', '✉');
+  renderSidebarIcon(data, 'work-email-icon', 'email', '✉');
+  renderSidebarIcon(data, 'github-icon', 'github', '◇');
+  renderSidebarIcon(data, 'work-github-icon', 'github', '◇');
+  renderSidebarIcon(data, 'researchgate-icon', 'researchgate', '▥');
+  renderSidebarIcon(data, 'work-researchgate-icon', 'researchgate', '▥');
+  renderSidebarIcon(data, 'resume-icon', 'resume', 'CV');
+  renderSidebarIcon(data, 'work-resume-icon', 'resume', 'CV');
+  renderSidebarIcon(data, 'services-icon', 'services', '↗');
+  renderSidebarIcon(data, 'back-icon', 'back', '←');
   setText('about-services-icon', iconText(data, 'arrow', '→'));
   setText('work-discuss-icon', iconText(data, 'arrow', '→'));
 }
@@ -388,6 +410,21 @@ function renderAcademic(data) {
     copy.append(make('h3', '', localized(item, 'institution')));
     copy.append(make('p', 'timeline-degree', localized(item, 'degree')));
     copy.append(make('p', 'timeline-detail', localized(item, 'details')));
+    const advisor = String(item.advisor || '').trim();
+    if (advisor) {
+      const advisorLine = make('p', 'timeline-advisor');
+      advisorLine.append(`${activeCopy().advisorLabel || 'Advisor'} `);
+      if (item.advisorUrl) {
+        const advisorLink = make('a', '', advisor);
+        advisorLink.href = item.advisorUrl;
+        advisorLink.target = '_blank';
+        advisorLink.rel = 'noreferrer';
+        advisorLine.append(advisorLink);
+      } else {
+        advisorLine.append(advisor);
+      }
+      copy.append(advisorLine);
+    }
     row.append(copy);
     return row;
   }));
@@ -489,6 +526,14 @@ function renderContact(data) {
     const link = document.getElementById(id);
     if (!link || !data.contact?.researchgate) return;
     link.href = data.contact.researchgate;
+  });
+
+  ['resume-link', 'work-resume-link'].forEach((id) => {
+    const link = document.getElementById(id);
+    if (!link) return;
+    const resume = String(data.contact?.resume || '').trim();
+    link.hidden = !resume;
+    if (resume) link.href = resume;
   });
 
   setText('wechat-value', data.contact.wechat);

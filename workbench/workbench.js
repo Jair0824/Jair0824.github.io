@@ -35,27 +35,35 @@ function parseKeyValue(raw) {
 function educationLines(items) {
   return (Array.isArray(items) ? items : []).map((item) => {
     if (typeof item === 'string') return item;
-    return [item.period, item.institution, item.degree, item.details].filter(Boolean).join('｜');
+    const parts = [item.period, item.institution, item.degree, item.details, item.advisor, item.advisorUrl]
+      .map((value) => value || '');
+    while (parts.at(-1) === '') parts.pop();
+    return parts.join(' || ');
   });
 }
 
 function parseEducation(raw, fallback = []) {
   return lines(raw).map((entry, index) => {
-    const parts = entry.split(/\s*[|｜]\s*/);
+    const modernFormat = entry.includes('||');
+    const parts = modernFormat ? entry.split(/\s*\|\|\s*/) : entry.split(/\s*[|｜]\s*/);
     const previous = fallback[index] || {};
     if (parts.length < 2) {
       return {
         period: previous.period || '',
         institution: previous.institution || entry,
         degree: previous.degree || '',
-        details: previous.details || ''
+        details: previous.details || '',
+        advisor: previous.advisor || '',
+        advisorUrl: previous.advisorUrl || ''
       };
     }
     return {
       period: parts[0] || previous.period || '',
       institution: parts[1] || previous.institution || '',
       degree: parts[2] || previous.degree || '',
-      details: parts.slice(3).join('｜') || previous.details || ''
+      details: modernFormat ? (parts[3] || '') : (parts.slice(3).join('｜') || previous.details || ''),
+      advisor: modernFormat ? (parts[4] || '') : (previous.advisor || ''),
+      advisorUrl: modernFormat ? (parts[5] || '') : (previous.advisorUrl || '')
     };
   });
 }
@@ -96,6 +104,8 @@ const defaultSidebar = {
   githubLabelEn: 'Jair0824',
   researchgateLabel: 'ResearchGate',
   researchgateLabelEn: 'ResearchGate',
+  resumeLabel: '个人简历',
+  resumeLabelEn: 'Curriculum Vitae',
   servicesLabel: '服务',
   servicesLabelEn: 'Services',
   backLabel: '返回研究',
@@ -103,11 +113,12 @@ const defaultSidebar = {
 };
 
 const defaultIcons = {
-  email: '✉',
-  github: '◇',
-  researchgate: '▥',
-  services: '↗',
-  back: '←',
+  email: 'assets/icons/mail.svg',
+  github: 'assets/icons/github.svg',
+  researchgate: 'assets/icons/researchgate.svg',
+  services: 'assets/icons/briefcase-business.svg',
+  resume: 'assets/icons/file-text.svg',
+  back: 'assets/icons/arrow-left.svg',
   arrow: '→',
   external: '↗',
   educationEmblem: 'assets/ustc-emblem.jpg'
@@ -206,6 +217,7 @@ function renderEditor(data) {
   value('contact-wechat', data.contact.wechat);
   value('contact-github', data.contact.github);
   value('contact-researchgate', data.contact.researchgate);
+  value('contact-resume', data.contact.resume);
   value('footer-text', data.footer);
   value('footer-text-en', data.footerEn);
 
@@ -295,6 +307,8 @@ function collectContent() {
       githubLabelEn: value('sidebar-github-label-en').trim(),
       researchgateLabel: value('sidebar-researchgate-label').trim(),
       researchgateLabelEn: value('sidebar-researchgate-label-en').trim(),
+      resumeLabel: value('sidebar-resume-label').trim(),
+      resumeLabelEn: value('sidebar-resume-label-en').trim(),
       servicesLabel: value('sidebar-services-label').trim(),
       servicesLabelEn: value('sidebar-services-label-en').trim(),
       backLabel: value('sidebar-back-label').trim(),
@@ -309,6 +323,7 @@ function collectContent() {
       github: value('icon-github').trim(),
       researchgate: value('icon-researchgate').trim(),
       services: value('icon-services').trim(),
+      resume: value('icon-resume').trim(),
       back: value('icon-back').trim(),
       arrow: value('icon-arrow').trim(),
       external: value('icon-external').trim(),
@@ -333,7 +348,8 @@ function collectContent() {
       email: value('contact-email').trim(),
       wechat: value('contact-wechat').trim(),
       github: value('contact-github').trim(),
-      researchgate: value('contact-researchgate').trim()
+      researchgate: value('contact-researchgate').trim(),
+      resume: value('contact-resume').trim()
     },
     footer: value('footer-text').trim(),
     footerEn: value('footer-text-en').trim()

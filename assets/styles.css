@@ -384,6 +384,15 @@ body > noscript {
   line-height: 1;
 }
 
+.sidebar-icon--asset {
+  width: 16px;
+  height: 16px;
+  justify-self: center;
+  background-color: currentcolor;
+  -webkit-mask: var(--sidebar-icon-source) center / contain no-repeat;
+  mask: var(--sidebar-icon-source) center / contain no-repeat;
+}
+
 .identity-role {
   color: var(--accent);
   font-size: 15px;
@@ -739,6 +748,24 @@ body > noscript {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.65;
+}
+
+.timeline-copy .timeline-advisor {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.timeline-advisor a {
+  color: var(--accent-dark);
+  border-bottom: 1px solid rgb(111 157 181 / 0.42);
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.timeline-advisor a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .timeline-item p {
