@@ -33,6 +33,9 @@ from.setUTCFullYear(from.getUTCFullYear() - 1);
 
 const query = `
   query Contributions($login: String!, $from: DateTime!, $to: DateTime!) {
+    viewer {
+      login
+    }
     user(login: $login) {
       contributionsCollection(from: $from, to: $to) {
         contributionCalendar {
@@ -46,13 +49,16 @@ const query = `
             }
           }
         }
+        hasAnyRestrictedContributions
+        restrictedContributionsCount
       }
     }
   }
 `;
 
-const token = String(process.env.GITHUB_TOKEN || '').trim();
-if (!token) throw new Error('GITHUB_TOKEN is required to update the contribution calendar');
+const personalToken = String(process.env.GITHUB_CONTRIBUTIONS_TOKEN || '').trim();
+const token = personalToken || String(process.env.GITHUB_TOKEN || '').trim();
+if (!token) throw new Error('GITHUB_CONTRIBUTIONS_TOKEN or GITHUB_TOKEN is required to update the contribution calendar');
 const response = await fetch('https://api.github.com/graphql', {
   method: 'POST',
   headers: {
@@ -72,8 +78,20 @@ if (!response.ok) throw new Error(`GitHub API request failed with status ${respo
 
 if (payload?.errors?.length) throw new Error(`GitHub API error: ${payload.errors.map((error) => error.message).join('; ')}`);
 
-const calendar = payload?.data?.user?.contributionsCollection?.contributionCalendar;
+const collection = payload?.data?.user?.contributionsCollection;
+const calendar = collection?.contributionCalendar;
 if (!calendar || !Array.isArray(calendar.weeks)) throw new Error(`GitHub user ${username} was not found`);
+
+const viewerLogin = String(payload?.data?.viewer?.login || '').trim();
+if (personalToken && viewerLogin.toLowerCase() !== username.toLowerCase()) {
+  throw new Error(`GITHUB_CONTRIBUTIONS_TOKEN belongs to ${viewerLogin || 'an unknown account'}, not ${username}`);
+}
+if (!personalToken) {
+  console.warn(`The GitHub token belongs to ${viewerLogin || 'an unknown account'}, not ${username}. Private contributions will not be available. Set GITHUB_CONTRIBUTIONS_TOKEN to a token owned by ${username}.`);
+}
+if (collection.hasAnyRestrictedContributions && !personalToken) {
+  console.warn(`GitHub reports ${collection.restrictedContributionsCount} restricted contributions. The public fallback will not include them.`);
+}
 
 const colors = {
   NONE: '#182429',

@@ -32,6 +32,7 @@ jobs:
       - name: Update GitHub contributions
         run: node tools/update-contributions.mjs
         env:
+          GITHUB_CONTRIBUTIONS_TOKEN: ${{ secrets.GITHUB_CONTRIBUTIONS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build public files
         run: node tools/build.mjs

@@ -27,6 +27,15 @@
 
 `https://jair0824.github.io`
 
+### 同步完整 GitHub 贡献
+
+贡献热力图默认通过 GitHub GraphQL API 生成。没有个人 Token 时，GitHub Actions 只能读取公开贡献；如果你的 GitHub 主页包含私有仓库贡献，请在仓库的 `Settings > Secrets and variables > Actions` 中添加 Secret：
+
+- 名称：`GITHUB_CONTRIBUTIONS_TOKEN`
+- 值：属于 `Jair0824` 账号的 GitHub Personal Access Token，至少包含 `read:user` 权限
+
+同时确认 GitHub 个人主页的贡献设置允许显示私有贡献数量。Token 只用于 Actions 中的贡献统计请求，不会写入仓库或发布到网页。添加后，在 `Actions > Deploy personal website > Run workflow` 手动运行一次，之后每日定时任务会继续更新
+
 ## 命令行
 
 ```powershell
