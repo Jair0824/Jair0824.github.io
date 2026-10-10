@@ -1,5 +1,7 @@
 const CONTENT_PATH = 'content/site.json';
-const LANGUAGE_KEY = 'garrylee-language';
+const pageType = document.body?.dataset.page === 'workstation' ? 'work' : 'academic';
+const LANGUAGE_KEY = `garrylee-language-${pageType}`;
+const DEFAULT_LANGUAGE = pageType === 'academic' ? 'en' : 'zh';
 
 const interfaceCopy = {
   zh: {
@@ -198,9 +200,10 @@ function activeCopy() {
 
 function readLanguage() {
   try {
-    return localStorage.getItem(LANGUAGE_KEY) === 'en' ? 'en' : 'zh';
+    const stored = localStorage.getItem(LANGUAGE_KEY);
+    return stored === 'en' || stored === 'zh' ? stored : DEFAULT_LANGUAGE;
   } catch {
-    return 'zh';
+    return DEFAULT_LANGUAGE;
   }
 }
 
