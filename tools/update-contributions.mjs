@@ -56,9 +56,9 @@ const query = `
   }
 `;
 
-const personalToken = String(process.env.GITHUB_CONTRIBUTIONS_TOKEN || '').trim();
+const personalToken = String(process.env.PERSONAL_GITHUB_TOKEN || '').trim();
 const token = personalToken || String(process.env.GITHUB_TOKEN || '').trim();
-if (!token) throw new Error('GITHUB_CONTRIBUTIONS_TOKEN or GITHUB_TOKEN is required to update the contribution calendar');
+if (!token) throw new Error('PERSONAL_GITHUB_TOKEN or GITHUB_TOKEN is required to update the contribution calendar');
 const response = await fetch('https://api.github.com/graphql', {
   method: 'POST',
   headers: {
@@ -84,10 +84,10 @@ if (!calendar || !Array.isArray(calendar.weeks)) throw new Error(`GitHub user ${
 
 const viewerLogin = String(payload?.data?.viewer?.login || '').trim();
 if (personalToken && viewerLogin.toLowerCase() !== username.toLowerCase()) {
-  throw new Error(`GITHUB_CONTRIBUTIONS_TOKEN belongs to ${viewerLogin || 'an unknown account'}, not ${username}`);
+  throw new Error(`PERSONAL_GITHUB_TOKEN belongs to ${viewerLogin || 'an unknown account'}, not ${username}`);
 }
 if (!personalToken) {
-  console.warn(`The GitHub token belongs to ${viewerLogin || 'an unknown account'}, not ${username}. Private contributions will not be available. Set GITHUB_CONTRIBUTIONS_TOKEN to a token owned by ${username}.`);
+  console.warn(`The GitHub token belongs to ${viewerLogin || 'an unknown account'}, not ${username}. Private contributions will not be available. Set PERSONAL_GITHUB_TOKEN to a token owned by ${username}.`);
 }
 if (collection.hasAnyRestrictedContributions && !personalToken) {
   console.warn(`GitHub reports ${collection.restrictedContributionsCount} restricted contributions. The public fallback will not include them.`);
