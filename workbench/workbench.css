@@ -50,9 +50,9 @@ label small { display: block; margin-top: 3px; color: var(--muted); font-size: 1
 .check-row { min-height: 52px; padding: 11px 12px; flex-direction: row; align-items: flex-start; gap: 10px; border: 1px solid var(--line); border-radius: 4px; background: #f5f7f4; }
 .check-row input { width: 18px; min-height: 18px; margin: 2px 0 0; }
 .check-row span { color: var(--ink); font-size: 13px; }
-input, textarea { width: 100%; padding: 10px 11px; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: #fff; outline: none; resize: vertical; }
-input { min-height: 40px; }
-input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 2px rgb(43 114 103 / .13); }
+input, textarea, select { width: 100%; padding: 10px 11px; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: #fff; outline: none; resize: vertical; }
+input, select { min-height: 40px; }
+input:focus, textarea:focus, select:focus { border-color: var(--teal); box-shadow: 0 0 0 2px rgb(43 114 103 / .13); }
 input[type="color"] { padding: 4px; }
 input[type="range"] { min-height: 30px; padding-inline: 0; accent-color: var(--teal); }
 .field-grid { display: grid; gap: 12px; }

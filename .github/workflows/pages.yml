@@ -33,12 +33,16 @@ jobs:
         run: node tools/update-contributions.mjs
         env:
           PERSONAL_GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+      - name: Validate content
+        run: npm run validate
+      - name: Test
+        run: npm test
       - name: Build public files
         run: node tools/build.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: _site
       - name: Deploy

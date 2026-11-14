@@ -1,7 +1,9 @@
 {
+  "$schema": "./site.schema.json",
   "meta": {
+    "url": "https://jair0824.github.io",
     "siteTitle": "GarryLee",
-    "siteTitleEn": "GarryLee",
+    "siteTitleEn": "GarryLee | Plasma Physics & Diagnostics",
     "description": "中国科学技术大学 GarryLee 的个人学术主页，关注等离子体物理、空间环境观测与科学计算",
     "descriptionEn": "Academic homepage of GarryLee at the University of Science and Technology of China, focused on plasma physics, space-environment observations, and scientific computing",
     "accent": "#6f9db5"
@@ -16,6 +18,29 @@
   "githubContributions": {
     "enabled": true,
     "username": "Jair0824"
+  },
+  "sections": {
+    "about": {
+      "enabled": true
+    },
+    "research": {
+      "enabled": true
+    },
+    "publications": {
+      "enabled": true
+    },
+    "news": {
+      "enabled": true
+    },
+    "education": {
+      "enabled": true
+    },
+    "contributions": {
+      "enabled": true
+    },
+    "workstation": {
+      "enabled": true
+    }
   },
   "profile": {
     "name": "GarryLee",
@@ -55,6 +80,21 @@
     "Scientific computing and simulation",
     "Exploring reliable uses of agents in scientific research assistance"
   ],
+  "publications": {
+    "enabled": true,
+    "items": []
+  },
+  "news": {
+    "enabled": true,
+    "items": [
+      {
+        "date": "2026.09",
+        "url": "",
+        "text": "开始在中国科学技术大学 KMAX 实验室开展等离子体物理与诊断方向的研究",
+        "textEn": "Started research on plasma physics and plasma diagnostics at the USTC-KMAX laboratory"
+      }
+    ]
+  },
   "education": [
     {
       "period": "2026.09 — 至今",
@@ -147,16 +187,8 @@
     "researchgate": "https://www.researchgate.net/profile/Jiarui-Li-91",
     "resume": "assets/Jiarui_Li_English_Resume.pdf"
   },
-  "footer": "研究 · 工程 · 独立实践",
+  "footer": "研究 · 工程 · 实践",
   "footerEn": "Research · Engineering · Independent Practice",
-  "credentials": [
-    "2026.09 — 至今 || 中国科学技术大学 || 硕士研究生 · 能源动力 || 等离子体物理｜等离子体诊断｜场反位型(FRC) || 孙玄 || https://faculty.ustc.edu.cn/sunxuan/zh_CN/index.htm",
-    "2022.09 — 2026.06 || 中国科学技术大学 || 本科 · 空间科学与技术 || 流星雷达观测｜流星余迹时空分布特征｜流星余迹通信｜中高层大气动力学 || 易稳 || https://faculty.ustc.edu.cn/Wen_Yi/zh_CN/index.htm"
-  ],
-  "credentialsEn": [
-    "Sep. 2026 — Present || University of Science and Technology of China || M.Eng. in Energy and Power Engineering || Plasma Physics｜Plasma Diagnostics｜Field-Reversed Configuration (FRC) || Prof. Xuan Sun || https://faculty.ustc.edu.cn/sunxuan/zh_CN/index.htm",
-    "Sep. 2022 — Jun. 2026 || University of Science and Technology of China || B.S. in Space Science and Technology || Meteor Radar Observations｜Spatiotemporal Characteristics of Meteor Trails｜Meteor-Trail Communications｜Middle and Upper Atmospheric Dynamics || Prof. Wen Yi || https://faculty.ustc.edu.cn/Wen_Yi/zh_CN/index.htm"
-  ],
   "note": {
     "text": "",
     "textEn": ""
@@ -174,11 +206,11 @@
     "locationEn": "Hefei, China",
     "educationLabel": "教育经历",
     "educationLabelEn": "Education",
-    "workRole": "独立合作",
+    "workRole": "物理/系统/运营/实践",
     "workRoleEn": "Independent Work",
     "workAffiliation": "独立开发与技术服务",
     "workAffiliationEn": "Independent development and technical services",
-    "availability": "可接受线上与线下合作",
+    "availability": "线上/线下合作",
     "availabilityEn": "Available for online and local work",
     "responseLabel": "沟通语言",
     "responseLabelEn": "Language",
@@ -202,7 +234,6 @@
   "ui": {
     "zh": {
       "skip": "跳到正文",
-      "homepageLabel": "",
       "brandTag": "Research & Practice",
       "navLabel": "主要导航",
       "languageLabel": "语言切换",
@@ -211,6 +242,8 @@
       "navEducation": "学术概览",
       "navWorkstation": "服务",
       "navServices": "服务",
+      "navPublications": "论文",
+      "navNews": "动态",
       "profileLabel": "个人信息",
       "plasmaVisualLabel": "等离子体动态视觉",
       "labValue": "KMAX",
@@ -239,12 +272,25 @@
       "researchKicker": "RESEARCH INTERESTS",
       "researchTitle": "研究兴趣",
       "researchIntro": "从物理机制出发，关注理论、诊断、计算与数据表达之间的联系",
+      "publicationsKicker": "PUBLICATIONS",
+      "publicationsTitle": "论文与成果",
+      "publicationsIntro": "已发表与在投的工作，按时间倒序排列",
+      "citeLabel": "复制引用",
+      "citedLabel": "已复制",
+      "paperLinkLabel": "论文",
+      "pdfLinkLabel": "PDF",
+      "codeLinkLabel": "代码",
+      "doiLinkLabel": "DOI",
+      "dataLinkLabel": "数据",
+      "newsKicker": "NEWS",
+      "newsTitle": "近期动态",
+      "newsIntro": "研究进展、学术活动与阶段性记录",
       "overviewKicker": "ACADEMIC OVERVIEW",
       "overviewTitle": "学术概览",
-      "overviewIntro": "",
+      "overviewIntro": "这里整理教育经历与研究训练，后续将逐步补充成熟的项目与成果",
       "contributionsKicker": "GITHUB ACTIVITY",
       "contributionsTitle": "GitHub",
-      "contributionsIntro": "",
+      "contributionsIntro": "公开代码与项目维护记录",
       "contributionsLink": "查看 GitHub 主页",
       "contributionsAlt": "{username} 的 GitHub 贡献记录",
       "noteTitle": "关于公开内容",
@@ -260,10 +306,10 @@
       "contactNav": "联系",
       "workEyebrow": "INDEPENDENT WORK · 独立合作",
       "workIdentityCopy": "独立开发与技术服务",
-      "workHeadline": "把问题讲清楚，把结果做出来",
-      "workIntroduction": "这是我的独立工作入口，我利用科研训练、代码能力与 Agent 协作，为个人和小型团队完成数据分析、网站制作与物理辅导",
+      "workHeadline": "问题，结果",
+      "workIntroduction": "欢迎进入我的个人工作台，这里将展示利用科研训练、代码能力与 Agent 协作，为个人和小型团队完成数据分析、网站制作与物理辅导等相关合作方向",
       "viewServices": "查看可做的工作",
-      "discussProject": "沟通一个项目",
+      "discussProject": "项目沟通",
       "availableStatus": "可接受线上与线下合作",
       "responseLabel": "沟通语言",
       "responseValue": "中文优先 / English available",
@@ -293,7 +339,6 @@
     },
     "en": {
       "skip": "Skip to content",
-      "homepageLabel": "",
       "brandTag": "Research & Practice",
       "navLabel": "Primary navigation",
       "languageLabel": "Language switcher",
@@ -302,6 +347,8 @@
       "navEducation": "Overview",
       "navWorkstation": "Services",
       "navServices": "Services",
+      "navPublications": "Papers",
+      "navNews": "News",
       "profileLabel": "Profile information",
       "plasmaVisualLabel": "Animated plasma field",
       "labValue": "KMAX",
@@ -330,12 +377,25 @@
       "researchKicker": "RESEARCH INTERESTS",
       "researchTitle": "Research Interests",
       "researchIntro": "Starting from physical mechanisms, I am interested in the links between theory, diagnostics, computation, and data representation",
+      "publicationsKicker": "PUBLICATIONS",
+      "publicationsTitle": "Publications",
+      "publicationsIntro": "Published and ongoing work, most recent first",
+      "citeLabel": "Copy citation",
+      "citedLabel": "Copied",
+      "paperLinkLabel": "Paper",
+      "pdfLinkLabel": "PDF",
+      "codeLinkLabel": "Code",
+      "doiLinkLabel": "DOI",
+      "dataLinkLabel": "Data",
+      "newsKicker": "NEWS",
+      "newsTitle": "Recent News",
+      "newsIntro": "Research progress, academic events, and short updates",
       "overviewKicker": "ACADEMIC OVERVIEW",
       "overviewTitle": "Academic Overview",
-      "overviewIntro": "",
+      "overviewIntro": "This page brings together my education and research training, with mature projects and results added over time",
       "contributionsKicker": "GITHUB ACTIVITY",
-      "contributionsTitle": "GitHub Contributions",
-      "contributionsIntro": "",
+      "contributionsTitle": "GitHub",
+      "contributionsIntro": "Public coding and project maintenance activity",
       "contributionsLink": "View GitHub profile",
       "contributionsAlt": "GitHub contribution history for {username}",
       "noteTitle": "About public materials",

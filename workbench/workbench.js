@@ -68,6 +68,9 @@ function parseEducation(raw, fallback = []) {
   });
 }
 
+// 章节开关的字段顺序与 site.json 的 sections 保持一致
+const SECTION_FIELDS = ['about', 'research', 'publications', 'news', 'education', 'contributions', 'workstation'];
+
 const defaultNote = {
   text: '科研经历与成果将在适合公开时持续更新，这里先呈现研究方向、教育经历与工作方法',
   textEn: 'Research experience and results will be added when appropriate for public release, while this page focuses on my interests, education, and working methods'
@@ -144,12 +147,19 @@ function fillRepeatItem(element, item) {
   });
 }
 
-function addRepeatItem(kind, item) {
+function fillPublication(element, item) {
+  fillRepeatItem(element, item);
+  element.querySelectorAll('[data-link]').forEach((input) => {
+    input.value = item.links?.[input.dataset.link] || '';
+  });
+}
+
+function addRepeatItem(kind, item, fill = fillRepeatItem) {
   const template = document.getElementById(`${kind}-template`);
   const container = document.getElementById(`${kind}-editor`);
   container.querySelector('.empty-repeater')?.remove();
   const element = template.content.firstElementChild.cloneNode(true);
-  fillRepeatItem(element, item);
+  fill(element, item);
   element.querySelector('.remove-item').addEventListener('click', () => {
     element.remove();
     renderEmptyRepeater(kind);
@@ -204,6 +214,10 @@ function renderEditor(data) {
   value('speed-output', Number(value('visual-speed')).toFixed(2));
   document.getElementById('github-contributions-enabled').checked = data.githubContributions?.enabled !== false;
   value('github-contributions-username', data.githubContributions?.username ?? 'Jair0824');
+  SECTION_FIELDS.forEach((id) => {
+    const input = document.getElementById(`section-${id}`);
+    if (input) input.checked = data.sections?.[id]?.enabled !== false;
+  });
   value('focus-list', (data.focus || []).join('\n'));
   value('focus-list-en', (data.focusEn || []).join('\n'));
   value('focus-details', (data.focusDetails || []).join('\n'));
@@ -227,17 +241,43 @@ function renderEditor(data) {
   document.getElementById('service-editor').replaceChildren();
   (data.services || []).forEach((service) => addRepeatItem('service', service));
   renderEmptyRepeater('service');
+
+  document.getElementById('publications-enabled').checked = data.publications?.enabled !== false;
+  document.getElementById('publication-editor').replaceChildren();
+  (data.publications?.items || []).forEach((publication) => addRepeatItem('publication', publication, fillPublication));
+  renderEmptyRepeater('publication');
+
+  document.getElementById('news-enabled').checked = data.news?.enabled !== false;
+  document.getElementById('news-editor').replaceChildren();
+  (data.news?.items || []).forEach((entry) => addRepeatItem('news', entry));
+  renderEmptyRepeater('news');
+
   setDirty(false);
 }
 
+function collectItemFields(element) {
+  const item = {};
+  element.querySelectorAll('[data-field]').forEach((input) => {
+    item[input.dataset.field] = ['tags', 'tagsEn'].includes(input.dataset.field)
+      ? input.value.split(',').map((tag) => tag.trim()).filter(Boolean)
+      : input.value.trim();
+  });
+  return item;
+}
+
 function collectRepeater(kind) {
-  return [...document.querySelectorAll(`#${kind}-editor .${kind}-item`)].map((element) => {
-    const item = {};
-    element.querySelectorAll('[data-field]').forEach((input) => {
-      item[input.dataset.field] = ['tags', 'tagsEn'].includes(input.dataset.field)
-        ? input.value.split(',').map((tag) => tag.trim()).filter(Boolean)
-        : input.value.trim();
+  return [...document.querySelectorAll(`#${kind}-editor .${kind}-item`)].map((element) => collectItemFields(element));
+}
+
+function collectPublications() {
+  return [...document.querySelectorAll('#publication-editor .publication-item')].map((element) => {
+    const item = collectItemFields(element);
+    const links = {};
+    element.querySelectorAll('[data-link]').forEach((input) => {
+      const value = input.value.trim();
+      if (value) links[input.dataset.link] = value;
     });
+    if (Object.keys(links).length) item.links = links;
     return item;
   });
 }
@@ -265,6 +305,10 @@ function collectContent() {
       enabled: document.getElementById('github-contributions-enabled').checked,
       username: value('github-contributions-username').trim()
     },
+    sections: Object.fromEntries(SECTION_FIELDS.map((id) => {
+      const input = document.getElementById(`section-${id}`);
+      return [id, { enabled: input ? input.checked : true }];
+    })),
     profile: {
       ...content.profile,
       name: value('profile-name').trim(),
@@ -335,14 +379,20 @@ function collectContent() {
     focusDetailsEn: lines(value('focus-details-en')),
     education: parseEducation(value('credential-list'), content.education),
     educationEn: parseEducation(value('credential-list-en'), content.educationEn),
-    credentials: lines(value('credential-list')),
-    credentialsEn: lines(value('credential-list-en')),
     note: {
       text: value('note-copy').trim(),
       textEn: value('note-copy-en').trim()
     },
     projects: collectRepeater('project'),
     services: collectRepeater('service'),
+    publications: {
+      enabled: document.getElementById('publications-enabled').checked,
+      items: collectPublications()
+    },
+    news: {
+      enabled: document.getElementById('news-enabled').checked,
+      items: collectRepeater('news')
+    },
     contact: {
       ...content.contact,
       email: value('contact-email').trim(),
@@ -419,6 +469,17 @@ publishButton.addEventListener('click', () => publishDialog.showModal());
 confirmPublish.addEventListener('click', publish);
 document.getElementById('add-service').addEventListener('click', () => {
   addRepeatItem('service', { title: '', titleEn: '', description: '', descriptionEn: '' });
+  setDirty(true);
+});
+document.getElementById('add-publication').addEventListener('click', () => {
+  addRepeatItem('publication', {
+    title: '', authors: '', highlight: '', venue: '', year: '',
+    venueType: 'journal', tags: [], citation: '', links: {}
+  }, fillPublication);
+  setDirty(true);
+});
+document.getElementById('add-news').addEventListener('click', () => {
+  addRepeatItem('news', { date: '', text: '', textEn: '', url: '' });
   setDirty(true);
 });
 document.getElementById('add-project').addEventListener('click', () => {

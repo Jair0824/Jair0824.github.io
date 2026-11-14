@@ -4,6 +4,8 @@ import { readFile, rename, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
+import { applySiteBindings } from './site-bindings.mjs';
+import { validateContent } from './validate-content.mjs';
 
 const execFileAsync = promisify(execFile);
 const toolsDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -48,48 +50,6 @@ async function readJsonBody(request) {
 
 function requireString(value, label) {
   if (typeof value !== 'string' || !value.trim()) throw new Error(`${label}不能为空`);
-}
-
-function validateContent(data) {
-  if (!data || typeof data !== 'object') throw new Error('网站内容格式无效');
-  requireString(data.meta?.siteTitle, '浏览器标题');
-  requireString(data.meta?.siteTitleEn, '英文浏览器标题');
-  requireString(data.meta?.description, '搜索摘要');
-  requireString(data.meta?.descriptionEn, '英文搜索摘要');
-  if (!/^#[0-9a-f]{6}$/i.test(data.meta?.accent || '')) throw new Error('主题色格式无效');
-  if (data.visual) {
-    if (!Number.isFinite(data.visual.particleDensity) || data.visual.particleDensity < 30 || data.visual.particleDensity > 500) throw new Error('粒子密度超出范围');
-    if (!Number.isFinite(data.visual.flowSpeed) || data.visual.flowSpeed <= 0 || data.visual.flowSpeed > 2) throw new Error('流动速度超出范围');
-    if (!/^#[0-9a-f]{6}$/i.test(data.visual.primaryColor || '') || !/^#[0-9a-f]{6}$/i.test(data.visual.secondaryColor || '')) throw new Error('流场颜色格式无效');
-  }
-  const githubUsername = String(data.githubContributions?.username || '').trim();
-  if (data.githubContributions?.enabled !== false && githubUsername && !/^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(githubUsername)) {
-    throw new Error('GitHub 用户名格式无效');
-  }
-  requireString(data.profile?.name, '显示姓名');
-  requireString(data.profile?.headline, '首页主标题');
-  requireString(data.profile?.headlineEn, '英文首页主标题');
-  requireString(data.profile?.introduction, '个人简介');
-  requireString(data.profile?.introductionEn, '英文个人简介');
-  if (!Array.isArray(data.focus) || !Array.isArray(data.focusEn)) throw new Error('关注方向格式无效');
-  [...(data.education || []), ...(data.educationEn || [])].forEach((item, index) => {
-    if (!item.advisorUrl) return;
-    try { new URL(item.advisorUrl); } catch { throw new Error(`教育经历 ${index + 1} 导师链接无效`); }
-  });
-  if (!Array.isArray(data.projects) || !Array.isArray(data.services)) throw new Error('项目或服务格式无效');
-  data.projects.forEach((project, index) => {
-    requireString(project.title, `项目 ${index + 1} 名称`);
-    requireString(project.summary, `项目 ${index + 1} 说明`);
-    try { new URL(project.url); } catch { throw new Error(`项目 ${index + 1} 网址无效`); }
-  });
-  data.services.forEach((service, index) => {
-    requireString(service.title, `服务 ${index + 1} 标题`);
-    requireString(service.description, `服务 ${index + 1} 说明`);
-  });
-  requireString(data.contact?.email, '邮箱');
-  try { new URL(data.contact?.github); } catch { throw new Error('GitHub 主页地址无效'); }
-  const resume = String(data.contact?.resume || '').trim();
-  if (resume && !/^(?:https?:\/\/|\.?\/?assets\/)[^\s]+$/i.test(resume)) throw new Error('个人简历地址无效');
 }
 
 async function runGit(args) {
@@ -152,18 +112,33 @@ function resolveStaticPath(urlPath) {
 async function serveStatic(urlPath, response) {
   const filePath = resolveStaticPath(urlPath);
   if (!filePath) return sendText(response, 404, 'Not found');
+  let body;
   try {
     const info = await stat(filePath);
     if (!info.isFile()) return sendText(response, 404, 'Not found');
-    const body = await readFile(filePath);
-    response.writeHead(200, {
-      'Content-Type': mimeTypes.get(path.extname(filePath).toLowerCase()) || 'application/octet-stream',
-      'Cache-Control': filePath.endsWith('site.json') ? 'no-store' : 'no-cache'
-    });
-    response.end(body);
+    body = await readFile(filePath);
   } catch {
-    sendText(response, 404, 'Not found');
+    return sendText(response, 404, 'Not found');
   }
+
+  const page = urlPath === '/' || urlPath === '/index.html' ? 'academic'
+    : urlPath === '/work.html' ? 'work'
+      : null;
+  if (page) {
+    // 本机预览走和构建脚本同一套注入，保证工作台看到的就是线上会看到的样子
+    try {
+      const content = JSON.parse(await readFile(contentFile, 'utf8'));
+      body = Buffer.from(applySiteBindings(body.toString('utf8'), content, page), 'utf8');
+    } catch (error) {
+      return sendText(response, 500, `页面生成失败：${error.message}`);
+    }
+  }
+
+  response.writeHead(200, {
+    'Content-Type': mimeTypes.get(path.extname(filePath).toLowerCase()) || 'application/octet-stream',
+    'Cache-Control': filePath.endsWith('site.json') ? 'no-store' : 'no-cache'
+  });
+  response.end(body);
 }
 
 async function handleApi(request, response, url) {
@@ -173,7 +148,7 @@ async function handleApi(request, response, url) {
 
   if (url.pathname === '/api/content' && request.method === 'PUT') {
     const data = await readJsonBody(request);
-    validateContent(data);
+    validateContent(data, { assetRoot: projectRoot });
     const temporaryFile = `${contentFile}.tmp`;
     await writeFile(temporaryFile, `${JSON.stringify(data, null, 2)}\n`, 'utf8');
     await rename(temporaryFile, contentFile);

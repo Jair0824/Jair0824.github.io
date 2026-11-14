@@ -1,6 +1,8 @@
 const CONTENT_PATH = 'content/site.json';
 const pageType = document.body?.dataset.page === 'workstation' ? 'work' : 'academic';
-const LANGUAGE_KEY = `garrylee-language-${pageType}`;
+// 语言偏好跨页共享：旧版本按页面分了两个 key，读取时兼容，写入只用一个
+const LANGUAGE_KEY = 'garrylee-language';
+const LEGACY_LANGUAGE_KEY = `garrylee-language-${pageType}`;
 const DEFAULT_LANGUAGE = pageType === 'academic' ? 'en' : 'zh';
 
 const interfaceCopy = {
@@ -15,6 +17,8 @@ const interfaceCopy = {
     navEducation: '学术概览',
     navWorkstation: '服务',
     navServices: '服务',
+    navPublications: '论文',
+    navNews: '动态',
     profileLabel: '个人信息',
     plasmaVisualLabel: '等离子体动态视觉',
     labValue: 'KMAX',
@@ -43,6 +47,19 @@ const interfaceCopy = {
     researchKicker: 'RESEARCH INTERESTS',
     researchTitle: '研究兴趣',
     researchIntro: '从物理机制出发，关注理论、诊断、计算与数据表达之间的联系',
+    publicationsKicker: 'PUBLICATIONS',
+    publicationsTitle: '论文与成果',
+    publicationsIntro: '已发表与在投的工作，按时间倒序排列',
+    citeLabel: '复制引用',
+    citedLabel: '已复制',
+    paperLinkLabel: '论文',
+    pdfLinkLabel: 'PDF',
+    codeLinkLabel: '代码',
+    doiLinkLabel: 'DOI',
+    dataLinkLabel: '数据',
+    newsKicker: 'NEWS',
+    newsTitle: '近期动态',
+    newsIntro: '研究进展、学术活动与阶段性记录',
     overviewKicker: 'ACADEMIC OVERVIEW',
     overviewTitle: '学术概览',
     overviewIntro: '这里整理教育经历与研究训练，后续将逐步补充成熟的项目与成果',
@@ -106,6 +123,8 @@ const interfaceCopy = {
     navEducation: 'Overview',
     navWorkstation: 'Services',
     navServices: 'Services',
+    navPublications: 'Papers',
+    navNews: 'News',
     profileLabel: 'Profile information',
     plasmaVisualLabel: 'Animated plasma field',
     labValue: 'KMAX',
@@ -134,6 +153,19 @@ const interfaceCopy = {
     researchKicker: 'RESEARCH INTERESTS',
     researchTitle: 'Research Interests',
     researchIntro: 'Starting from physical mechanisms, I am interested in the links between theory, diagnostics, computation, and data representation',
+    publicationsKicker: 'PUBLICATIONS',
+    publicationsTitle: 'Publications',
+    publicationsIntro: 'Published and ongoing work, most recent first',
+    citeLabel: 'Copy citation',
+    citedLabel: 'Copied',
+    paperLinkLabel: 'Paper',
+    pdfLinkLabel: 'PDF',
+    codeLinkLabel: 'Code',
+    doiLinkLabel: 'DOI',
+    dataLinkLabel: 'Data',
+    newsKicker: 'NEWS',
+    newsTitle: 'Recent News',
+    newsIntro: 'Research progress, academic events, and short updates',
     overviewKicker: 'ACADEMIC OVERVIEW',
     overviewTitle: 'Academic Overview',
     overviewIntro: 'This page brings together my education and research training, with mature projects and results added over time',
@@ -192,15 +224,20 @@ let siteData = null;
 let currentLanguage = readLanguage();
 
 function activeCopy() {
-  return {
-    ...interfaceCopy[currentLanguage],
-    ...(siteData?.ui?.[currentLanguage] || {})
-  };
+  // content/site.json 里留空的字段沿用内置文案，否则一次误清空就会让页面出现空段落
+  const copy = { ...interfaceCopy[currentLanguage] };
+  const configured = siteData?.ui?.[currentLanguage];
+  if (configured) {
+    Object.entries(configured).forEach(([key, value]) => {
+      if (typeof value === 'string' && value.trim()) copy[key] = value;
+    });
+  }
+  return copy;
 }
 
 function readLanguage() {
   try {
-    const stored = localStorage.getItem(LANGUAGE_KEY);
+    const stored = localStorage.getItem(LANGUAGE_KEY) || localStorage.getItem(LEGACY_LANGUAGE_KEY);
     return stored === 'en' || stored === 'zh' ? stored : DEFAULT_LANGUAGE;
   } catch {
     return DEFAULT_LANGUAGE;
@@ -366,7 +403,9 @@ function renderContributions(data) {
     }
   }
 
-  const visible = data.githubContributions?.enabled !== false && Boolean(username);
+  const visible = sectionEnabled(data, 'contributions')
+    && data.githubContributions?.enabled !== false
+    && Boolean(username);
   section.hidden = !visible;
   if (!visible) return;
 
@@ -381,6 +420,206 @@ function renderContributions(data) {
   if (chart) {
     chart.alt = String(activeCopy().contributionsAlt || '').replaceAll('{username}', username);
   }
+}
+
+const PUBLICATION_LINKS = [
+  ['paper', 'paperLinkLabel', 'Paper'],
+  ['pdf', 'pdfLinkLabel', 'PDF'],
+  ['code', 'codeLinkLabel', 'Code'],
+  ['doi', 'doiLinkLabel', 'DOI'],
+  ['data', 'dataLinkLabel', 'Data']
+];
+
+function sectionItems(section) {
+  if (!section || section.enabled === false) return [];
+  return Array.isArray(section.items) ? section.items.filter((item) => item && typeof item === 'object') : [];
+}
+
+/**
+ * 章节开关：site.json 的 sections.<id>.enabled === false 时整节与导航项一起消失。
+ * 未配置的章节默认可见，因此老内容不需要迁移。
+ */
+function sectionEnabled(data, id) {
+  const flag = data?.sections?.[id];
+  return !(flag && flag.enabled === false);
+}
+
+function setSectionVisibility(id, visible) {
+  const section = document.getElementById(id);
+  if (section) section.hidden = !visible;
+  const link = document.querySelector(`.site-nav a[href="#${id}"]`);
+  if (link) link.hidden = !visible;
+}
+
+/**
+ * 学术页里"没有内容就不该出现"的章节统一在这里收口。
+ * publications / news / contributions 由各自的 enabled + 内容判断，不在这里重复处理。
+ */
+function applySectionSwitches(data, hasEducation) {
+  setSectionVisibility('about', sectionEnabled(data, 'about'));
+  setSectionVisibility('research', sectionEnabled(data, 'research'));
+  setSectionVisibility('education', sectionEnabled(data, 'education') && hasEducation);
+  setSectionVisibility('workstation', sectionEnabled(data, 'workstation'));
+}
+
+function citationText(publication) {
+  const custom = String(publication.citation || '').trim();
+  if (custom) return custom;
+  const authors = String(publication.authors || '').trim();
+  const year = String(publication.year || '').trim();
+  const title = String(publication.title || '').trim();
+  const venue = String(publication.venue || '').trim();
+  if (!title) return '';
+  const sentence = (value) => (/[.!?]$/.test(value) ? value : `${value}.`);
+  const parts = [];
+  if (authors) parts.push(sentence(authors));
+  if (year) parts.push(`(${year}).`);
+  parts.push(sentence(title));
+  if (venue) parts.push(sentence(venue));
+  return parts.join(' ').replace(/\s+/g, ' ').trim();
+}
+
+async function copyPlainText(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const area = document.createElement('textarea');
+  area.value = value;
+  area.setAttribute('readonly', '');
+  area.style.position = 'fixed';
+  area.style.opacity = '0';
+  document.body.append(area);
+  area.select();
+  const copied = document.execCommand('copy');
+  area.remove();
+  if (!copied) throw new Error('复制失败');
+}
+
+function buildAuthorLine(authors, highlight) {
+  const line = make('p', 'publication-authors');
+  const self = String(highlight || '').trim();
+  authors.split(/\s*,\s*/).filter(Boolean).forEach((name, index) => {
+    if (index) line.append(', ');
+    line.append(self && name === self
+      ? make('strong', 'publication-self', name)
+      : document.createTextNode(name));
+  });
+  return line;
+}
+
+function buildPublicationActions(publication, copy) {
+  const container = make('div', 'publication-actions');
+  const links = publication.links && typeof publication.links === 'object' ? publication.links : {};
+  PUBLICATION_LINKS.forEach(([key, labelKey, fallback]) => {
+    const url = String(links[key] || '').trim();
+    if (!url) return;
+    const anchor = make('a', `publication-action publication-action--${key}`, copy[labelKey] || fallback);
+    anchor.href = url;
+    anchor.target = '_blank';
+    anchor.rel = 'noreferrer';
+    container.append(anchor);
+  });
+
+  const citation = citationText(publication);
+  if (citation) {
+    const button = make('button', 'publication-action publication-cite', copy.citeLabel || 'Cite');
+    button.type = 'button';
+    button.addEventListener('click', async () => {
+      try {
+        await copyPlainText(citation);
+        button.textContent = copy.citedLabel || 'Copied';
+        button.classList.add('is-copied');
+        setTimeout(() => {
+          button.textContent = copy.citeLabel || 'Cite';
+          button.classList.remove('is-copied');
+        }, 1600);
+      } catch {
+        button.textContent = copy.citeLabel || 'Cite';
+      }
+    });
+    container.append(button);
+  }
+
+  return container.childElementCount ? container : null;
+}
+
+function buildPublication(publication, copy) {
+  const item = make('article', 'publication-item');
+  const meta = make('div', 'publication-meta');
+  const venue = String(publication.venue || '').trim();
+  const year = String(publication.year || '').trim();
+  const venueType = String(publication.venueType || '').trim();
+  if (venue) meta.append(make('span', 'publication-venue', venue));
+  if (year) meta.append(make('span', 'publication-year', year));
+  if (venueType) item.dataset.venueType = venueType;
+
+  const body = make('div', 'publication-body');
+  const title = String(publication.title || '').trim();
+  const heading = make('h3', 'publication-title');
+  const primary = String(
+    publication.links?.paper || publication.links?.pdf || publication.links?.doi || ''
+  ).trim();
+  if (primary) {
+    const anchor = make('a', '', title);
+    anchor.href = primary;
+    anchor.target = '_blank';
+    anchor.rel = 'noreferrer';
+    heading.append(anchor);
+  } else {
+    heading.textContent = title;
+  }
+  body.append(heading);
+
+  const authors = String(publication.authors || '').trim();
+  if (authors) body.append(buildAuthorLine(authors, publication.highlight));
+
+  const tags = Array.isArray(publication.tags) ? publication.tags.filter(Boolean) : [];
+  if (tags.length) {
+    const tagList = make('div', 'publication-tags');
+    tags.forEach((tag) => tagList.append(make('span', '', String(tag))));
+    body.append(tagList);
+  }
+
+  const actions = buildPublicationActions(publication, copy);
+  if (actions) body.append(actions);
+
+  item.append(meta, body);
+  return item;
+}
+
+function renderPublications(data) {
+  const items = sectionEnabled(data, 'publications') ? sectionItems(data.publications) : [];
+  setSectionVisibility('publications', items.length > 0);
+  const list = document.getElementById('publication-list');
+  if (!list) return;
+  const copy = activeCopy();
+  list.replaceChildren(...items.map((publication) => buildPublication(publication, copy)));
+}
+
+function renderNews(data) {
+  const items = sectionEnabled(data, 'news') ? sectionItems(data.news) : [];
+  setSectionVisibility('news', items.length > 0);
+  const list = document.getElementById('news-list');
+  if (!list) return;
+  list.replaceChildren(...items.map((entry) => {
+    const item = make('article', 'news-item');
+    item.append(make('time', 'news-date', String(entry.date || '').trim()));
+    const body = make('div', 'news-copy');
+    const text = localized(entry, 'text');
+    const url = String(entry.url || '').trim();
+    if (url) {
+      const anchor = make('a', 'news-link', text);
+      anchor.href = url;
+      anchor.target = '_blank';
+      anchor.rel = 'noreferrer';
+      body.append(anchor);
+    } else {
+      body.append(make('p', '', text));
+    }
+    item.append(body);
+    return item;
+  }));
 }
 
 function renderAcademic(data) {
@@ -432,7 +671,10 @@ function renderAcademic(data) {
     return row;
   }));
 
+  renderPublications(data);
+  renderNews(data);
   renderContributions(data);
+  applySectionSwitches(data, education.length > 0);
 
   const note = document.querySelector('.editorial-note');
   const configuredNote = data.note && typeof data.note === 'object';
@@ -473,7 +715,14 @@ function renderWorkstation(data) {
     const center = make('div', 'project-preview-center');
     center.append(make('strong', '', localized(project, 'visualTitle')));
     const bottom = make('div', 'project-preview-bottom');
-    bottom.append(make('span', '', new URL(project.url).hostname.toUpperCase()));
+    let host = '';
+    try {
+      host = new URL(project.url).hostname.toUpperCase();
+    } catch {
+      // 网址写错时只让这一行留空，不要中断整页渲染
+      host = String(project.url || '');
+    }
+    bottom.append(make('span', '', host));
     preview.append(top, center, bottom);
 
     const copy = make('div', 'project-copy');
@@ -573,6 +822,22 @@ function colorToRgb(hex, fallback) {
   return [0, 2, 4].map((offset) => Number.parseInt(normalized.slice(offset, offset + 2), 16));
 }
 
+/**
+ * 流场配色只有一个来源：site.json 的 visual.primaryColor / secondaryColor。
+ * 另两种色调由这两个颜色混合而来，避免在 JS 里再硬编码一份调色板。
+ */
+function auroraPalette(config) {
+  const primary = colorToRgb(config?.primaryColor, [126, 226, 192]);
+  const secondary = colorToRgb(config?.secondaryColor, [102, 213, 230]);
+  const blend = (from, to, ratio) => from.map((value, index) => Math.round(value + (to[index] - value) * ratio));
+  return [
+    primary,
+    secondary,
+    blend(primary, secondary, 0.62),
+    blend(secondary, [255, 255, 255], 0.3)
+  ];
+}
+
 function initializeProfileOrb(config) {
   const canvas = document.getElementById('plasma-portrait');
   const context = canvas?.getContext('2d');
@@ -580,13 +845,8 @@ function initializeProfileOrb(config) {
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
-  // Match the active aurora palette instead of the former light-theme blue
-  const palette = [
-    [126, 226, 192], // emerald
-    [102, 213, 230], // ice cyan
-    [83, 203, 166],  // mint
-    [220, 233, 121]  // lemon highlight
-  ];
+  // 球面配色跟随 site.json，不再与首页流场各存一份
+  const palette = auroraPalette(config);
   const primary = palette[0];
   const secondary = palette[1];
   const particles = Array.from({ length: 84 }, (_, index) => ({
@@ -695,13 +955,8 @@ function initializePlasmaBackground(config) {
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionEnabled = config.motionEnabled !== false && !reducedMotion;
-  // Keep the beam aligned with the dark aurora theme rather than the old light-theme colors
-  const palette = [
-    [126, 226, 192], // emerald
-    [102, 213, 230], // ice cyan
-    [83, 203, 166],  // mint
-    [220, 233, 121]  // lemon highlight
-  ];
+  // 背景流场与球面共用同一份配色来源
+  const palette = auroraPalette(config);
   const primary = palette[0];
   const secondary = palette[1];
   const density = Math.max(70, Math.min(280, Number(config.particleDensity) || 180));
@@ -867,7 +1122,7 @@ function initializePlasmaBackground(config) {
 }
 
 function initializeNavigation() {
-  const links = [...document.querySelectorAll('.site-nav a[href^="#"]')];
+  const links = [...document.querySelectorAll('.site-nav a[href^="#"]')].filter((link) => !link.hidden);
   if (!links.length) return;
   const sections = links.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
   if (!sections.length) return;
@@ -878,12 +1133,16 @@ function initializeNavigation() {
       .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
     if (!visible) return;
     links.forEach((link) => {
-      link.classList.toggle('is-active', link.getAttribute('href') === `#${visible.target.id}`);
+      const active = link.getAttribute('href') === `#${visible.target.id}`;
+      link.classList.toggle('is-active', active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
     });
   }, { rootMargin: '-18% 0px -62% 0px', threshold: [0, 0.2, 0.6] });
 
   sections.forEach((section) => observer.observe(section));
   links[0].classList.add('is-active');
+  links[0].setAttribute('aria-current', 'location');
 }
 
 async function loadSite() {

@@ -1,4 +1,6 @@
 _site/
+.worktrees/
+.dsh-acl-recovery/
 *.tmp
 .DS_Store
 Thumbs.db

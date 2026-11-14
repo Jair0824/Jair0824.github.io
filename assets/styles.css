@@ -848,6 +848,160 @@ body > noscript {
   line-height: 1.75;
 }
 
+.publication-list,
+.news-list {
+  margin: 0;
+}
+
+.publication-item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.publication-item:last-child {
+  padding-bottom: 14px;
+  border-bottom: 0;
+}
+
+.publication-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.publication-venue {
+  color: var(--accent-dark);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.publication-year {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.publication-body,
+.news-copy {
+  min-width: 0;
+}
+
+.publication-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.publication-title a {
+  border-bottom: 1px solid transparent;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.publication-title a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--line-strong);
+}
+
+.publication-authors {
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.publication-self {
+  color: var(--ink);
+  font-weight: 400;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.publication-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.publication-tags span {
+  padding: 1px 7px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.publication-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 9px;
+}
+
+.publication-action {
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  color: var(--accent-dark);
+  background: none;
+  font-size: 12.5px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.publication-action:hover,
+.publication-action:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--line-strong);
+  outline: none;
+}
+
+.publication-cite {
+  cursor: pointer;
+  border-bottom: 1px dotted var(--accent-dark);
+}
+
+.publication-cite.is-copied {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.news-item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 18px;
+  padding: 8px 0;
+}
+
+.news-date {
+  color: var(--accent-dark);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.news-copy p,
+.news-copy a {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.news-copy a {
+  border-bottom: 1px solid var(--line-strong);
+  transition: color 160ms ease;
+}
+
+.news-copy a:hover {
+  color: var(--accent);
+}
+
 .workstation-block {
   background: transparent;
 }
@@ -1247,20 +1401,24 @@ body > noscript {
 
   .site-nav {
     order: 3;
+    display: flex;
+    gap: 2px;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0;
+    overflow-x: auto;
     border-top: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .site-nav a {
-    min-width: 0;
-    padding: 12px 4px;
-    overflow: hidden;
+    flex: 0 0 auto;
+    padding: 12px 9px;
     font-size: 11px;
     text-align: center;
-    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .site-nav a::after {
@@ -1403,6 +1561,18 @@ body > noscript {
     gap: 2px;
   }
 
+  .publication-item,
+  .news-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .publication-meta {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
+
   .workstation-copy {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -1481,8 +1651,9 @@ body > noscript {
   --surface-muted: #0f1b1d;
   --text-primary: #ecf7f0;
   --text-secondary: #b4c8c0;
-  --accent: #7ee2c0;
-  --accent-dark: #5bb8a0;
+  /* 强调色以 content/site.json 的 meta.accent 为准，这里只是无 JS 时的回落值 */
+  --accent: #6f9db5;
+  --accent-dark: #4f7f99;
   --border: rgb(159 211 192 / 0.2);
   --bg: var(--background);
   --panel: transparent;
@@ -1491,7 +1662,7 @@ body > noscript {
   --text: var(--text-secondary);
   --muted: #8ca69c;
   --line: rgb(159 211 192 / 0.18);
-  --line-strong: rgb(126 226 192 / 0.5);
+  --line-strong: rgb(111 157 181 / 0.5);
   --coral: #dce979;
   --gold: #dce979;
   color-scheme: dark;
@@ -1737,12 +1908,12 @@ body {
 
 .profile-visual {
   background: rgb(3 12 14 / 0.24);
-  box-shadow: 0 0 0 7px rgb(126 226 192 / 0.08), 0 12px 38px rgb(0 0 0 / 0.28);
+  box-shadow: 0 0 0 7px rgb(111 157 181 / 0.08), 0 12px 38px rgb(0 0 0 / 0.28);
 }
 
 .project-preview {
   background: transparent;
-  border-color: rgb(126 226 192 / 0.32);
+  border-color: rgb(111 157 181 / 0.32);
 }
 
 .content-panel,

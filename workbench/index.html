@@ -127,6 +127,17 @@
         </fieldset>
 
         <fieldset>
+          <legend>章节开关</legend>
+          <label class="check-row"><input id="section-about" type="checkbox"><span><strong>关于我</strong><small>关闭后该节与导航入口一起隐藏，内容仍保留</small></span></label>
+          <label class="check-row"><input id="section-research" type="checkbox"><span><strong>研究兴趣</strong></span></label>
+          <label class="check-row"><input id="section-publications" type="checkbox"><span><strong>论文与成果</strong><small>列表为空时本来就不会显示</small></span></label>
+          <label class="check-row"><input id="section-news" type="checkbox"><span><strong>近期动态</strong><small>列表为空时本来就不会显示</small></span></label>
+          <label class="check-row"><input id="section-education" type="checkbox"><span><strong>学术概览</strong><small>没有教育经历时自动隐藏</small></span></label>
+          <label class="check-row"><input id="section-contributions" type="checkbox"><span><strong>GitHub 贡献</strong></span></label>
+          <label class="check-row"><input id="section-workstation" type="checkbox"><span><strong>独立合作入口</strong></span></label>
+        </fieldset>
+
+        <fieldset>
           <legend>动态视觉</legend>
           <label class="check-row"><input id="visual-motion" type="checkbox"><span><strong>启用等离子体流场</strong><small>关闭后显示静态科学纹理，并遵循系统的“减少动态效果”设置。</small></span></label>
           <div class="field-grid two-columns">
@@ -165,6 +176,24 @@
             <button class="button button-small" id="add-service" type="button">添加服务</button>
           </div>
           <div class="repeater" id="service-editor" data-empty-label="暂无服务，可直接保存"></div>
+        </fieldset>
+
+        <fieldset>
+          <label class="check-row"><input id="publications-enabled" type="checkbox"><span><strong>显示论文与成果</strong><small>列表为空或关闭时，主页不显示这一节，导航里的入口也会一起隐藏</small></span></label>
+          <div class="fieldset-heading">
+            <legend>论文与成果（可选）</legend>
+            <button class="button button-small" id="add-publication" type="button">添加论文</button>
+          </div>
+          <div class="repeater" id="publication-editor" data-empty-label="暂无论文，可直接保存"></div>
+        </fieldset>
+
+        <fieldset>
+          <label class="check-row"><input id="news-enabled" type="checkbox"><span><strong>显示近期动态</strong><small>适合记录接收、报告、获奖等简短进展；按填写顺序展示</small></span></label>
+          <div class="fieldset-heading">
+            <legend>近期动态（可选）</legend>
+            <button class="button button-small" id="add-news" type="button">添加动态</button>
+          </div>
+          <div class="repeater" id="news-editor" data-empty-label="暂无动态，可直接保存"></div>
         </fieldset>
 
         <fieldset>
@@ -252,6 +281,50 @@
       </div>
       <label>视觉标题<input data-field="visualTitle" type="text"></label>
       <label>视觉标题（英文）<input data-field="visualTitleEn" type="text"></label>
+    </article>
+  </template>
+
+  <template id="publication-template">
+    <article class="repeat-item publication-item">
+      <div class="repeat-heading"><strong>论文</strong><button class="text-button remove-item" type="button">删除</button></div>
+      <label>标题<input data-field="title" type="text" required></label>
+      <label>作者 <span>用逗号分隔，例如 J. Li, X. Sun</span><input data-field="authors" type="text"></label>
+      <label>本人姓名 <span>与作者中的写法完全一致时加下划线</span><input data-field="highlight" type="text"></label>
+      <div class="field-grid two-columns">
+        <label>期刊或会议<input data-field="venue" type="text"></label>
+        <label>年份<input data-field="year" type="text"></label>
+      </div>
+      <div class="field-grid two-columns">
+        <label>类型<select data-field="venueType">
+          <option value="">未指定</option>
+          <option value="journal">期刊</option>
+          <option value="conference">会议</option>
+          <option value="preprint">预印本</option>
+          <option value="thesis">学位论文</option>
+          <option value="book">专著</option>
+          <option value="other">其他</option>
+        </select></label>
+        <label>标签 <span>用逗号分隔</span><input data-field="tags" type="text"></label>
+      </div>
+      <label>引用文本 <span>留空时按“作者. (年份). 标题. 期刊.”自动拼</span><textarea data-field="citation" rows="3"></textarea></label>
+      <div class="field-grid two-columns">
+        <label>论文链接<input data-link="paper" type="url" placeholder="https://"></label>
+        <label>PDF 链接<input data-link="pdf" type="url" placeholder="https://"></label>
+        <label>代码链接<input data-link="code" type="url" placeholder="https://"></label>
+        <label>DOI 链接<input data-link="doi" type="url" placeholder="https://doi.org/"></label>
+      </div>
+    </article>
+  </template>
+
+  <template id="news-template">
+    <article class="repeat-item news-item">
+      <div class="repeat-heading"><strong>动态</strong><button class="text-button remove-item" type="button">删除</button></div>
+      <div class="field-grid two-columns">
+        <label>时间 <span>例如 2026.11</span><input data-field="date" type="text" required></label>
+        <label>链接（可选）<input data-field="url" type="url" placeholder="https://"></label>
+      </div>
+      <label>内容<textarea data-field="text" rows="2" required></textarea></label>
+      <label>内容（英文）<textarea data-field="textEn" rows="2"></textarea></label>
     </article>
   </template>
 </body>

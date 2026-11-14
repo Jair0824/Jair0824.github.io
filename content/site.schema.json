@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GarryLee personal website content",
+  "description": "content/site.json 的结构说明。构建与工作台使用的完整规则在 tools/validate-content.mjs，这份 schema 只负责编辑器补全与内联提示。",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "description": "站点级元数据，构建时会写进 HTML 的 title、description、OG 与 JSON-LD",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "站点根地址，例如 https://jair0824.github.io；留空则不生成 canonical 与 sitemap"
+        },
+        "siteTitle": {
+          "type": "string",
+          "description": "中文浏览器标题"
+        },
+        "siteTitleEn": {
+          "type": "string",
+          "description": "学术页（默认英文）的浏览器标题"
+        },
+        "description": {
+          "type": "string",
+          "description": "中文搜索摘要，也用于服务页"
+        },
+        "descriptionEn": {
+          "type": "string",
+          "description": "英文搜索摘要"
+        },
+        "accent": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "主题强调色"
+        },
+        "lang": {
+          "type": "string",
+          "description": "学术页默认语言，默认 en"
+        },
+        "ogImage": {
+          "type": "string",
+          "description": "分享卡片图片，默认 assets/ustc-emblem.jpg"
+        }
+      },
+      "required": ["siteTitle", "siteTitleEn", "description", "descriptionEn", "accent"]
+    },
+    "visual": {
+      "type": "object",
+      "description": "等离子体流场参数",
+      "properties": {
+        "motionEnabled": { "type": "boolean" },
+        "particleDensity": { "type": "number", "minimum": 30, "maximum": 500 },
+        "flowSpeed": { "type": "number", "exclusiveMinimum": 0, "maximum": 2 },
+        "primaryColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "secondaryColor": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+      }
+    },
+    "githubContributions": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "username": { "type": "string" }
+      }
+    },
+    "sections": {
+      "type": "object",
+      "description": "章节开关。enabled 为 false 时该节与导航入口一起隐藏，内容仍保留在 site.json 里；未配置的章节默认可见",
+      "additionalProperties": false,
+      "properties": {
+        "about": { "$ref": "#/definitions/sectionSwitch" },
+        "research": { "$ref": "#/definitions/sectionSwitch" },
+        "publications": { "$ref": "#/definitions/sectionSwitch" },
+        "news": { "$ref": "#/definitions/sectionSwitch" },
+        "education": { "$ref": "#/definitions/sectionSwitch" },
+        "contributions": { "$ref": "#/definitions/sectionSwitch" },
+        "workstation": { "$ref": "#/definitions/sectionSwitch" }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "mark": { "type": "string" },
+        "eyebrow": { "type": "string" },
+        "eyebrowEn": { "type": "string" },
+        "headline": { "type": "string" },
+        "headlineEn": { "type": "string" },
+        "introduction": { "type": "string" },
+        "introductionEn": { "type": "string" }
+      },
+      "required": ["name", "headline", "headlineEn", "introduction", "introductionEn"]
+    },
+    "focus": {
+      "type": "array",
+      "description": "研究兴趣标题，与 focusDetails 逐行对应",
+      "items": { "type": "string" }
+    },
+    "focusEn": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "focusDetails": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "focusDetailsEn": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "publications": {
+      "type": "object",
+      "description": "论文与成果。items 为空或 enabled 为 false 时，主页该节与导航入口一起隐藏",
+      "properties": {
+        "enabled": { "type": "boolean", "default": true },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/publication" }
+        }
+      }
+    },
+    "news": {
+      "type": "object",
+      "description": "近期动态，按填写顺序展示",
+      "properties": {
+        "enabled": { "type": "boolean", "default": true },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/newsItem" }
+        }
+      }
+    },
+    "education": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/education" }
+    },
+    "educationEn": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/education" }
+    },
+    "projects": {
+      "type": "array",
+      "items": { "type": "object", "required": ["title", "summary", "url"] }
+    },
+    "services": {
+      "type": "array",
+      "items": { "type": "object", "required": ["title", "description"] }
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "wechat": { "type": "string" },
+        "github": { "type": "string", "format": "uri" },
+        "researchgate": { "type": "string", "format": "uri" },
+        "resume": { "type": "string", "description": "相对 resources 的路径或完整网址" }
+      },
+      "required": ["email", "github"]
+    },
+    "footer": { "type": "string" },
+    "footerEn": { "type": "string" },
+    "note": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "textEn": { "type": "string" }
+      }
+    },
+    "sidebar": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "ui": {
+      "type": "object",
+      "description": "界面文案。留空的键会回落到 assets/site.js 里的内置文案",
+      "properties": {
+        "zh": { "type": "object", "additionalProperties": { "type": "string" } },
+        "en": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    },
+    "icons": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "definitions": {
+    "sectionSwitch": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean", "default": true }
+      }
+    },
+    "publication": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9-]*$",
+          "description": "可选，用于锚点与去重"
+        },
+        "title": { "type": "string" },
+        "authors": {
+          "type": "string",
+          "description": "用逗号分隔，例如 J. Li, X. Sun"
+        },
+        "highlight": {
+          "type": "string",
+          "description": "作者列表中要加下划线的本人姓名，必须与 authors 中的写法完全一致"
+        },
+        "venue": { "type": "string", "description": "期刊或会议名称" },
+        "venueType": {
+          "type": "string",
+          "enum": ["journal", "conference", "preprint", "thesis", "book", "other"]
+        },
+        "year": { "type": ["string", "number"] },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "abstract": { "type": "string" },
+        "citation": {
+          "type": "string",
+          "description": "复制引用时使用的文本；留空时按作者、年份、标题、期刊自动拼"
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "paper": { "type": "string" },
+            "pdf": { "type": "string" },
+            "code": { "type": "string" },
+            "doi": { "type": "string" },
+            "data": { "type": "string" }
+          }
+        }
+      }
+    },
+    "newsItem": {
+      "type": "object",
+      "required": ["date", "text"],
+      "properties": {
+        "date": { "type": "string", "description": "例如 2026.11" },
+        "text": { "type": "string" },
+        "textEn": { "type": "string" },
+        "url": { "type": "string", "description": "可选外链" }
+      }
+    },
+    "education": {
+      "type": "object",
+      "required": ["institution"],
+      "properties": {
+        "period": { "type": "string" },
+        "institution": { "type": "string" },
+        "degree": { "type": "string" },
+        "details": { "type": "string" },
+        "advisor": { "type": "string" },
+        "advisorUrl": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

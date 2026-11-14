@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "node tools/workbench-server.mjs",
-    "build": "node tools/build.mjs"
+    "build": "node tools/build.mjs",
+    "test": "node --test tools/",
+    "validate": "node tools/validate-content.mjs"
   }
 }
