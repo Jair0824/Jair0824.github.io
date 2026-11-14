@@ -108,7 +108,7 @@ push main │ cron "17 2 * * *"（UTC 02:17 = 北京 10:17）│ workflow_dispat
        │    需要 PERSONAL_GITHUB_TOKEN（本人账号，read:user）
        │    三道防线：Actions 内缺 token 直接失败 / token 的 viewer.login 必须等于配置的 username / 结果只落 SVG 产物
        ├─ npm run validate → validateContent()
-       ├─ npm test → 17 个用例（内容校验 + 构建注入）
+       ├─ npm test → 23 个用例（内容校验 15 + 构建注入 8）
        ├─ node tools/build.mjs → applySiteBindings() → _site/
        ├─ configure-pages@v5 → upload-pages-artifact@v4(_site)
        └─ deploy-pages@v4 → github-pages environment
@@ -347,6 +347,7 @@ push main │ cron "17 2 * * *"（UTC 02:17 = 北京 10:17）│ workflow_dispat
 ### P1（结构性问题，影响可维护性）
 
 1. ~~**测试未接入 CI**~~ → ✅ 已接入：`pages.yml` 现在 `validate → test → build` 三步齐全。
+   > 踩过的坑：`node --test tools/`（目录参数）在 Node 22 上会被当成**模块路径**，CI 直接 `MODULE_NOT_FOUND`。已改为显式文件列表 `node --test tools/validate-content.test.mjs tools/site-bindings.test.mjs`；**新增测试文件时要记得把它加进 `package.json` 的 test 脚本**。
 2. **首屏正文仍不可爬**：`title/description/OG/JSON-LD` 已构建期定稿（✅），但**正文**（简介、研究兴趣、教育、论文）仍 100% 由 `fetch('content/site.json')` 运行时渲染；无 JS 时只有 `index.html` 里那几段中文兜底，且**英文访问者看到的是中文兜底**（`lang="en"`）。→ C1。
 3. **CSS 双主题叠加**：1–1632 行是浅色基线，1647–1958 行用"极光夜"整体重定义 `:root` 并覆盖组件；`.skip-link`、`.site-header`、`.language-switch` 被改了两遍；`--surface/--panel/--panel-strong` 中的 `--panel/--panel-strong` 在夜主题里是 `transparent`，实际已无意义。→ A-b。
 4. **文案三源（部分收口）**：`index.html` 的 `data-i18n` 文本、`assets/site.js` 的 `interfaceCopy`、`site.json` 的 `ui.*` 仍同时存在。本轮已把 `ui.zh` / `ui.en` 的**键集合一致性**纳入校验（缺键会构建失败），并删掉了空串占位；但三份文本本身还没合并。
