@@ -71,13 +71,26 @@ async function gitSucceeds(args) {
   }
 }
 
+/**
+ * 把 git 的原始报错翻成一类可处理的原因。
+ * 规则未命中时必须带上原始报错首行，否则用户和我都只能看到"稍后重试"。
+ */
 function friendlyGitError(error) {
-  const details = `${error?.stderr || ''}\n${error?.stdout || ''}\n${error?.message || ''}`;
+  const lines = `${error?.stderr || ''}\n${error?.stdout || ''}\n${error?.message || ''}`
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const details = lines.join('\n');
+  const excerpt = (lines.find((line) => /^(fatal|error|remote|hint)!?:/i.test(line))
+    || lines[lines.length - 1]
+    || '未知错误').slice(0, 200);
+
   if (/non-fast-forward|fetch first|rejected/i.test(details)) return '远程仓库有更新，自动合并没有完成。请重试发布；若仍失败，请在工作台外检查远程更改。';
-  if (/Authentication failed|could not read Username|403|Permission denied/i.test(details)) return 'GitHub 身份验证失败。请先在这台电脑上登录 GitHub，然后重试发布。';
-  if (/Failed to connect|Could not resolve host|Connection.*closed|timed out/i.test(details)) return '暂时无法连接 GitHub。你的更改已经保存在本地，请检查网络后重试发布。';
+  if (/Authentication failed|could not read (Username|Password)|Permission denied|403|401|SEC_E_NO_CREDENTIALS|AcquireCredentialsHandle|Invalid username or password|Bad credentials/i.test(details)) return `无法使用已保存的 GitHub 凭据（${excerpt}）。请在工作台外登录一次 GitHub，然后重试发布。`;
+  if (/Connection was reset|Recv failure|Send failure|SSL|schannel|Failed to connect|Could not resolve host|Connection.*closed|timed out|RPC failed/i.test(details)) return `连接 GitHub 失败（${excerpt}）。你的更改已经保存在本地，请检查网络或代理后重试发布。`;
+  if (/GH006|Protected branch|pre-receive hook declined|refusing to allow/i.test(details)) return `GitHub 拒绝了这次推送（${excerpt}），本地提交已保留。请检查分支保护设置或凭据权限。`;
   if (/CONFLICT|Automatic merge failed/i.test(details)) return '远程文件与本地文件发生冲突，已取消自动合并，本地内容没有丢失。';
-  return 'GitHub 发布失败。本地内容和提交均已保留，请稍后重试。';
+  return `GitHub 发布失败（${excerpt}）。本地内容和提交均已保留。`;
 }
 
 async function synchronizeRemote() {
